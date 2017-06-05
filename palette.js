@@ -3,8 +3,8 @@ import Polyline from './polyline';
 export default class Palette {
   
   /*
-    *@param  {Map}       map   [Amap instance]
-    *@param  {String}    type  [graph type: polyline]
+    *@param {Map} map [Amap instance]
+    *@param {String} type [graph type: polyline]
     *@return {Object}
     
     *palatte represents a canavas picture
@@ -29,7 +29,7 @@ export default class Palette {
   };
   
   /*
-    *@param  {String}    data   [graph data: polyline point lnglat]
+    *@param {String} data [graph data: polyline point lnglat]
   */
   importData(data) {
     switch(this.type) {

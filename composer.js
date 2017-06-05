@@ -21,7 +21,7 @@ export default class Composer {
   };
   
   /*
-    *@return {Palette}   palette [Palette instance]
+    *@return {Palette} palette [Palette instance]
   */
   createPalette() {
     let palette;

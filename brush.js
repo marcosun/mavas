@@ -1,7 +1,7 @@
 export default class Brush {
   
   /*
-    *@param  {Map}       map   [Amap instance]
+    *@param {Map} map [Amap instance]
     *@return {Object}
     
     *palatte represents a canavas picture
