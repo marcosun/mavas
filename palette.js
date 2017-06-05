@@ -10,6 +10,7 @@ export default class Palette {
     *palatte represents a canavas picture
   */
   constructor(map, type) {
+    //TODO: palette supports only one type of graph now
     switch(type) {
       case 'polyline':
         this.__proto__.importPolyline = Polyline.importPolyline;
@@ -22,13 +23,10 @@ export default class Palette {
     this.map = map;
     this.type = type || 'polyline';
     this.canvas = document.createElement('canvas');
-    //TODO: canvas size as small as possible
     this.canvas.width = this.map.getSize().width;
     this.canvas.height = this.map.getSize().height;
     this.ctx = this.canvas.getContext('2d');
   };
-  
-  
   
   /*
     *@param  {String}    data   [graph data: polyline point lnglat]
