@@ -27,6 +27,11 @@ function draw() {
   });
 };
 
+/*
+  *cache lines lie in map bounded area
+  *create buffer area to draw more graphs beyong map bound
+  *TODO: more acurate buffer area i.e. buffer for zoom level
+*/
 function cacheVisiblePolyline() {
   let boundLngBuffer,
       boundLatBuffer,
