@@ -17,6 +17,7 @@ export default class Brush {
   draw(palettes) {
     this.ctx.save();
     this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+    //TODO: replace forEach with while
     palettes.forEach((palette) => {
       palette.draw();
       this.ctx.drawImage(palette.canvas,0,0);

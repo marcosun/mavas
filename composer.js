@@ -33,12 +33,18 @@ export default class Composer {
   
   draw() {
     //TODO: now supports palette only
-    this.customLayers.forEach((layer) => {
-      let customLayer;
-      customLayer = new AMap.CustomLayer(layer.canvas);
-      customLayer.render = layer.draw.bind(layer);
+    let customLayer,
+        currentLayer,
+        i = 0,
+        len = this.customLayers.length;
+    
+    while(i < len) {
+      currentLayer = this.customLayers[i];
+      customLayer = new AMap.CustomLayer(currentLayer.canvas);
+      customLayer.render = currentLayer.draw.bind(currentLayer);
       customLayer.setMap(this.map);
-    });
+      i ++;
+    };
   };
   
 };

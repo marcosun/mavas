@@ -9,22 +9,35 @@ function importPolyline(polyline) {
 };
 
 function draw() {
+  let ia, ib, lena, lenb, eachLine, eachPoint, lngLat, cLngLat;
+  
   //cache visible data
   this.setBoundLngLat();
   this.cacheVisiblePolyline();
   
   this.ctx.strokeStyle = '#FF0000';
   this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-  this.polyline.cache.forEach((eachline) => {
+  
+  ia = 0;
+  lena = this.polyline.cache.length;
+  while(ia < lena) {
+    eachLine = this.polyline.cache[ia];
     this.ctx.beginPath();
-    eachline.forEach((point) => {
-      let lnglat, clnglat;
-      lnglat = new AMap.LngLat(point[0], point[1]);
-      clnglat = this.map.lngLatToContainer(lnglat);
-      this.ctx.lineTo(clnglat.x, clnglat.y);
-    });
+    
+    ib = 0;
+    lenb = eachLine.length;
+    while(ib < lenb) {
+      eachPoint = eachLine[ib];
+      lngLat = new AMap.LngLat(eachPoint[0], eachPoint[1]);
+      cLngLat = this.map.lngLatToContainer(lngLat);
+      this.ctx.lineTo(cLngLat.x, cLngLat.y);
+      
+      ib ++;
+    };
     this.ctx.stroke();
-  });
+    
+    ia ++;
+  };
 };
 
 /*
