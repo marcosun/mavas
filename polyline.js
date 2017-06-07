@@ -11,45 +11,6 @@ function importPolyline(polyline) {
 /*
   *this is where magic happens
 */
-//while loop
-//function draw() {
-//  let ia, ib, lena, lenb, currentLine, currentPoint, lngLat, cLngLat;
-//  
-//  //cache visible data
-//  this.setBoundLngLat();
-//  this.setCentreLngLat();
-//  this.cacheVisiblePolyline();
-//  
-//  this.ctx.strokeStyle = '#FF0000';
-//  this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-//  
-//  ia = 0;
-//  lena = this.polyline.cache.length;
-//  
-//  let now = new Date();
-//  while(ia < lena) {
-//    currentLine = this.polyline.cache[ia];
-//    this.ctx.beginPath();
-//    
-//    ib = 0;
-//    lenb = currentLine.length;
-//    while(ib < lenb) {
-//      currentPoint = currentLine[ib];
-//      lngLat = new AMap.LngLat(currentPoint[0], currentPoint[1]);
-//      cLngLat = this.map.lngLatToContainer(lngLat);
-//      this.ctx.lineTo(cLngLat.x, cLngLat.y);
-//      
-//      ib ++;
-//    };
-//    this.ctx.stroke();
-//    
-//    ia ++;
-//  };
-//  console.log(`canvas api uses ${new Date() - now}ms`);
-//};
-//
-
-//for loop
 function draw() {
   let currentLine, currentPoint, lngLat, cLngLat;
   
@@ -77,187 +38,11 @@ function draw() {
   };
   console.log(`canvas api uses ${new Date() - now}ms`);
 };
-//
 
 /*
   *this is where performance enhancement comes in
   *look at my doc for explanation
 */
-//while loop
-//function cacheVisiblePolyline() {
-//  let now = new Date();
-//  let ia, ib, lena, lenb, currentLine, resultLine, currentPoint = {}, previousPoint = {}, positionDiff, r;
-//  
-//  this.polyline.cache = [];
-//  
-//  r = Math.sqrt((this.centreLngLat[0] - this.boundLngLat[0]) ^ 2 + (this.centreLngLat[1] - this.boundLngLat[1]) ^ 2);
-//  ia = 0;
-//  lena = this.polyline.original.length;
-//  while(ia < lena) {
-//    currentLine = this.polyline.original[ia];
-//    ib = 1;
-//    lenb = currentLine.length;
-//    resultLine = [];
-//    while(ib < lenb) {
-//      if (ib == 1) {
-//        previousPoint.lngLat = currentLine[ib - 1];
-//        previousPoint.position = lngLatToBlockPosition(previousPoint.lngLat, this.boundLngLat);
-//        
-//        if (previousPoint.position === 0) {
-//          resultLine.push(previousPoint.lngLat);
-//          previousPoint.isDrawn = true;
-//        }
-//      }
-//      
-//      currentPoint.lngLat = currentLine[ib];
-//      currentPoint.position = lngLatToBlockPosition(currentPoint.lngLat, this.boundLngLat);
-//      positionDiff = Math.abs(currentPoint.position - previousPoint.position);
-//      
-//      //rule 1
-//      if (currentPoint.position === 0) {
-//        if (previousPoint.isDrawn !== true) {
-//          resultLine.push(previousPoint.lngLat);
-//        }
-//        resultLine.push(currentPoint.lngLat);
-//        previousPoint = Object.assign({}, currentPoint, {isDrawn: true});
-//        ib ++;
-//        continue;
-//      }
-//      
-//      //rule 2
-//      if (positionDiff === 0) {
-//        if (previousPoint.isDrawn === true) {
-//          resultLine.push(currentPoint.lngLat);
-//        }
-//        if (resultLine.length !== 0) {
-//          this.polyline.cache.push(resultLine);
-//          resultLine = [];
-//        }
-//        previousPoint = Object.assign({}, currentPoint, {isDrawn: false});
-//        ib ++;
-//        continue;
-//      };
-//      
-//      if (previousPoint.position % 2 !== 0) {
-//        switch(positionDiff) {
-//          //rule 3
-//          case 1:
-//          case 7:
-//            if (previousPoint.isDrawn === true) {
-//              resultLine.push(currentPoint.lngLat);
-//            }
-//            if (resultLine.length !== 0) {
-//              this.polyline.cache.push(resultLine);
-//              resultLine = [];
-//            }
-//            previousPoint = Object.assign({}, currentPoint, {isDrawn: false});
-//            ib ++;
-//            continue;
-//            break;
-//          //rule 4
-//          case 4:
-//            if (previousPoint.isDrawn !== true) {
-//              resultLine.push(previousPoint.lngLat);
-//            }
-//            resultLine.push(currentPoint.lngLat);
-//            previousPoint = Object.assign({}, currentPoint, {isDrawn: true});
-//            ib ++;
-//            continue;
-//            break;
-//        };
-//      } else {
-//        switch(positionDiff) {
-//          //rule 5
-//          case 1:
-//          case 2:
-//          case 6:
-//          case 7:
-//            if (previousPoint.isDrawn === true) {
-//              resultLine.push(currentPoint.lngLat);
-//            }
-//            if (resultLine.length !== 0) {
-//              this.polyline.cache.push(resultLine);
-//              resultLine = [];
-//            }
-//            previousPoint = Object.assign({}, currentPoint, {isDrawn: false});
-//            ib ++;
-//            continue;
-//            break;
-//        };
-//      }
-//      
-//      let A = previousPoint.lngLat[1] - currentPoint.lngLat[1];
-//      let B = currentPoint.lngLat[0] - previousPoint.lngLat[0];
-//      let C = previousPoint.lngLat[0] * currentPoint.lngLat[1] - currentPoint.lngLat[0] * previousPoint.lngLat[1];
-//      
-//      let d = Math.abs((A * this.centreLngLat[0] + B * this.centreLngLat[1] + C) / Math.sqrt(A ^ 2 + B ^ 2));
-//      
-//      //rule 6.1
-//      if (d > r) {
-//        if (previousPoint.isDrawn === true) {
-//          resultLine.push(currentPoint.lngLat);
-//        }
-//        if (resultLine.length !== 0) {
-//          this.polyline.cache.push(resultLine);
-//          resultLine = [];
-//        }
-//        previousPoint = Object.assign({}, currentPoint, {isDrawn: false});
-//        ib ++;
-//        continue;
-//      } else {
-//        if (previousPoint.isDrawn !== true) {
-//          resultLine.push(previousPoint.lngLat);
-//        }
-//        resultLine.push(currentPoint.lngLat);
-//        previousPoint = Object.assign({}, currentPoint, {isDrawn: true});
-//        ib ++;
-//        continue;
-//      }
-//    };
-//    
-//    if (resultLine.length !== 0) {
-//      this.polyline.cache.push(resultLine);
-//      resultLine = [];
-//    }
-//    
-//    ia ++;
-//  };
-//  console.log(`cache function uses ${new Date() - now}ms`);
-//  
-//  
-//  //virtual rendering algorithm
-////  let now = new Date();
-////  let boundLngBuffer,
-////      boundLatBuffer,
-////      expandedBoundLngLat;
-////  
-////  boundLngBuffer = this.boundLngLat[0] - this.boundLngLat[2];
-////  boundLatBuffer = this.boundLngLat[1] - this.boundLngLat[3];
-////  expandedBoundLngLat = [this.boundLngLat[2] - boundLngBuffer, this.boundLngLat[3] - boundLatBuffer, this.boundLngLat[0] + boundLngBuffer, this.boundLngLat[1] + boundLatBuffer];
-////  
-////  this.polyline.cache = [];
-////  
-////  this.polyline.original.forEach((eachline) => {
-////    let result = [];
-////    
-////    eachline.forEach((point) => {
-////      let lng = point[0],
-////          lat = point[1];
-////      if (lng >= expandedBoundLngLat[0] && lat >= expandedBoundLngLat[1] && lng <= expandedBoundLngLat[2] && lat <= expandedBoundLngLat[3] ) {
-////        result.push(point);
-////      }
-////    });
-////    
-////    if (result.length !== 0) {
-////      this.polyline.cache.push(result);
-////    }
-////  });
-////  console.log(`cache function uses ${new Date() - now}ms`);
-//  //
-//};
-//
-
-//for loop
 function cacheVisiblePolyline() {
   let now = new Date();
   let currentLine, resultLine, currentPoint = {}, previousPoint = {}, positionDiff, r;
@@ -385,8 +170,38 @@ function cacheVisiblePolyline() {
     
   };
   console.log(`cache function uses ${new Date() - now}ms`);
+  
+  
+  //virtual rendering algorithm
+//  let now = new Date();
+//  let boundLngBuffer,
+//      boundLatBuffer,
+//      expandedBoundLngLat;
+//  
+//  boundLngBuffer = this.boundLngLat[0] - this.boundLngLat[2];
+//  boundLatBuffer = this.boundLngLat[1] - this.boundLngLat[3];
+//  expandedBoundLngLat = [this.boundLngLat[2] - boundLngBuffer, this.boundLngLat[3] - boundLatBuffer, this.boundLngLat[0] + boundLngBuffer, this.boundLngLat[1] + boundLatBuffer];
+//  
+//  this.polyline.cache = [];
+//  
+//  this.polyline.original.forEach((eachline) => {
+//    let result = [];
+//    
+//    eachline.forEach((point) => {
+//      let lng = point[0],
+//          lat = point[1];
+//      if (lng >= expandedBoundLngLat[0] && lat >= expandedBoundLngLat[1] && lng <= expandedBoundLngLat[2] && lat <= expandedBoundLngLat[3] ) {
+//        result.push(point);
+//      }
+//    });
+//    
+//    if (result.length !== 0) {
+//      this.polyline.cache.push(result);
+//    }
+//  });
+//  console.log(`cache function uses ${new Date() - now}ms`);
+  //
 };
-//
 
 function lngLatToBlockPosition(lngLat, boundLngLat) {
   let pointToNorthEast = [lngLat[0] - boundLngLat[0], lngLat[1] - boundLngLat[1]],
