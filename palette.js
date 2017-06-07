@@ -31,10 +31,19 @@ export default class Palette {
   
   setBoundLngLat() {
     let bounds, southwest, northeast;
+    
     bounds = this.map.getBounds();
-    southwest = bounds.getSouthWest();
     northeast = bounds.getNorthEast();
-    this.boundLngLat = [southwest.lng, southwest.lat, northeast.lng, northeast.lat]
+    southwest = bounds.getSouthWest();
+    this.boundLngLat = [northeast.lng, northeast.lat, southwest.lng, southwest.lat]
+    //this.boundLngLat = [southwest.lng, southwest.lat, northeast.lng, northeast.lat]
+  };
+  
+  setCentreLngLat() {
+    let centre;
+    
+    centre = this.map.getCenter();
+    this.centreLngLat = [centre.lng, centre.lat];
   };
   
   /*
