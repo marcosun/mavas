@@ -24,11 +24,14 @@ function draw() {
   
   let now = new Date();
   
+  /*
+    *draw lines with no delay
+  */
   for(let ia = 0, lena = this.polyline.cache.length; ia < lena; ia++) {
     currentLine = this.polyline.cache[ia];
     this.ctx.beginPath();
-    
-    for(let ib =0, lenb = currentLine.length; ib < lenb; ib++) {
+
+    for(let ib = 0, lenb = currentLine.length; ib < lenb; ib++) {
       currentPoint = currentLine[ib];
       lngLat = new AMap.LngLat(currentPoint[0], currentPoint[1]);
       cLngLat = this.map.lngLatToContainer(lngLat);
@@ -36,6 +39,31 @@ function draw() {
     };
     this.ctx.stroke();
   };
+  
+  /*
+    *draw lines with time interval
+  */
+//  let i = 0, len = this.polyline.cache.length / 100;
+//  
+//  var interval = setInterval(() => {
+//    for(let ia = i * 100, lena = (i + 1) * 100 > this.polyline.cache.length ? this.polyline.cache.length : (i + 1) * 100; ia < lena; ia++) {
+//      currentLine = this.polyline.cache[ia];
+//      this.ctx.beginPath();
+//
+//      for(let ib = 0, lenb = currentLine.length; ib < lenb; ib++) {
+//        currentPoint = currentLine[ib];
+//        lngLat = new AMap.LngLat(currentPoint[0], currentPoint[1]);
+//        cLngLat = this.map.lngLatToContainer(lngLat);
+//        this.ctx.lineTo(cLngLat.x, cLngLat.y);
+//      };
+//      this.ctx.stroke();
+//    };
+//    if (i + 1 > len) {
+//      clearInterval(interval);
+//    }
+//    i ++;
+//  });
+  
   console.log(`canvas api uses ${new Date() - now}ms`);
 };
 
