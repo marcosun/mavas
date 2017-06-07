@@ -72,6 +72,27 @@ function draw() {
   *look at my doc for explanation
 */
 function cacheVisiblePolyline() {
+  
+  const cache= () => {
+    if (previousPoint.isDrawn !== true) {
+      resultLine.push(previousPoint.lngLat);
+    }
+    resultLine.push(currentPoint.lngLat);
+    previousPoint = Object.assign({}, currentPoint, {isDrawn: true});
+  };
+  
+  const dontCache = () => {
+    if (previousPoint.isDrawn === true) {
+      resultLine.push(currentPoint.lngLat);
+    }
+    if (resultLine.length !== 0) {
+      this.polyline.cache.push(resultLine);
+      resultLine = [];
+    }
+    previousPoint = Object.assign({}, currentPoint, {isDrawn: false});
+  };
+  
+  
   let now = new Date();
   let currentLine, resultLine, currentPoint = {}, previousPoint = {}, positionDiff, r;
   
@@ -98,24 +119,13 @@ function cacheVisiblePolyline() {
       
       //rule 1
       if (currentPoint.position === 0) {
-        if (previousPoint.isDrawn !== true) {
-          resultLine.push(previousPoint.lngLat);
-        }
-        resultLine.push(currentPoint.lngLat);
-        previousPoint = Object.assign({}, currentPoint, {isDrawn: true});
+        cache();
         continue;
       }
       
       //rule 2
       if (positionDiff === 0) {
-        if (previousPoint.isDrawn === true) {
-          resultLine.push(currentPoint.lngLat);
-        }
-        if (resultLine.length !== 0) {
-          this.polyline.cache.push(resultLine);
-          resultLine = [];
-        }
-        previousPoint = Object.assign({}, currentPoint, {isDrawn: false});
+        dontCache();
         continue;
       };
       
@@ -124,23 +134,12 @@ function cacheVisiblePolyline() {
           //rule 3
           case 1:
           case 7:
-            if (previousPoint.isDrawn === true) {
-              resultLine.push(currentPoint.lngLat);
-            }
-            if (resultLine.length !== 0) {
-              this.polyline.cache.push(resultLine);
-              resultLine = [];
-            }
-            previousPoint = Object.assign({}, currentPoint, {isDrawn: false});
+            dontCache();
             continue;
             break;
           //rule 4
           case 4:
-            if (previousPoint.isDrawn !== true) {
-              resultLine.push(previousPoint.lngLat);
-            }
-            resultLine.push(currentPoint.lngLat);
-            previousPoint = Object.assign({}, currentPoint, {isDrawn: true});
+            cache();
             continue;
             break;
         };
@@ -151,14 +150,7 @@ function cacheVisiblePolyline() {
           case 2:
           case 6:
           case 7:
-            if (previousPoint.isDrawn === true) {
-              resultLine.push(currentPoint.lngLat);
-            }
-            if (resultLine.length !== 0) {
-              this.polyline.cache.push(resultLine);
-              resultLine = [];
-            }
-            previousPoint = Object.assign({}, currentPoint, {isDrawn: false});
+            dontCache();
             continue;
             break;
         };
@@ -172,21 +164,10 @@ function cacheVisiblePolyline() {
       
       //rule 6.1
       if (d > r) {
-        if (previousPoint.isDrawn === true) {
-          resultLine.push(currentPoint.lngLat);
-        }
-        if (resultLine.length !== 0) {
-          this.polyline.cache.push(resultLine);
-          resultLine = [];
-        }
-        previousPoint = Object.assign({}, currentPoint, {isDrawn: false});
+        dontCache();
         continue;
       } else {
-        if (previousPoint.isDrawn !== true) {
-          resultLine.push(previousPoint.lngLat);
-        }
-        resultLine.push(currentPoint.lngLat);
-        previousPoint = Object.assign({}, currentPoint, {isDrawn: true});
+        cache();
         continue;
       }
     };
