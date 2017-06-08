@@ -21,17 +21,7 @@ export default class Map extends React.Component {
   componentDidMount() {
     let mavas, transformedData, palette;
     
-    //init mavas
-    mavas = new Mavas('map',{
-      resizeEnable: true,
-      zoom: 16,
-      center: [116.483467,39.987400]
-    });
-    mavas.map.plugin(['AMap.CustomLayer'], () => {});
-    
-
-    palette = mavas.createLayer('palette');
-    
+    //prepare data to this format: [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number
     transformedData = data.map((route) => {
       let len = route.length,
           prev = [0,0],
@@ -46,7 +36,34 @@ export default class Map extends React.Component {
       return result;
     });
     
-    palette.importData(transformedData);
+    //init mavas; see amap api reference
+    mavas = new Mavas('map',{
+      resizeEnable: true,
+      zoom: 16,
+      center: [116.483467,39.987400]
+    });
+    //init amap layers on demand; see amap api reference
+    mavas.map.plugin(['AMap.CustomLayer'], () => {});
+    
+    /*
+      *create polyline
+      *@param {String} type [compulsory]
+      *@param {String} cacheAlgo [optional]
+      *@param {{interval: Number,String, size: Number,String }} delay [optional]
+      *@param {Array} data [optional]
+      *@color {String} type [optional]
+      *@return {Palette} palette [Palette instance]
+    */
+    palette = mavas.createLayer({
+      type: 'polyline',
+      cacheAlgo: '9 blocks',
+      delay: {
+        interval: 100,
+        size: 100,
+      },
+      data: transformedData,
+      color: 'green',
+    });
     
     mavas.draw();
   };
