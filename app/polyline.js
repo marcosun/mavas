@@ -4,14 +4,14 @@ import Mavas from '../lib/mavas/main';
 import Util from '../lib/mavas/util';
 import data from '../lib/mavas/busRouteData';
 
-import Styles from './map.css';
+import Styles from './polyline.css';
 
 /*
   *Map component creates a container for map
   *container size is controlled by css styles
   *initialise Amap as soon as Map component is mounted in react lifecycle
 */
-export default class Map extends React.Component {
+export default class Polyline extends React.Component {
   
   constructor(props) {
     super(props);
@@ -70,7 +70,10 @@ export default class Map extends React.Component {
   
   render() {
     return (
-      <div className={Styles.mapContainer} id="map"></div>
+      <div>
+        <h1>This is Marker page</h1>
+        <div className={Styles.mapContainer} id="map"></div>
+      </div>
     );
   };
 };

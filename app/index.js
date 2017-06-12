@@ -5,14 +5,18 @@ import {
   Route
 } from 'react-router-dom';
 
-import Home from './Home';
+import Polyline from './polyline';
+import Marker from './marker';
 
 /*
   *show Home page at root path
 */
 render(
   <Router>
-    <Route exact path='/' component={Home} />
+    <div>
+      <Route exact path='/polyline' component={Polyline} />
+      <Route exact path='/marker' component={Marker} />
+    </div>
   </Router>,
   document.getElementById('app')
 );
