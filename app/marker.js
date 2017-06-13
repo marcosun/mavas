@@ -22,14 +22,14 @@ export default class Marker extends React.Component {
     let mavas, transformedData, paletteMarker, palettePolyline;
     
     //prepare data to this format: [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number
-    transformedData = [data.map((pointObj) => {
+    transformedData = data.map((pointObj) => {
       let result = [];
       
       result.push(pointObj.lng);
       result.push(pointObj.lat);
       
       return result;
-    })];
+    });
     
     //init mavas; see amap api reference
     mavas = new Mavas('map',{
@@ -51,7 +51,7 @@ export default class Marker extends React.Component {
     palettePolyline = mavas.createLayer({
       type: 'polyline',
       cacheAlgo: '9 blocks',
-      data: transformedData,
+      data: [transformedData],
       color: 'red',
     });
     
@@ -64,12 +64,8 @@ export default class Marker extends React.Component {
     paletteMarker = mavas.createLayer({
       type: 'marker',
       data: transformedData,
+      tooltip: Util.pluck(data, 'gmtTime'),
     });
-    
-//    paletteTooltip = mavas.createLayer({
-//      type: 'tooltip',
-//      data: tooltip: [Util.pluck(data, 'gmtTime')],
-//    });
     
     mavas.draw({
       zIndex: 100,
