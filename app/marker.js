@@ -19,7 +19,7 @@ export default class Marker extends React.Component {
   };
   
   componentDidMount() {
-    let mavas, transformedData, paletteMarker, palettePolyline;
+    let mavas, transformedData, palette, palettePolyline, paletteMarker, paletteTooltip;
     
     //prepare data to this format: [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number
     transformedData = data.map((pointObj) => {
@@ -41,6 +41,9 @@ export default class Marker extends React.Component {
     mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
     /*
+      *show dynamic || real-time gps points
+    */
+    /*
       *create polyline
       *@param {String} type [compulsory]
       *@param {String} cacheAlgo [optional]
@@ -51,7 +54,7 @@ export default class Marker extends React.Component {
     palettePolyline = mavas.createLayer({
       type: 'polyline',
       cacheAlgo: '9 blocks',
-      data: [transformedData],
+      data: [transformedData.slice(0,2)],
       color: 'red',
     });
     
@@ -62,15 +65,84 @@ export default class Marker extends React.Component {
       *@param {Array} tooltip [optional]
       *@return {Palette} palette [Palette instance]
     */
-    paletteMarker = mavas.createLayer({
+    palette = mavas.createLayer({
       type: 'marker',
-      data: transformedData,
-      tooltip: Util.pluck(data, 'gmtTime'),
+      data: transformedData.slice(0,2),
+      tooltip: Util.pluck(data.slice(0,2), 'gmtTime'),
     });
+    
+    paletteMarker = palette.palette;
+    paletteTooltip = palette.paletteTooltip;
     
     mavas.draw({
       zIndex: 100,
     });
+    
+    var i = 3, len = transformedData.length;
+    
+    var move = () => {
+      console.log(i);
+      if (i < len) {
+        palettePolyline.importData([transformedData.slice(0,i)]);
+
+        palettePolyline.draw();
+
+        paletteMarker.importData(transformedData.slice(0,i));
+
+        paletteMarker.draw();
+
+        paletteTooltip.importData({marker: transformedData.slice(0,i), tooltip: Util.pluck(data.slice(0,i), 'gmtTime')});
+
+        paletteTooltip.draw();
+        
+        i ++;
+        
+        window.requestAnimationFrame(move);
+        
+      }
+    };
+    
+    window.requestAnimationFrame(move);
+    
+    
+    /*
+      *show gps points at once
+    */
+//    /*
+//      *create polyline
+//      *@param {String} type [compulsory]
+//      *@param {String} cacheAlgo [optional]
+//      *@param {Array} data [optional]
+//      *@color {String} type [optional]
+//      *@return {Palette} palette [Palette instance]
+//    */
+//    palettePolyline = mavas.createLayer({
+//      type: 'polyline',
+//      cacheAlgo: '9 blocks',
+//      data: [transformedData],
+//      color: 'red',
+//    });
+//    
+//    /*
+//      *create marker
+//      *@param {String} type [compulsory]
+//      *@param {Array} data [optional]
+//      *@param {Array} tooltip [optional]
+//      *@return {Palette} palette [Palette instance]
+//    */
+//    palette = mavas.createLayer({
+//      type: 'marker',
+//      data: transformedData,
+//      tooltip: Util.pluck(data, 'gmtTime'),
+//    });
+//    
+//    paletteMarker = palette.palette;
+//    paletteTooltip = palette.paletteTooltip;
+//    
+//    mavas.draw({
+//      zIndex: 100,
+//    });
+    
   };
   
   render() {
