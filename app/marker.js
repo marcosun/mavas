@@ -1,6 +1,8 @@
 import React from 'react';
 
+import Util from '../lib/mavas/util';
 import Mavas from '../lib/mavas/main';
+import data from '../lib/mavas/markerData';
 
 import Styles from './marker.css';
 
@@ -17,17 +19,14 @@ export default class Marker extends React.Component {
   };
   
   componentDidMount() {
-    let mavas, transformedData, palette,
-        data = '116.480904,39.989216;116.480957,39.989189;116.481247,39.988995;116.481407,39.988888;116.481453,39.988869;116.482574,39.988125;116.483414,39.987583;116.483467,39.987404';
+    let mavas, transformedData, paletteMarker, palettePolyline;
     
     //prepare data to this format: [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number
-    transformedData = [data.split(';').map((pointStr) => {
-      let point, result = [];
+    transformedData = [data.map((pointObj) => {
+      let result = [];
       
-      point = pointStr.split(',');
-      
-      result.push(Number(point[0]));
-      result.push(Number(point[1]));
+      result.push(pointObj.lng);
+      result.push(pointObj.lat);
       
       return result;
     })];
@@ -36,7 +35,7 @@ export default class Marker extends React.Component {
     mavas = new Mavas('map',{
       resizeEnable: true,
       zoom: 16,
-      center: [116.483467,39.987400]
+      center: [120.057926,30.183576]
     });
     //init amap layers on demand; see amap api reference
     mavas.map.plugin(['AMap.CustomLayer'], () => {});
@@ -50,13 +49,26 @@ export default class Marker extends React.Component {
       *@color {String} type [optional]
       *@return {Palette} palette [Palette instance]
     */
-    palette = mavas.createLayer({
+    paletteMarker = mavas.createLayer({
       type: 'marker',
-      cacheAlgo: '9 blocks',
       data: transformedData,
+      tooltip: [Util.pluck(data, 'gmtTime')],
     });
     
-    mavas.draw();
+    palettePolyline = mavas.createLayer({
+      type: 'polyline',
+      cacheAlgo: '9 blocks',
+      delay: {
+        interval: 100,
+        size: 100,
+      },
+      data: transformedData,
+      color: 'red',
+    });
+    
+    mavas.draw({
+      zIndex: 100,
+    });
   };
   
   render() {
