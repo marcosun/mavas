@@ -59,6 +59,7 @@ export default class Marker extends React.Component {
       *create marker
       *@param {String} type [compulsory]
       *@param {Array} data [optional]
+      *@param {Array} tooltip [optional]
       *@return {Palette} palette [Palette instance]
     */
     paletteMarker = mavas.createLayer({
