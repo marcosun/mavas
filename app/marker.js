@@ -58,10 +58,6 @@ export default class Marker extends React.Component {
     palettePolyline = mavas.createLayer({
       type: 'polyline',
       cacheAlgo: '9 blocks',
-      delay: {
-        interval: 100,
-        size: 100,
-      },
       data: transformedData,
       color: 'red',
     });
