@@ -81,7 +81,6 @@ export default class Marker extends React.Component {
     var i = 3, len = transformedData.length;
     
     var move = () => {
-      console.log(i);
       if (i < len) {
         palettePolyline.importData([transformedData.slice(0,i)]);
 
