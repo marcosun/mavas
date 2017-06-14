@@ -156,6 +156,11 @@ export default class Marker extends React.Component {
     window.requestAnimationFrame(move);
   };
   
+  clear() {
+    this.mavas.map.destroy();
+    this.componentDidMount();
+  };
+  
   render() {
     return (
       <div>
@@ -163,6 +168,7 @@ export default class Marker extends React.Component {
         <div style={{"height": "50px"}}>
           <a className="btn" onClick={this.showStaticGpsRoute.bind(this)} href="javascript:;">静态gps轨迹</a>
           <a className="btn" onClick={this.showRealTimeGpsRoute.bind(this)} href="javascript:;">动态gps轨迹</a>
+          <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
         </div>
         <div className="map-container" id="map"></div>
       </div>
