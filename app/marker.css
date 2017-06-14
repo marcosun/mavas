@@ -2,3 +2,12 @@
   height: 600px;
   width: 100%;
 }
+
+.btn {
+  margin: 0 5px;
+  padding: 2px 5px;
+  color: black;
+  border: 1px solid black;
+  border-radius: 2px;
+  text-decoration: none;
+}

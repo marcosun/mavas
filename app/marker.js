@@ -19,10 +19,8 @@ export default class Marker extends React.Component {
   };
   
   componentDidMount() {
-    let mavas, transformedData, palette, palettePolyline, paletteMarker, paletteTooltip;
-    
     //prepare data to this format: [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number
-    transformedData = data.map((pointObj) => {
+    this.transformedData = data.map((pointObj) => {
       let result = [];
       
       result.push(pointObj.lng);
@@ -32,17 +30,22 @@ export default class Marker extends React.Component {
     });
     
     //init mavas; see amap api reference
-    mavas = new Mavas('map',{
+    this.mavas = new Mavas('map',{
       resizeEnable: true,
       zoom: 16,
       center: [120.057926,30.183576]
     });
     //init amap layers on demand; see amap api reference
-    mavas.map.plugin(['AMap.CustomLayer'], () => {});
+    this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
-    /*
-      *show dynamic || real-time gps points
-    */
+  };
+  
+  /*
+    *show static gps points
+  */
+  showStaticGpsRoute() {
+    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    
     /*
       *create polyline
       *@param {String} type [compulsory]
@@ -51,10 +54,53 @@ export default class Marker extends React.Component {
       *@color {String} type [optional]
       *@return {Palette} palette [Palette instance]
     */
-    palettePolyline = mavas.createLayer({
+    palettePolyline = this.mavas.createLayer({
       type: 'polyline',
       cacheAlgo: '9 blocks',
-      data: [transformedData.slice(0,2)],
+      data: [this.transformedData],
+      color: 'red',
+    });
+
+    /*
+      *create marker
+      *@param {String} type [compulsory]
+      *@param {Array} data [optional]
+      *@param {Array} tooltip [optional]
+      *@return {Palette} palette [Palette instance]
+    */
+    palette = this.mavas.createLayer({
+      type: 'marker',
+      data: this.transformedData,
+      tooltip: Util.pluck(data, 'gmtTime'),
+    });
+
+    paletteMarker = palette.palette;
+    paletteTooltip = palette.paletteTooltip;
+
+    //see AMap.CustomLayer options
+    this.mavas.draw({
+      zIndex: 100,
+    });
+  };
+  
+  /*
+    *show dynamic || real-time gps points
+  */
+  showRealTimeGpsRoute() {
+    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    
+    /*
+      *create polyline
+      *@param {String} type [compulsory]
+      *@param {String} cacheAlgo [optional]
+      *@param {Array} data [optional]
+      *@color {String} type [optional]
+      *@return {Palette} palette [Palette instance]
+    */
+    palettePolyline = this.mavas.createLayer({
+      type: 'polyline',
+      cacheAlgo: '9 blocks',
+      data: [this.transformedData.slice(0,2)],
       color: 'red',
     });
     
@@ -65,32 +111,36 @@ export default class Marker extends React.Component {
       *@param {Array} tooltip [optional]
       *@return {Palette} palette [Palette instance]
     */
-    palette = mavas.createLayer({
+    palette = this.mavas.createLayer({
       type: 'marker',
-      data: transformedData.slice(0,2),
+      data: this.transformedData.slice(0,2),
       tooltip: Util.pluck(data.slice(0,2), 'gmtTime'),
     });
     
     paletteMarker = palette.palette;
     paletteTooltip = palette.paletteTooltip;
     
-    mavas.draw({
+    //see AMap.CustomLayer options
+    this.mavas.draw({
       zIndex: 100,
     });
     
-    var i = 3, len = transformedData.length;
+    /*
+      *draw every point at a seperate js loop cycle
+    */
+    var i = 3, len = this.transformedData.length;
     
     var move = () => {
       if (i < len) {
-        palettePolyline.importData([transformedData.slice(0,i)]);
+        palettePolyline.importData([this.transformedData.slice(0,i)]);
 
         palettePolyline.draw();
 
-        paletteMarker.importData(transformedData.slice(0,i));
+        paletteMarker.importData(this.transformedData.slice(0,i));
 
         paletteMarker.draw();
 
-        paletteTooltip.importData({marker: transformedData.slice(0,i), tooltip: Util.pluck(data.slice(0,i), 'gmtTime')});
+        paletteTooltip.importData({marker: this.transformedData.slice(0,i), tooltip: Util.pluck(data.slice(0,i), 'gmtTime')});
 
         paletteTooltip.draw();
         
@@ -101,53 +151,21 @@ export default class Marker extends React.Component {
       }
     };
     
-    window.requestAnimationFrame(move);
-    
-    
     /*
-      *show gps points at once
+      *this is the official recommanded render method
+      *performance: requestAnimationFrame > setInterval
     */
-//    /*
-//      *create polyline
-//      *@param {String} type [compulsory]
-//      *@param {String} cacheAlgo [optional]
-//      *@param {Array} data [optional]
-//      *@color {String} type [optional]
-//      *@return {Palette} palette [Palette instance]
-//    */
-//    palettePolyline = mavas.createLayer({
-//      type: 'polyline',
-//      cacheAlgo: '9 blocks',
-//      data: [transformedData],
-//      color: 'red',
-//    });
-//    
-//    /*
-//      *create marker
-//      *@param {String} type [compulsory]
-//      *@param {Array} data [optional]
-//      *@param {Array} tooltip [optional]
-//      *@return {Palette} palette [Palette instance]
-//    */
-//    palette = mavas.createLayer({
-//      type: 'marker',
-//      data: transformedData,
-//      tooltip: Util.pluck(data, 'gmtTime'),
-//    });
-//    
-//    paletteMarker = palette.palette;
-//    paletteTooltip = palette.paletteTooltip;
-//    
-//    mavas.draw({
-//      zIndex: 100,
-//    });
-    
+    window.requestAnimationFrame(move);
   };
   
   render() {
     return (
       <div>
-        <h1>This is Marker page</h1>
+        <h1>Marker Demo</h1>
+        <div style={{"height": "50px"}}>
+          <a className={Styles.btn} onClick={this.showStaticGpsRoute.bind(this)} href="javascript:;">静态gps轨迹</a>
+          <a className={Styles.btn} onClick={this.showRealTimeGpsRoute.bind(this)} href="javascript:;">动态gps轨迹</a>
+        </div>
         <div className={Styles.mapContainer} id="map"></div>
       </div>
     );
