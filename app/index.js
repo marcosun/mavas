@@ -8,6 +8,8 @@ import {
 import Polyline from './polyline';
 import Marker from './marker';
 
+import Styles from './index.css';
+
 /*
   *show Home page at root path
 */

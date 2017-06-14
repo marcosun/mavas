@@ -4,8 +4,6 @@ import Util from '../lib/mavas/util';
 import Mavas from '../lib/mavas/main';
 import data from '../lib/mavas/markerData';
 
-import Styles from './marker.css';
-
 /*
   *Map component creates a container for map
   *container size is controlled by css styles
@@ -163,10 +161,10 @@ export default class Marker extends React.Component {
       <div>
         <h1>Marker Demo</h1>
         <div style={{"height": "50px"}}>
-          <a className={Styles.btn} onClick={this.showStaticGpsRoute.bind(this)} href="javascript:;">静态gps轨迹</a>
-          <a className={Styles.btn} onClick={this.showRealTimeGpsRoute.bind(this)} href="javascript:;">动态gps轨迹</a>
+          <a className="btn" onClick={this.showStaticGpsRoute.bind(this)} href="javascript:;">静态gps轨迹</a>
+          <a className="btn" onClick={this.showRealTimeGpsRoute.bind(this)} href="javascript:;">动态gps轨迹</a>
         </div>
-        <div className={Styles.mapContainer} id="map"></div>
+        <div className="map-container" id="map"></div>
       </div>
     );
   };

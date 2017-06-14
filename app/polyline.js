@@ -4,8 +4,6 @@ import Mavas from '../lib/mavas/main';
 import Util from '../lib/mavas/util';
 import data from '../lib/mavas/busRouteData';
 
-import Styles from './polyline.css';
-
 /*
   *Map component creates a container for map
   *container size is controlled by css styles
@@ -16,13 +14,21 @@ export default class Polyline extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
+    this.state = {
+      algo: {
+        '9 blocks': true,
+        'simple': false,
+      },
+      render: {
+        'instant': true,
+        'delay': false,
+      },
+    };
   };
   
   componentDidMount() {
-    let mavas, transformedData, palette;
-    
     //prepare data to this format: [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number
-    transformedData = data.map((route) => {
+    this.transformedData = data.map((route) => {
       let len = route.length,
           prev = [0,0],
           result = [];
@@ -37,13 +43,61 @@ export default class Polyline extends React.Component {
     });
     
     //init mavas; see amap api reference
-    mavas = new Mavas('map',{
+    this.mavas = new Mavas('map',{
       resizeEnable: true,
-      zoom: 16,
+      zoom: 12,
       center: [116.483467,39.987400]
     });
     //init amap layers on demand; see amap api reference
-    mavas.map.plugin(['AMap.CustomLayer'], () => {});
+    this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
+    
+  };
+  
+  onChange(e) {
+    switch(e.target.name) {
+      case '9 blocks':
+        this.setState({
+          ...this.state,
+          algo: {
+            '9 blocks': true,
+            'simple': false,
+          },
+        });
+        break;
+      case 'simple':
+        this.setState({
+          ...this.state,
+          algo: {
+            '9 blocks': false,
+            'simple': true,
+          },
+        });
+        break;
+      case 'instant':
+        this.setState({
+          ...this.state,
+          render: {
+            'instant': true,
+            'delay': false,
+          },
+        });
+        break;
+      case 'delay':
+        this.setState({
+          ...this.state,
+          render: {
+            'instant': false,
+            'delay': true,
+          },
+        });
+        break;
+      default:
+        throw new Error('unknown error');
+    };
+  };
+  
+  draw() {
+    let palette;
     
     /*
       *create polyline
@@ -54,41 +108,45 @@ export default class Polyline extends React.Component {
       *@color {String} type [optional]
       *@return {Palette} palette [Palette instance]
     */
-    palette = mavas.createLayer({
+    palette = this.mavas.createLayer({
       type: 'polyline',
-      cacheAlgo: '9 blocks',
-      delay: {
+      cacheAlgo: this.state.algo['9 blocks'] ? '9 blocks' : 'simple',
+      delay: this.state.render.instant ? undefined : {
         interval: 100,
         size: 100,
       },
-      data: transformedData,
-      color: 'green',
+      data: this.transformedData,
+      color: 'red',
     });
     
-    mavas.draw();
+    this.mavas.draw();
+  };
+  
+  clear() {
+    this.mavas.map.destroy();
+    this.componentDidMount();
   };
   
   render() {
     return (
       <div>
-        <h1>This is Marker page</h1>
-        <div className={Styles.mapContainer} id="map"></div>
+        <h1 style={{'margin': '10px 0'}}>Polyline Demo</h1>
+        <div style={{'height': '50px'}}>
+          <div style={{'display': 'inline-block'}}>
+            <h5 style={{'margin': '5px 0'}}>算法（必选、单选）</h5>
+            <label style={{"padding": "2px 5px"}}><input name="9 blocks" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.algo['9 blocks']}></input>9 blocks</label>
+            <label style={{"padding": "2px 5px"}}><input name="simple" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.algo.simple}></input>simple</label>
+          </div>
+          <div style={{'display': 'inline-block', 'marginLeft': '100px'}}>
+            <h5 style={{'margin': '5px 0'}}>渲染方式（必选、单选）</h5>
+            <label style={{"padding": "2px 5px"}}><input name="instant" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.instant}></input>instant</label>
+            <label style={{"padding": "2px 5px"}}><input name="delay" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.delay}></input>delay</label>
+          </div>
+          <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
+          <a className="btn" onClick={this.draw.bind(this)} href="javascript:;">draw</a>
+        </div>
+        <div className="map-container" id="map"></div>
       </div>
     );
   };
 };
-
-
-
-/*
-  *polylines
-'116.481003,39.989311;116.480957,39.989265;116.480904,39.989220';
-'116.480904,39.989216;116.480957,39.989189;116.481247,39.988995;116.481407,39.988888;116.481453,39.988869;116.482574,39.988125;116.483414,39.987583;116.483467,39.987404';
-
-'116.483467,39.987400;116.483414,39.987358;116.482811,39.986820;116.482025,39.986088;116.481346,39.985489;116.481293,39.985435;116.481148,39.985275';
-
-
-'116.481148,39.985268;116.481247,39.985203;116.481270,39.985096;116.482162,39.984493;116.482498,39.984257';
-
-'116.482498,39.984253;116.482460,39.984219;116.482170,39.983971;116.481911,39.983723';
-*/
