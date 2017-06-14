@@ -1,0 +1,28 @@
+{
+  "name": "mavas",
+  "version": "0.0.1",
+  "description": "build your canvas on amap",
+  "main": "main.js",
+  "scripts": {
+    "build": "webpack -p "
+  },
+  "keywords": [
+    "map",
+    "amap",
+    "mavas",
+    "dtdream"
+  ],
+  "author": "Marco",
+  "license": "UNLICENSED",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "style-loader": "^0.18.1",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.6.1"
+  }
+}
