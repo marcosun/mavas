@@ -1,6 +1,6 @@
 {
   "name": "mavas",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "build your canvas on amap",
   "main": "main.js",
   "scripts": {
