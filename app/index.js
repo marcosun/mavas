@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Redirect,
 } from 'react-router-dom';
 
 import Polyline from './polyline';
@@ -16,6 +17,7 @@ import Styles from './index.css';
 render(
   <Router>
     <div>
+      <Route exact path='/' render={() => (<Redirect to='/marker' />)} />
       <Route exact path='/polyline' component={Polyline} />
       <Route exact path='/marker' component={Marker} />
     </div>
