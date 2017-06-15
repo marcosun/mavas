@@ -251,7 +251,7 @@ export default class Marker extends React.Component {
         <div style={{"height": "50px"}}>
           <a className="btn" onClick={this.showStaticGpsRoute.bind(this)} href="javascript:;">静态gps轨迹</a>
           <a className="btn" onClick={this.showRealTimeGpsRoute.bind(this)} href="javascript:;">动态gps轨迹</a>
-          <a className="btn" onClick={this.showRealTimeFocusGpsRoute.bind(this)} href="javascript:;">动态跟踪gps轨迹</a>
+          <a className="btn" onClick={this.showRealTimeFocusNewGpsRoute.bind(this)} href="javascript:;">动态跟踪gps轨迹</a>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
         </div>
         <div className="map-container" id="map"></div>
