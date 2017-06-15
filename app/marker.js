@@ -160,9 +160,9 @@ export default class Marker extends React.Component {
   };
   
   /*
-    *show dynamic || real-time FOCUS gps points
+    *show dynamic || real-time FOCUS on new gps points
   */
-  showRealTimeFocusGpsRoute() {
+  showRealTimeFocusNewGpsRoute() {
     let palette, palettePolyline, paletteMarker, paletteTooltip;
     
     /*
