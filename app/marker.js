@@ -64,12 +64,14 @@ export default class Marker extends React.Component {
       *@param {String} type [compulsory]
       *@param {Array} data [optional]
       *@param {Array} tooltip [optional]
+      *@param {Boolean} fit [optional: default false]
       *@return {Palette} palette [Palette instance]
     */
     palette = this.mavas.createLayer({
       type: 'marker',
       data: this.transformedData,
       tooltip: Util.pluck(data, 'gmtTime'),
+      fit: true,
     });
 
     paletteMarker = palette.palette;
