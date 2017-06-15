@@ -167,6 +167,10 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin("styles.css"),
   ],
+  
+  devServer: {
+    disableHostCheck: true
+  }
 
   /* Advanced configuration (click to show) */
 }
