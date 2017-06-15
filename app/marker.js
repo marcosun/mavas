@@ -31,7 +31,8 @@ export default class Marker extends React.Component {
     this.mavas = new Mavas('map',{
       resizeEnable: true,
       zoom: 16,
-      center: [120.057926,30.183576]
+      center: [120.057926,30.183576],
+      animateEnable: false,
     });
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
@@ -126,7 +127,7 @@ export default class Marker extends React.Component {
     });
     
     /*
-      *draw every point at a seperate js loop cycle
+      *alernate drawing canvas and calling browser refresh function
     */
     var i = 3, len = this.transformedData.length;
     
@@ -158,6 +159,86 @@ export default class Marker extends React.Component {
     window.requestAnimationFrame(move);
   };
   
+  /*
+    *show dynamic || real-time FOCUS gps points
+  */
+  showRealTimeFocusGpsRoute() {
+    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    
+    /*
+      *create polyline
+      *@param {String} type [compulsory]
+      *@param {String} cacheAlgo [optional]
+      *@param {Array} data [optional]
+      *@color {String} type [optional]
+      *@return {Palette} palette [Palette instance]
+    */
+    palettePolyline = this.mavas.createLayer({
+      type: 'polyline',
+      cacheAlgo: '9 blocks',
+      data: [this.transformedData.slice(0,2)],
+      color: 'red',
+    });
+    
+    /*
+      *create marker
+      *@param {String} type [compulsory]
+      *@param {Array} data [optional]
+      *@param {Array} tooltip [optional]
+      *@return {Palette} palette [Palette instance]
+    */
+    palette = this.mavas.createLayer({
+      type: 'marker',
+      data: this.transformedData.slice(0,2),
+      tooltip: Util.pluck(data.slice(0,2), 'gmtTime'),
+    });
+    
+    paletteMarker = palette.palette;
+    paletteTooltip = palette.paletteTooltip;
+    
+    //see AMap.CustomLayer options
+    this.mavas.draw({
+      zIndex: 100,
+    });
+    
+    /*
+      *alernate drawing canvas and calling browser refresh function
+    */
+    var i = 3, len = this.transformedData.length;
+    
+    var move = () => {
+      if (i < len) {
+        palettePolyline.importData([this.transformedData.slice(0,i)]);
+
+        palettePolyline.draw();
+
+        paletteMarker.importData(this.transformedData.slice(0,i));
+
+        paletteMarker.draw();
+
+        paletteTooltip.importData({marker: this.transformedData.slice(0,i), tooltip: Util.pluck(data.slice(0,i), 'gmtTime')});
+
+        paletteTooltip.draw();
+        
+        i ++;
+        
+        window.requestAnimationFrame(setCenter);
+        
+      }
+    };
+    
+    var setCenter = () => {
+      this.mavas.map.setCenter(new AMap.LngLat(this.transformedData[i - 1][0], this.transformedData[i - 1][1]));
+      window.requestAnimationFrame(move);
+    };
+    
+    /*
+      *this is the official recommanded render method
+      *performance: requestAnimationFrame > setInterval
+    */
+    window.requestAnimationFrame(move);
+  };
+  
   clear() {
     this.mavas.map.destroy();
     this.componentDidMount();
@@ -170,6 +251,7 @@ export default class Marker extends React.Component {
         <div style={{"height": "50px"}}>
           <a className="btn" onClick={this.showStaticGpsRoute.bind(this)} href="javascript:;">静态gps轨迹</a>
           <a className="btn" onClick={this.showRealTimeGpsRoute.bind(this)} href="javascript:;">动态gps轨迹</a>
+          <a className="btn" onClick={this.showRealTimeFocusGpsRoute.bind(this)} href="javascript:;">动态跟踪gps轨迹</a>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
         </div>
         <div className="map-container" id="map"></div>
