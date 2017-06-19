@@ -14,14 +14,25 @@ export default class Polyline extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.state = {
+    this.defaultState = {
       algo: {
-        '9 blocks': true,
+        '9 blocks': false,
         'simple': false,
       },
       render: {
-        'instant': true,
+        'instant': false,
         'delay': false,
+        'realtime': false,
+      },
+    };
+    this.state = {
+      algo: {
+        ...this.defaultState.algo,
+        '9 blocks': true,
+      },
+      render: {
+        ...this.defaultState.render,
+        'instant': true,
       },
     };
   };
@@ -46,7 +57,7 @@ export default class Polyline extends React.Component {
     this.mavas = new Mavas('map',{
       resizeEnable: true,
       zoom: 12,
-      center: [116.483467,39.987400]
+      center: [116.483467,39.987400],
     });
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
@@ -59,8 +70,8 @@ export default class Polyline extends React.Component {
         this.setState({
           ...this.state,
           algo: {
+            ...this.defaultState.algo,
             '9 blocks': true,
-            'simple': false,
           },
         });
         break;
@@ -68,7 +79,7 @@ export default class Polyline extends React.Component {
         this.setState({
           ...this.state,
           algo: {
-            '9 blocks': false,
+            ...this.defaultState.algo,
             'simple': true,
           },
         });
@@ -77,8 +88,8 @@ export default class Polyline extends React.Component {
         this.setState({
           ...this.state,
           render: {
+            ...this.defaultState.render,
             'instant': true,
-            'delay': false,
           },
         });
         break;
@@ -86,8 +97,17 @@ export default class Polyline extends React.Component {
         this.setState({
           ...this.state,
           render: {
-            'instant': false,
+            ...this.defaultState.render,
             'delay': true,
+          },
+        });
+        break;
+      case 'realtime':
+        this.setState({
+          ...this.state,
+          render: {
+            ...this.defaultState.render,
+            'realtime': true,
           },
         });
         break;
@@ -102,20 +122,24 @@ export default class Polyline extends React.Component {
     /*
       *create polyline
       *@param {String} type [compulsory]
+      *@param {String} id [optional]
+      *@param {Array} data [optional]
       *@param {String} cacheAlgo [optional]
       *@param {{interval: Number,String, size: Number,String }} delay [optional]
-      *@param {Array} data [optional]
-      *@color {String} type [optional]
+      *@param {Boolean} realtime [optional]
+      *@param {String} color [optional]
       *@return {Palette} palette [Palette instance]
     */
     palette = this.mavas.createLayer({
       type: 'polyline',
+      id: 'polyline',
+      data: this.transformedData,
       cacheAlgo: this.state.algo['9 blocks'] ? '9 blocks' : 'simple',
       delay: this.state.render.instant ? undefined : {
         interval: 100,
         size: 100,
       },
-      data: this.transformedData,
+      realtime: this.state.render.realtime,
       color: 'red',
     });
     
@@ -141,6 +165,7 @@ export default class Polyline extends React.Component {
             <h5 style={{'margin': '5px 0'}}>渲染方式（必选、单选）</h5>
             <label style={{"padding": "2px 5px"}}><input name="instant" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.instant}></input>instant</label>
             <label style={{"padding": "2px 5px"}}><input name="delay" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.delay}></input>delay</label>
+            <label style={{"padding": "2px 5px"}}><input name="realtime" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.realtime}></input>realtime</label>
           </div>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
           <a className="btn" onClick={this.draw.bind(this)} href="javascript:;">draw</a>
