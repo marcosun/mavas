@@ -90,6 +90,7 @@ export default class Marker extends React.Component {
     /*
       *create polyline
       *@param {String} type [compulsory]
+      *@param {String} id [optional]
       *@param {Array} data [optional]
       *@param {String} cacheAlgo [optional]
       *@param {Boolean} realtime [optional]
@@ -98,6 +99,7 @@ export default class Marker extends React.Component {
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
+      id: 'polyline',
       data: [this.transformedData],
       cacheAlgo: '9 blocks',
       realtime: true,
@@ -107,6 +109,7 @@ export default class Marker extends React.Component {
     /*
       *create marker
       *@param {String} type [compulsory]
+      *@param {String} id [optional]
       *@param {Array} data [optional]
       *@param {Array} tooltip [optional]
       *@param {Boolean} realtime [optional]
@@ -115,6 +118,7 @@ export default class Marker extends React.Component {
     */
     palette = this.mavas.createLayer({
       type: 'marker',
+      id: 'marker',
       data: this.transformedData,
       tooltip: Util.pluck(data, 'gmtTime'),
       realtime: true,
