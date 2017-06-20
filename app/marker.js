@@ -84,10 +84,54 @@ export default class Marker extends React.Component {
     });
   };
   
+  showRealtimeStaticGpsRoute() {
+    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    
+    /*
+      *create polyline
+      *@param {String} type [compulsory]
+      *@param {String} cacheAlgo [optional]
+      *@param {Array} data [optional]
+      *@color {String} type [optional]
+      *@return {Palette} palette [Palette instance]
+    */
+    palettePolyline = this.mavas.createLayer({
+      type: 'polyline',
+      cacheAlgo: '9 blocks',
+      data: [this.transformedData],
+      realtime: true,
+      color: 'red',
+    });
+
+    /*
+      *create marker
+      *@param {String} type [compulsory]
+      *@param {Array} data [optional]
+      *@param {Array} tooltip [optional]
+      *@param {Boolean} fit [optional: default false]
+      *@return {Palette} palette [Palette instance]
+    */
+    palette = this.mavas.createLayer({
+      type: 'marker',
+      data: this.transformedData,
+      tooltip: Util.pluck(data, 'gmtTime'),
+      realtime: true,
+      fit: true,
+    });
+
+    paletteMarker = palette.palette;
+    paletteTooltip = palette.paletteTooltip;
+
+    //see AMap.CustomLayer options
+    this.mavas.draw({
+      zIndex: 100,
+    });
+  };
+  
   /*
     *show dynamic || real-time gps points
   */
-  showRealTimeGpsRoute() {
+  showDynamicGpsRoute() {
     let palette, palettePolyline, paletteMarker, paletteTooltip;
     
     /*
@@ -162,7 +206,7 @@ export default class Marker extends React.Component {
   /*
     *show dynamic || real-time FOCUS on new gps points
   */
-  showRealTimeFocusNewGpsRoute() {
+  showDynamicFocusNewGpsRoute() {
     let palette, palettePolyline, paletteMarker, paletteTooltip;
     
     /*
@@ -250,8 +294,9 @@ export default class Marker extends React.Component {
         <h1>Marker Demo</h1>
         <div style={{"height": "50px"}}>
           <a className="btn" onClick={this.showStaticGpsRoute.bind(this)} href="javascript:;">静态gps轨迹</a>
-          <a className="btn" onClick={this.showRealTimeGpsRoute.bind(this)} href="javascript:;">动态gps轨迹</a>
-          <a className="btn" onClick={this.showRealTimeFocusNewGpsRoute.bind(this)} href="javascript:;">动态跟踪gps轨迹</a>
+          <a className="btn" onClick={this.showRealtimeStaticGpsRoute.bind(this)} href="javascript:;">静态实时重绘gps轨迹</a>
+          <a className="btn" onClick={this.showDynamicGpsRoute.bind(this)} href="javascript:;">动态gps轨迹</a>
+          <a className="btn" onClick={this.showDynamicFocusNewGpsRoute.bind(this)} href="javascript:;">动态跟踪gps轨迹</a>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
         </div>
         <div className="map-container" id="map"></div>
