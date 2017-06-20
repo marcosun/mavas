@@ -65,14 +65,12 @@ export default class Marker extends React.Component {
       *@param {String} type [compulsory]
       *@param {Array} data [optional]
       *@param {Array} tooltip [optional]
-      *@param {Boolean} fit [optional: default false]
       *@return {Palette} palette [Palette instance]
     */
     palette = this.mavas.createLayer({
       type: 'marker',
       data: this.transformedData,
       tooltip: Util.pluck(data, 'gmtTime'),
-      fit: true,
     });
 
     paletteMarker = palette.palette;
@@ -82,6 +80,9 @@ export default class Marker extends React.Component {
     this.mavas.draw({
       zIndex: 100,
     });
+    
+    //set correct centre and zoom to cover all data points of a particular palette
+    this.mavas.setFit(paletteMarker);
   };
   
   showRealtimeStaticGpsRoute() {
@@ -113,7 +114,6 @@ export default class Marker extends React.Component {
       *@param {Array} data [optional]
       *@param {Array} tooltip [optional]
       *@param {Boolean} realtime [optional]
-      *@param {Boolean} fit [optional: default false]
       *@return {Palette} palette [Palette instance]
     */
     palette = this.mavas.createLayer({
@@ -122,7 +122,6 @@ export default class Marker extends React.Component {
       data: this.transformedData,
       tooltip: Util.pluck(data, 'gmtTime'),
       realtime: true,
-      fit: true,
     });
 
     paletteMarker = palette.palette;
@@ -132,6 +131,9 @@ export default class Marker extends React.Component {
     this.mavas.draw({
       zIndex: 100,
     });
+    
+    //set correct centre and zoom to cover all data points of a particular palette
+    this.mavas.setFit(paletteMarker);
   };
   
   /*
