@@ -48,15 +48,15 @@ export default class Marker extends React.Component {
     /*
       *create polyline
       *@param {String} type [compulsory]
-      *@param {String} cacheAlgo [optional]
       *@param {Array} data [optional]
-      *@color {String} type [optional]
+      *@param {String} cacheAlgo [optional]
+      *@param {String} color [optional]
       *@return {Palette} palette [Palette instance]
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      cacheAlgo: '9 blocks',
       data: [this.transformedData],
+      cacheAlgo: '9 blocks',
       color: 'red',
     });
 
@@ -90,15 +90,16 @@ export default class Marker extends React.Component {
     /*
       *create polyline
       *@param {String} type [compulsory]
-      *@param {String} cacheAlgo [optional]
       *@param {Array} data [optional]
-      *@color {String} type [optional]
+      *@param {String} cacheAlgo [optional]
+      *@param {Boolean} realtime [optional]
+      *@param {String} color [optional]
       *@return {Palette} palette [Palette instance]
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      cacheAlgo: '9 blocks',
       data: [this.transformedData],
+      cacheAlgo: '9 blocks',
       realtime: true,
       color: 'red',
     });
@@ -108,6 +109,7 @@ export default class Marker extends React.Component {
       *@param {String} type [compulsory]
       *@param {Array} data [optional]
       *@param {Array} tooltip [optional]
+      *@param {Boolean} realtime [optional]
       *@param {Boolean} fit [optional: default false]
       *@return {Palette} palette [Palette instance]
     */
@@ -137,15 +139,15 @@ export default class Marker extends React.Component {
     /*
       *create polyline
       *@param {String} type [compulsory]
-      *@param {String} cacheAlgo [optional]
       *@param {Array} data [optional]
-      *@color {String} type [optional]
+      *@param {String} cacheAlgo [optional]
+      *@param {String} color [optional]
       *@return {Palette} palette [Palette instance]
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      cacheAlgo: '9 blocks',
       data: [this.transformedData.slice(0,2)],
+      cacheAlgo: '9 blocks',
       color: 'red',
     });
     
@@ -212,15 +214,15 @@ export default class Marker extends React.Component {
     /*
       *create polyline
       *@param {String} type [compulsory]
-      *@param {String} cacheAlgo [optional]
       *@param {Array} data [optional]
-      *@color {String} type [optional]
+      *@param {String} cacheAlgo [optional]
+      *@param {String} color [optional]
       *@return {Palette} palette [Palette instance]
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      cacheAlgo: '9 blocks',
       data: [this.transformedData.slice(0,2)],
+      cacheAlgo: '9 blocks',
       color: 'red',
     });
     
