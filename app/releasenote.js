@@ -12,6 +12,13 @@ export default class Polyline extends React.Component {
       <div>
         <h1>Mavas Release Note</h1>
         <div>
+          <h2>Pre Release Version 0.0.3</h2>
+          <em>Scheduled July 27, 2017</em>
+          <ol>
+            <li>External canvas images can be intergrated with palettes by calling createLayer with type property equals to 'external'</li>
+          </ol>
+        </div>
+        <div>
           <h2>Version 0.0.2</h2>
           <em>July 20, 2017</em>
           <ol>
