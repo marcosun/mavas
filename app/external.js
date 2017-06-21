@@ -45,22 +45,11 @@ export default class External extends React.Component {
   };
   
   /*
-    *show static gps points
+    *show fixed external image on top left corner
   */
-  showPolylineWithEcharts() {
-    let palette, canvas, myChart, option, externalPalette;
+  showStaticGuage() {
+    let palette, canvas, myChart, option;
     
-    /*
-      *create polyline
-      *@param {String} type [compulsory]
-      *@param {String} id [optional]
-      *@param {Array} data [optional]
-      *@param {String} cacheAlgo [optional]
-      *@param {{interval: Number,String, size: Number,String }} delay [optional]
-      *@param {Boolean} realtime [optional]
-      *@param {String} color [optional]
-      *@return {Palette} palette [Palette instance]
-    */
     palette = this.mavas.createLayer({
       type: 'polyline',
       id: 'polyline',
@@ -71,9 +60,7 @@ export default class External extends React.Component {
     });
     
     //create canvas element
-    canvas = document.createElement('canvas');
-    canvas.width = 200;
-    canvas.height = 200;
+    canvas = document.getElementById('static-guage');
     
     //draw canvas with 3rd party plugins such as Echarts by Baidu
     myChart = echarts.init(canvas);
@@ -100,25 +87,9 @@ export default class External extends React.Component {
     option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
     myChart.setOption(option, true);
     
-    /*
-      *create external layer
-      *@param {String} type [compulsory]
-      *@param {String} id [optional]
-      *@param {Canvas} image [DOM canvas image]
-      *@return {Palette} palette [Palette instance]
-    */
-    externalPalette = this.mavas.createLayer({
-      type: 'external',
-      id: 'external',
-      image: canvas,
-    });
-    
     setInterval(function () {
       option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
       myChart.setOption(option, true);
-
-      //use drawImage api to update canvas
-      externalPalette.drawImage(canvas);
     },2000);
 
     //see AMap.CustomLayer options
@@ -137,11 +108,13 @@ export default class External extends React.Component {
       <div>
         <h1>Intergrating with External Images Demo</h1>
         <div style={{"height": "50px"}}>
-          <a className="btn" onClick={this.showPolylineWithEcharts.bind(this)} href="javascript:;">polyline w/ echarts</a>
+          <a className="btn" onClick={this.showStaticGuage.bind(this)} href="javascript:;">StaticGuage</a>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
         </div>
-        <div className="map-container" id="map"></div>
-        <div className="map-container" id="main"></div>
+        <div style={{"position": "relative"}}>
+          <div className="map-container" id="map"></div>
+          <div id="static-guage" style={{"position": "absolute", "bottom": "0", "right": "0", "width": "300px", "height": "300px"}}></div>
+        </div>
       </div>
     );
   };
