@@ -135,7 +135,7 @@ export default class External extends React.Component {
   render() {
     return (
       <div>
-        <h1>Marker Demo</h1>
+        <h1>Intergrating with External Images Demo</h1>
         <div style={{"height": "50px"}}>
           <a className="btn" onClick={this.showPolylineWithEcharts.bind(this)} href="javascript:;">polyline w/ echarts</a>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
