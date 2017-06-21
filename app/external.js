@@ -60,7 +60,13 @@ export default class External extends React.Component {
     });
     
     //create canvas element
-    canvas = document.getElementById('static-guage');
+    canvas = document.createElement('canvas');
+    canvas.className = 'static-guage';
+    canvas.style.position = 'absolute';
+    canvas.style.bottom = '0';
+    canvas.style.right = '0';
+    canvas.width = 300;
+    canvas.height = 300;
     
     //draw canvas with 3rd party plugins such as Echarts by Baidu
     myChart = echarts.init(canvas);
@@ -87,6 +93,8 @@ export default class External extends React.Component {
     option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
     myChart.setOption(option, true);
     
+    document.getElementsByClassName('amap-maps')[0].append(canvas);
+    
     setInterval(function () {
       option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
       myChart.setOption(option, true);
@@ -111,10 +119,7 @@ export default class External extends React.Component {
           <a className="btn" onClick={this.showStaticGuage.bind(this)} href="javascript:;">StaticGuage</a>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
         </div>
-        <div style={{"position": "relative"}}>
-          <div className="map-container" id="map"></div>
-          <div id="static-guage" style={{"position": "absolute", "bottom": "0", "right": "0", "width": "300px", "height": "300px"}}></div>
-        </div>
+        <div className="map-container" id="map"></div>
       </div>
     );
   };
