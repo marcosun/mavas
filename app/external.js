@@ -124,9 +124,9 @@ export default class External extends React.Component {
   
   
   /*
-    *show static gps points
+    *show fixed location gps points
   */
-  showFixedLngLatGuage() {
+  showFixedLocationGuage() {
     let palette, canvas, myChart, option, externalPalette;
     
     palette = this.mavas.createLayer({
@@ -174,14 +174,14 @@ export default class External extends React.Component {
       *@param {String} type [compulsory]
       *@param {String} id [optional]
       *@param {Canvas} image [DOM canvas image]
-      *@param {[lng, lat]} center [lng: Number, lat: Number]
+      *@param {[lng, lat]} position [lng: Number, lat: Number]
       *@return {Palette} palette [Palette instance]
     */
     externalPalette = this.mavas.createLayer({
-      type: 'external',
-      id: 'fixed-guage',
+      type: 'fixedLocationExternal',
+      id: 'fixed-location-guage',
       image: canvas,
-      center: [116.483467, 39.987400],
+      position: [116.483467, 39.987400],
     });
     
     setInterval(function () {
@@ -204,7 +204,7 @@ export default class External extends React.Component {
         <h1>Intergrating with External Images Demo</h1>
         <div style={{"height": "50px"}}>
           <a className="btn" onClick={this.showFixedScreenGuage.bind(this)} href="javascript:;">FixedScreenGuage</a>
-          <a className="btn" onClick={this.showFixedLngLatGuage.bind(this)} href="javascript:;">FixedLngLatGuage</a>
+          <a className="btn" onClick={this.showFixedLocationGuage.bind(this)} href="javascript:;">FixedLocationGuage</a>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
         </div>
         <div className="map-container" id="map"></div>
