@@ -59,7 +59,7 @@ export default class External extends React.Component {
       color: 'red',
     });
     
-    //create canvas element
+    //create canvas element for echarts
     canvas = document.createElement('canvas');
     canvas.id = 'fixed-screen-guage';
     canvas.width = 300;
@@ -90,23 +90,22 @@ export default class External extends React.Component {
     option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
     myChart.setOption(option, true);
     
-//    document.getElementsByClassName('amap-maps')[0].append(canvas);
-    
     /*
       *create external layer
       *@param {String} type [compulsory]
       *@param {String} id [optional]
       *@param {Canvas} image [DOM canvas image]
-      *@param {String} position [optional: top, topright, default to topright]
+      *@param {String or Array} position [optional: keywords such as top, or an Array indicating the postion of top left corner such as [0, 0] === 'topleft', default to topright]
       *@return {Palette} palette [Palette instance]
     */
     externalPalette = this.mavas.createLayer({
       type: 'fixedScreenExternal',
       id: 'fixed-screen-guage',
       image: canvas,
-      position: 'center',
+      position: 'topleft',//[10, 10]
     });
     
+    //update guage
     setInterval(function () {
       option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
       myChart.setOption(option, true);
