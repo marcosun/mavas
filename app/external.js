@@ -45,10 +45,10 @@ export default class External extends React.Component {
   };
   
   /*
-    *show fixed external image on top left corner
+    *show fixed external image on somewhere on the screen
   */
-  showStaticGuage() {
-    let palette, canvas, myChart, option;
+  showFixedScreenGuage() {
+    let palette, canvas, myChart,  option, externalPalette;
     
     palette = this.mavas.createLayer({
       type: 'polyline',
@@ -61,10 +61,7 @@ export default class External extends React.Component {
     
     //create canvas element
     canvas = document.createElement('canvas');
-    canvas.id = 'static-guage';
-    canvas.style.position = 'absolute';
-    canvas.style.bottom = '0';
-    canvas.style.right = '0';
+    canvas.id = 'fixed-screen-guage';
     canvas.width = 300;
     canvas.height = 300;
     
@@ -93,7 +90,22 @@ export default class External extends React.Component {
     option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
     myChart.setOption(option, true);
     
-    document.getElementsByClassName('amap-maps')[0].append(canvas);
+//    document.getElementsByClassName('amap-maps')[0].append(canvas);
+    
+    /*
+      *create external layer
+      *@param {String} type [compulsory]
+      *@param {String} id [optional]
+      *@param {Canvas} image [DOM canvas image]
+      *@param {String} position [optional: top, topright, default to topright]
+      *@return {Palette} palette [Palette instance]
+    */
+    externalPalette = this.mavas.createLayer({
+      type: 'fixedScreenExternal',
+      id: 'fixed-screen-guage',
+      image: canvas,
+      position: 'center',
+    });
     
     setInterval(function () {
       option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
@@ -192,7 +204,7 @@ export default class External extends React.Component {
       <div>
         <h1>Intergrating with External Images Demo</h1>
         <div style={{"height": "50px"}}>
-          <a className="btn" onClick={this.showStaticGuage.bind(this)} href="javascript:;">StaticGuage</a>
+          <a className="btn" onClick={this.showFixedScreenGuage.bind(this)} href="javascript:;">FixedScreenGuage</a>
           <a className="btn" onClick={this.showFixedLngLatGuage.bind(this)} href="javascript:;">FixedLngLatGuage</a>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
         </div>
