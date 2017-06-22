@@ -15,7 +15,8 @@ export default class Polyline extends React.Component {
           <h2>Pre Release Version 0.0.3</h2>
           <em>Scheduled July 27, 2017</em>
           <ol>
-            <li>External canvas images can be intergrated with palettes by calling createLayer with type property equals to 'external'</li>
+            <li>Place an external canvas that fixed on somewhere on screen by calling createLayer with type property equals to 'fixedScreenExternal'</li>
+            <li>Place an external canvas that fixed on a geographical location by calling createLayer with type property equals to 'fixedScreenExternal'</li>
           </ol>
         </div>
         <div>
