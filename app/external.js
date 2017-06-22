@@ -36,7 +36,7 @@ export default class External extends React.Component {
     //init mavas; see amap api reference
     this.mavas = new Mavas('map',{
       resizeEnable: true,
-      zoom: 12,
+      zoom: 16,
       center: [116.483467,39.987400],
     });
     //init amap layers on demand; see amap api reference
@@ -61,7 +61,7 @@ export default class External extends React.Component {
     
     //create canvas element
     canvas = document.createElement('canvas');
-    canvas.className = 'static-guage';
+    canvas.id = 'static-guage';
     canvas.style.position = 'absolute';
     canvas.style.bottom = '0';
     canvas.style.right = '0';
@@ -111,12 +111,89 @@ export default class External extends React.Component {
     this.componentDidMount();
   };
   
+  
+  /*
+    *show static gps points
+  */
+  showFixedLngLatGuage() {
+    let palette, canvas, myChart, option, externalPalette;
+    
+    palette = this.mavas.createLayer({
+      type: 'polyline',
+      id: 'polyline',
+      data: this.transformedData,
+      cacheAlgo: '9 blocks',
+      realtime: true,
+      color: 'red',
+    });
+    
+    //create canvas element
+    canvas = document.createElement('canvas');
+    canvas.width = 300;
+    canvas.height = 300;
+    
+    //draw canvas with 3rd party plugins such as Echarts by Baidu
+    myChart = echarts.init(canvas);
+    option = {
+      tooltip : {
+        formatter: "{a} <br/>{b} : {c}%",
+      },
+      toolbox: {
+        feature: {
+          restore: {},
+          saveAsImage: {},
+        },
+      },
+      series: [
+        {
+          name: '业务指标',
+          type: 'gauge',
+          detail: {formatter:'{value}%'},
+          data: [{value: 50, name: '完成率'}],
+        },
+      ],
+      animation: false,
+    };
+
+    option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+    myChart.setOption(option, true);
+    
+    /*
+      *create external layer
+      *@param {String} type [compulsory]
+      *@param {String} id [optional]
+      *@param {Canvas} image [DOM canvas image]
+      *@param {[lng, lat]} center [lng: Number, lat: Number]
+      *@return {Palette} palette [Palette instance]
+    */
+    externalPalette = this.mavas.createLayer({
+      type: 'external',
+      id: 'fixed-guage',
+      image: canvas,
+      center: [116.483467, 39.987400],
+    });
+    
+    setInterval(function () {
+      option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+      myChart.setOption(option, true);
+
+      //use drawImage api to update canvas
+      externalPalette.drawImage(canvas);
+    },2000);
+
+    //see AMap.CustomLayer options
+    this.mavas.draw({
+      zIndex: 100,
+    });
+  };
+  
   render() {
     return (
       <div>
         <h1>Intergrating with External Images Demo</h1>
         <div style={{"height": "50px"}}>
           <a className="btn" onClick={this.showStaticGuage.bind(this)} href="javascript:;">StaticGuage</a>
+          <a className="btn" onClick={this.showFixedLngLatGuage.bind(this)} href="javascript:;">FixedLngLatGuage</a>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
         </div>
         <div className="map-container" id="map"></div>
