@@ -10,6 +10,7 @@ import Polyline from './polyline';
 import Marker from './marker';
 import External from './external';
 import ReleaseNote from './releasenote';
+import BusTicketSummary from './busTicketSummary';
 
 import Styles from './index.css';
 
@@ -24,6 +25,7 @@ render(
       <Route exact path='/marker' component={Marker} />
       <Route exact path='/external' component={External} />
       <Route exact path='/releasenote' component={ReleaseNote} />
+      <Route exact path='/busTicketSummary' component={BusTicketSummary} />
     </div>
   </Router>,
   document.getElementById('app')
