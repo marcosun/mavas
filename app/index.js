@@ -11,6 +11,7 @@ import Marker from './marker';
 import External from './external';
 import ReleaseNote from './releasenote';
 import BusTicketSummary from './busTicketSummary';
+import OriginDestinationSummary from './originDestinationSummary';
 
 import Styles from './index.css';
 
@@ -26,6 +27,7 @@ render(
       <Route exact path='/external' component={External} />
       <Route exact path='/releasenote' component={ReleaseNote} />
       <Route exact path='/busTicketSummary' component={BusTicketSummary} />
+      <Route exact path='/originDestinationSummary' component={OriginDestinationSummary} />
     </div>
   </Router>,
   document.getElementById('app')
