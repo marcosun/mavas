@@ -274,9 +274,8 @@ export default class BusTicketSummary extends React.Component {
     request.onreadystatechange = () => {
       if (request.readyState === 4 && request.status === 200){
         mockData = JSON.parse(request.response);
+        this.draw();
       };
-      
-      this.draw();
     };
   };
   

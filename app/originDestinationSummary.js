@@ -1677,14 +1677,14 @@ export default class OriginDestinationSummary extends React.Component {
     request.onreadystatechange = () => {
       if (request.readyState === 4 && request.status === 200){
         mockData = JSON.parse(request.response);
+        console.log('draw');
+        this.draw();
       };
-      
-      this.draw();
     };
   };
   
   draw() {
-    let polylinePalette, markerPalette;
+    let palette, polylinePalette, markerPalette, tooltipPalette;
     
     this.dataTransformation();
     
@@ -1693,15 +1693,44 @@ export default class OriginDestinationSummary extends React.Component {
       id: 'polyline',
       data: this.data,
       realtime: true,
+      color: 'red',
     });
     
-//    markerPalette = this.mavas.createLayer({
-//      type: 'marker',
-//      id: 'marker',
-//      data: this.data,
-//    });
+    palette = this.mavas.createLayer({
+      type: 'marker',
+      id: 'marker',
+      data: (() => {
+        let result = [];
+        
+        this.data.forEach((currentLine) => {
+          result.push(currentLine[0]);
+          result.push(currentLine[1]);
+        });
+        
+        return result;
+      })(),
+      tooltip: (() => {
+        let result = [];
+        
+        let startStation = Util.pluck(mockData, 'startStation');
+        let endStation = Util.pluck(mockData, 'endStation');
+        let num = Util.pluck(mockData, 'num');
+        
+        for(let i = 0, len = startStation.length; i < len; i++) {
+          result.push(`起始站：${startStation[i]}，人数：${num[i]}`);
+          result.push(`终点站：${endStation[i]}，人数：${num[i]}`);
+        };
+        
+        return result;
+      })(),
+    });
     
-    this.mavas.draw();
+    markerPalette = palette.palette;
+    tooltipPalette = palette.paletteTooltip;
+    
+    this.mavas.draw({
+      zIndex: 150,
+    });
   };
   
   dataTransformation() {
