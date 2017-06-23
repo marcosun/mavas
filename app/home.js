@@ -25,7 +25,6 @@ export default class Home extends React.Component {
           <li><Link to="/phonePaySummary">bus phone pay summary 公交车无线支付统计</Link></li>
           <li><Link to="/originDestinationSummary">origin destination summary 交通量调查</Link></li>
           <li><Link to="/heatmap">heatmap 无线支付热力图</Link></li>
-          
         </ul>
       </div>
     );
