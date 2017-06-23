@@ -4,7 +4,7 @@ import echarts from 'echarts';
 import Mavas from '../lib/mavas/main';
 import Util from '../lib/mavas/util';
 
-const data = [
+let mockData = [
     {
         "id": "594bae87eb98535d8ccf5451",
         "startStation": "汽车北站",
@@ -1659,19 +1659,7 @@ export default class OriginDestinationSummary extends React.Component {
     this.props = props;
   };
   
-  dataTransformation() {
-    this.data = [];
-    
-    data.forEach((currentRoute) => {
-      this.data.push([[currentRoute.startLocation.x, currentRoute.startLocation.y], [currentRoute.endLocation.x, currentRoute.endLocation.y]]);
-    });
-    
-    return this.data;
-  };
-  
   componentDidMount() {
-    let palette;
-    
     //init mavas; see amap api reference
     this.mavas = new Mavas('map',{
       resizeEnable: true,
@@ -1682,16 +1670,48 @@ export default class OriginDestinationSummary extends React.Component {
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
+    var request = new XMLHttpRequest();
+    request.open('GET', 'http://10.88.1.227:8080/od', true);
+    request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    request.send();
+    request.onreadystatechange = () => {
+      if (request.readyState === 4 && request.status === 200){
+        mockData = JSON.parse(request.response);
+      };
+      
+      this.draw();
+    };
+  };
+  
+  draw() {
+    let polylinePalette, markerPalette;
+    
     this.dataTransformation();
     
-    palette = this.mavas.createLayer({
+    polylinePalette = this.mavas.createLayer({
       type: 'polyline',
       id: 'polyline',
       data: this.data,
       realtime: true,
     });
     
+//    markerPalette = this.mavas.createLayer({
+//      type: 'marker',
+//      id: 'marker',
+//      data: this.data,
+//    });
+    
     this.mavas.draw();
+  };
+  
+  dataTransformation() {
+    this.data = [];
+    
+    mockData.forEach((currentRoute) => {
+      this.data.push([[currentRoute.startLocation.x, currentRoute.startLocation.y], [currentRoute.endLocation.x, currentRoute.endLocation.y]]);
+    });
+    
+    return this.data;
   };
   
   render() {

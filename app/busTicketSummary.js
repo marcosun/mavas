@@ -3,7 +3,7 @@ import echarts from 'echarts';
 
 import Util from '../lib/mavas/util';
 
-const data = {
+let mockData = {
     "alipay": [
         {
             "date": "2017-06-06",
@@ -267,6 +267,20 @@ export default class BusTicketSummary extends React.Component {
   };
   
   componentDidMount() {
+    var request = new XMLHttpRequest();
+    request.open('POST', 'http://10.88.1.227:8080/trend', true);
+    request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    request.send('startDate=2017-06-06&endDate=2017-06-23');
+    request.onreadystatechange = () => {
+      if (request.readyState === 4 && request.status === 200){
+        mockData = JSON.parse(request.response);
+      };
+      
+      this.draw();
+    };
+  };
+  
+  draw() {
     let canvas, myChart, option;
     
     canvas = document.getElementById('canvas');
@@ -280,7 +294,7 @@ export default class BusTicketSummary extends React.Component {
             trigger: 'axis',
         },
         legend: {
-            data: Object.keys(data),
+            data: Object.keys(mockData),
         },
         grid: {
             left: '3%',
@@ -296,7 +310,7 @@ export default class BusTicketSummary extends React.Component {
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: Util.pluck(data.alipay, 'date'),
+            data: Util.pluck(mockData.alipay, 'date'),
         },
         yAxis: {
             type: 'value',
@@ -306,40 +320,30 @@ export default class BusTicketSummary extends React.Component {
                 name:'alipay',
                 type:'line',
                 smooth: true,
-                data: Util.pluck(data.alipay, 'count'),
+                data: Util.pluck(mockData.alipay, 'count'),
             },
             {
                 name:'virtualcard',
                 type:'line',
                 smooth: true,
-                data: Util.pluck(data.virtualcard, 'count'),
+                data: Util.pluck(mockData.virtualcard, 'count'),
             },
             {
                 name:'unionpay',
                 type:'line',
                 smooth: true,
-                data: Util.pluck(data.unionpay, 'count'),
+                data: Util.pluck(mockData.unionpay, 'count'),
             },
             {
                 name:'all',
                 type:'line',
                 smooth: true,
-                data: Util.pluck(data.all, 'count'),
+                data: Util.pluck(mockData.all, 'count'),
             },
         ],
     };
     
     myChart.setOption(option, true);
-    
-//    var request = new XMLHttpRequest();
-//    request.open('POST', 'http://10.88.1.227:8080/trend', true);
-//    request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-//    request.send('?startDate=2017-06-06&endDate=2017-06-23');
-//    request.onreadystatechange = () => {
-//      if (request.readyState === 4 && request.status === 200){
-//        debugger;
-//      };
-//    };
   };
   
   render() {
