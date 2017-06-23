@@ -68,7 +68,7 @@ export default class Heatmap extends React.Component {
   render() {
     return (
       <div>
-        <h1>Heatmap 公交车站无限支付方式统计</h1>
+        <h1>Heatmap 无线支付热力图</h1>
         <strong>请求API状态：<em>{this.state.isFetching ? '正在请求' : '请求成功'}</em></strong>
         <div className="map-container" id="map"></div>
       </div>

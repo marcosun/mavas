@@ -3,7 +3,7 @@ import echarts from 'echarts';
 
 import Util from '../lib/mavas/util';
 
-export default class BusTicketSummary extends React.Component {
+export default class PhonePaySummary extends React.Component {
   
   constructor(props) {
     super(props);
@@ -36,7 +36,7 @@ export default class BusTicketSummary extends React.Component {
   draw() {
     this.option = {
         title: {
-            text: '公交车移动支付统计',
+            text: '公交车无线支付统计',
         },
         tooltip: {
             trigger: 'axis',
@@ -97,7 +97,7 @@ export default class BusTicketSummary extends React.Component {
   render() {
     return (
       <div>
-        <h1>Bus Ticket Summary</h1>
+        <h1>Bus Phone Pay Summary</h1>
         <strong>请求API状态：<em>{this.state.isFetching ? '正在请求' : '请求成功'}</em></strong>
         <div id="canvas" style={{"width": "100%", "height": "600px"}}></div>
       </div>
