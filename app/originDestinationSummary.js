@@ -1672,12 +1672,10 @@ export default class OriginDestinationSummary extends React.Component {
     
     var request = new XMLHttpRequest();
     request.open('GET', 'http://10.88.1.227:8080/od', true);
-    request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     request.send();
     request.onreadystatechange = () => {
       if (request.readyState === 4 && request.status === 200){
         mockData = JSON.parse(request.response);
-        console.log('draw');
         this.draw();
       };
     };
@@ -1746,7 +1744,7 @@ export default class OriginDestinationSummary extends React.Component {
   render() {
     return (
       <div>
-        <h1>Bus Ticket Summary</h1>
+        <h1>Origin Destination Summary</h1>
         <div className="map-container" id="map"></div>
       </div>
     );
