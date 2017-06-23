@@ -14,13 +14,18 @@ export default class Home extends React.Component {
       <div>
         <h1>Index</h1>
         <ul>
-          <li><Link to="/polyline">polyline曲线图</Link></li>
-          <li><Link to="/marker">marker气泡图</Link></li>
-          <li><Link to="/external">external第三方图像集成</Link></li>
-          <li><Link to="/busTicketSummary">busTicketSummary无限公交支付统计</Link></li>
-          <li><Link to="/originDestinationSummary">originDestinationSummary交通量调查</Link></li>
-          <li><Link to="/heatmap">heatmap热力图</Link></li>
+          <h2>Mavas Demo</h2>
+          <li><Link to="/polyline">polyline 曲线图</Link></li>
+          <li><Link to="/marker">marker 气泡图</Link></li>
+          <li><Link to="/external">external 第三方图像集成</Link></li>
+          <br />
           <li><Link to="/releasenote">releasenote</Link></li>
+          <br />
+          <h2>Public Transport Dept. Demo 公交云需求</h2>
+          <li><Link to="/busTicketSummary">busTicketSummary 无线支付统计</Link></li>
+          <li><Link to="/originDestinationSummary">originDestinationSummary 交通量调查</Link></li>
+          <li><Link to="/heatmap">heatmap 无线支付热力图</Link></li>
+          
         </ul>
       </div>
     );
