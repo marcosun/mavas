@@ -2,7 +2,7 @@ import React from 'react';
 
 import Mavas from '../lib/mavas/main';
 import Util from '../lib/mavas/util';
-import data from '../lib/mavas/busRouteData';
+import data from './mockData/busRouteData';
 
 /*
   *Map component creates a container for map

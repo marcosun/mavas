@@ -2,7 +2,7 @@ import React from 'react';
 
 import Util from '../lib/mavas/util';
 import Mavas from '../lib/mavas/main';
-import data from '../lib/mavas/markerData';
+import data from './mockData/markerData';
 
 /*
   *Map component creates a container for map
