@@ -12,6 +12,7 @@ import External from './external';
 import ReleaseNote from './releasenote';
 import BusTicketSummary from './busTicketSummary';
 import OriginDestinationSummary from './originDestinationSummary';
+import Heatmap from './heatmap';
 
 import Styles from './index.css';
 
@@ -28,6 +29,7 @@ render(
       <Route exact path='/releasenote' component={ReleaseNote} />
       <Route exact path='/busTicketSummary' component={BusTicketSummary} />
       <Route exact path='/originDestinationSummary' component={OriginDestinationSummary} />
+      <Route exact path='/heatmap' component={Heatmap} />
     </div>
   </Router>,
   document.getElementById('app')
