@@ -63,13 +63,15 @@ export default class Marker extends React.Component {
     /*
       *create marker
       *@param {String} type [compulsory]
-      *@param {Array} data [optional]
+      *@param {location, icon} data [optional: location is an array of marker locations, icon is array of canvases for marker icons]
       *@param {Array} tooltip [optional]
       *@return {Palette} palette [Palette instance]
     */
     palette = this.mavas.createLayer({
       type: 'marker',
-      data: this.transformedData,
+      data: {
+        location: this.transformedData,
+      },
       tooltip: Util.pluck(data, 'gmtTime'),
     });
 
@@ -84,7 +86,7 @@ export default class Marker extends React.Component {
     //set correct centre and zoom to cover all data points of a particular palette
     this.mavas.setFit(paletteMarker);
   };
-  
+
   showRealtimeStaticGpsRoute() {
     let palette, palettePolyline, paletteMarker, paletteTooltip;
     
@@ -111,7 +113,7 @@ export default class Marker extends React.Component {
       *create marker
       *@param {String} type [compulsory]
       *@param {String} id [optional]
-      *@param {Array} data [optional]
+      *@param {location, icon} data [optional: location is an array of marker locations, icon is array of canvases for marker icons]
       *@param {Array} tooltip [optional]
       *@param {Boolean} realtime [optional]
       *@return {Palette} palette [Palette instance]
@@ -119,7 +121,9 @@ export default class Marker extends React.Component {
     palette = this.mavas.createLayer({
       type: 'marker',
       id: 'marker',
-      data: this.transformedData,
+      data: {
+        location: this.transformedData,
+      },
       tooltip: Util.pluck(data, 'gmtTime'),
       realtime: true,
     });
@@ -160,13 +164,15 @@ export default class Marker extends React.Component {
     /*
       *create marker
       *@param {String} type [compulsory]
-      *@param {Array} data [optional]
+      *@param {location, icon} data [optional: location is an array of marker locations, icon is array of canvases for marker icons]
       *@param {Array} tooltip [optional]
       *@return {Palette} palette [Palette instance]
     */
     palette = this.mavas.createLayer({
       type: 'marker',
-      data: this.transformedData.slice(0,2),
+      data: {
+        location: this.transformedData.slice(0,2),
+      },
       tooltip: Util.pluck(data.slice(0,2), 'gmtTime'),
     });
     
@@ -189,11 +195,17 @@ export default class Marker extends React.Component {
 
         palettePolyline.draw();
 
-        paletteMarker.importData(this.transformedData.slice(0,i));
+        paletteMarker.importData({
+          location: this.transformedData.slice(0,i),
+          icon: [],
+        });
 
         paletteMarker.draw();
 
-        paletteTooltip.importData({marker: this.transformedData.slice(0,i), tooltip: Util.pluck(data.slice(0,i), 'gmtTime')});
+        paletteTooltip.importData({
+          marker: this.transformedData.slice(0,i),
+          tooltip: Util.pluck(data.slice(0,i), 'gmtTime'),
+        });
 
         paletteTooltip.draw();
         
@@ -235,13 +247,15 @@ export default class Marker extends React.Component {
     /*
       *create marker
       *@param {String} type [compulsory]
-      *@param {Array} data [optional]
+      *@param {location, icon} data [optional: location is an array of marker locations, icon is array of canvases for marker icons]
       *@param {Array} tooltip [optional]
       *@return {Palette} palette [Palette instance]
     */
     palette = this.mavas.createLayer({
       type: 'marker',
-      data: this.transformedData.slice(0,2),
+      data: {
+        location: this.transformedData.slice(0,2),
+      },
       tooltip: Util.pluck(data.slice(0,2), 'gmtTime'),
     });
     
@@ -264,11 +278,17 @@ export default class Marker extends React.Component {
 
         palettePolyline.draw();
 
-        paletteMarker.importData(this.transformedData.slice(0,i));
+        paletteMarker.importData({
+          location: this.transformedData.slice(0,i),
+          icon: [],
+        });
 
         paletteMarker.draw();
 
-        paletteTooltip.importData({marker: this.transformedData.slice(0,i), tooltip: Util.pluck(data.slice(0,i), 'gmtTime')});
+        paletteTooltip.importData({
+          marker: this.transformedData.slice(0,i),
+          tooltip: Util.pluck(data.slice(0,i), 'gmtTime'),
+        });
 
         paletteTooltip.draw();
         
