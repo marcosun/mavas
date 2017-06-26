@@ -4,6 +4,15 @@ import Util from '../lib/mavas/util';
 import Mavas from '../lib/mavas/main';
 import data from './mockData/markerData';
 
+import startIcon from './image/start.png';
+import endIcon from './image/end.png';
+
+let startImage = document.createElement('img'),
+    endImage = document.createElement('img');
+
+startImage.src = startIcon;
+endImage.src = endIcon;
+
 /*
   *Map component creates a container for map
   *container size is controlled by css styles
@@ -86,7 +95,63 @@ export default class Marker extends React.Component {
     //set correct centre and zoom to cover all data points of a particular palette
     this.mavas.setFit(paletteMarker);
   };
+  
+  showStaticGpsRouteWithCustomisedIcon() {
+    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    
+    /*
+      *create polyline
+      *@param {String} type [compulsory]
+      *@param {Array} data [optional]
+      *@param {String} cacheAlgo [optional]
+      *@param {String} color [optional]
+      *@return {Palette} palette [Palette instance]
+    */
+    palettePolyline = this.mavas.createLayer({
+      type: 'polyline',
+      data: [this.transformedData],
+      cacheAlgo: '9 blocks',
+      color: 'red',
+    });
 
+    /*
+      *create marker
+      *@param {String} type [compulsory]
+      *@param {location, icon} data [optional: location is an array of marker locations, icon is array of canvases for marker icons]
+      *@param {Array} icon [compulsory: Array of canvases for marker icons]
+      *@param {Array} tooltip [optional]
+      *@return {Palette} palette [Palette instance]
+    */
+    palette = this.mavas.createLayer({
+      type: 'marker',
+      data: {
+        location: this.transformedData,
+        icon: (() => {
+          let result = [];
+          
+          for(let i = 0, len = this.transformedData.length; i < len; i = i + 2) {
+            result.push(startImage);
+            result.push(endImage);
+          }
+          
+          return result;
+        })(),
+      },
+      tooltip: Util.pluck(data, 'gmtTime'),
+    });
+
+    paletteMarker = palette.palette;
+    paletteTooltip = palette.paletteTooltip;
+
+    //see AMap.CustomLayer options
+    this.mavas.draw({
+      zIndex: 100,
+    });
+    
+    //set correct centre and zoom to cover all data points of a particular palette
+    this.mavas.setFit(paletteMarker);
+  };
+  
   showRealtimeStaticGpsRoute() {
     let palette, palettePolyline, paletteMarker, paletteTooltip;
     
@@ -322,6 +387,7 @@ export default class Marker extends React.Component {
         <h1>Marker Demo</h1>
         <div style={{"height": "50px"}}>
           <a className="btn" onClick={this.showStaticGpsRoute.bind(this)} href="javascript:;">静态gps轨迹</a>
+          <a className="btn" onClick={this.showStaticGpsRouteWithCustomisedIcon.bind(this)} href="javascript:;">自定义气泡静态gps轨迹</a>
           <a className="btn" onClick={this.showRealtimeStaticGpsRoute.bind(this)} href="javascript:;">静态实时重绘gps轨迹</a>
           <a className="btn" onClick={this.showDynamicGpsRoute.bind(this)} href="javascript:;">动态gps轨迹</a>
           <a className="btn" onClick={this.showDynamicFocusNewGpsRoute.bind(this)} href="javascript:;">动态跟踪gps轨迹</a>
