@@ -26,7 +26,7 @@ export default class Heatmap extends React.Component {
     
     //TODO: STRONGLY recommand superagent in production
     var request = new XMLHttpRequest();
-    request.open('POST', 'http://10.88.1.227:8080/getByStation', true);
+    request.open('POST', 'http://10.85.1.171:8080/getByStation', true);
     request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     request.send('startDate=2017-6-2&endDate=2017-6-22');
     request.onreadystatechange = () => {

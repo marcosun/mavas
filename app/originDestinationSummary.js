@@ -4,6 +4,15 @@ import echarts from 'echarts';
 import Mavas from '../lib/mavas/main';
 import Util from '../lib/mavas/util';
 
+import startIcon from './image/start.png';
+import endIcon from './image/end.png';
+
+let startImage = document.createElement('img'),
+    endImage = document.createElement('img');
+
+startImage.src = startIcon;
+endImage.src = endIcon;
+
 /*
   *Map component creates a container for map
   *container size is controlled by css styles
@@ -32,7 +41,7 @@ export default class OriginDestinationSummary extends React.Component {
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
     var request = new XMLHttpRequest();
-    request.open('GET', 'http://10.88.1.227:8080/od', true);
+    request.open('GET', 'http://10.85.1.171:8080/od', true);
     request.send();
     request.onreadystatechange = () => {
       if (request.readyState === 4 && request.status === 200){
@@ -60,16 +69,28 @@ export default class OriginDestinationSummary extends React.Component {
     palette = this.mavas.createLayer({
       type: 'marker',
       id: 'marker',
-      data: (() => {
-        let result = [];
-        
-        this.data.forEach((currentLine) => {
-          result.push(currentLine[0]);
-          result.push(currentLine[1]);
-        });
-        
-        return result;
-      })(),
+      data: {
+        location: (() => {
+          let result = [];
+          
+          this.data.forEach((currentLine) => {
+            result.push(currentLine[0]);
+            result.push(currentLine[1]);
+          });
+
+          return result;
+        })(),
+        icon: (() => {
+          let result = [];
+          
+          for(let i = 0, len = this.data.length; i < len; i++) {
+            result.push(startImage);
+            result.push(endImage);
+          }
+          
+          return result;
+        })(),
+      },
       tooltip: (() => {
         let result = [];
         
