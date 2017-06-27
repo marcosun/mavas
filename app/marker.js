@@ -376,6 +376,65 @@ export default class Marker extends React.Component {
     window.requestAnimationFrame(move);
   };
   
+  showMarkerOnClick() {
+    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    
+    /*
+      *create polyline
+      *@param {String} type [compulsory]
+      *@param {Array} data [optional]
+      *@param {String} cacheAlgo [optional]
+      *@param {String} color [optional]
+      *@return {Palette} palette [Palette instance]
+    */
+    palettePolyline = this.mavas.createLayer({
+      type: 'polyline',
+      data: [this.transformedData],
+      cacheAlgo: '9 blocks',
+      color: 'red',
+    });
+
+    /*
+      *create marker
+      *@param {String} type [compulsory]
+      *@param {location, icon} data [optional: location is an array of marker locations, icon is array of canvases for marker icons]
+      *@param {Function} onClick [optional: click callback]
+      *@param {Array} tooltip [optional]
+      *@return {Palette} palette [Palette instance]
+    */
+    palette = this.mavas.createLayer({
+      type: 'marker',
+      data: {
+        location: this.transformedData,
+      },
+      onClick: (e) => {
+        let location, result = [];
+        
+        for(let len = e.marker.length, i = len - 1; i >= 0; i--) {
+          location = e.marker[i].location;
+          
+          result.push(Util.findIndex(this.transformedData, (element, index) => {
+            return element === location;
+          }));
+        };
+        
+        alert(`you are clicking on marker number ${result}`);
+      },
+      tooltip: Util.pluck(data, 'gmtTime'),
+    });
+
+    paletteMarker = palette.palette;
+    paletteTooltip = palette.paletteTooltip;
+
+    //see AMap.CustomLayer options
+    this.mavas.draw({
+      zIndex: 100,
+    });
+    
+    //set correct centre and zoom to cover all data points of a particular palette
+    this.mavas.setFit(paletteMarker);
+  };
+  
   clear() {
     this.mavas.map.destroy();
     this.componentDidMount();
@@ -391,6 +450,7 @@ export default class Marker extends React.Component {
           <a className="btn" onClick={this.showRealtimeStaticGpsRoute.bind(this)} href="javascript:;">静态实时重绘gps轨迹</a>
           <a className="btn" onClick={this.showDynamicGpsRoute.bind(this)} href="javascript:;">动态gps轨迹</a>
           <a className="btn" onClick={this.showDynamicFocusNewGpsRoute.bind(this)} href="javascript:;">动态跟踪gps轨迹</a>
+          <a className="btn" onClick={this.showMarkerOnClick.bind(this)} href="javascript:;">点击气泡事件</a>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
         </div>
         <div className="map-container" id="map"></div>
