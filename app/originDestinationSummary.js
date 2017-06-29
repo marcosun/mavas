@@ -58,89 +58,39 @@ export default class OriginDestinationSummary extends React.Component {
   };
   
   draw() {
-    let palette, polylinePalette, markerPalette, tooltipPalette;
+    let palettePolyline, paletteMarker, paletteTooltip;
     
-    polylinePalette = this.mavas.createLayer({
+    palettePolyline = this.mavas.createLayer({
       type: 'polyline',
       id: 'polyline',
       data: {
-        location: this.data,
+        location: this.polylineData,
       },
       realtime: true,
       color: 'red',
     });
     
-    palette = this.mavas.createLayer({
+    paletteMarker = this.mavas.createLayer({
       type: 'marker',
       id: 'marker',
       data: {
-        location: (() => {
-          let result = [];
-          
-          this.data.forEach((currentLine) => {
-            result.push(currentLine[0]);
-            result.push(currentLine[1]);
-          });
-
-          return result;
-        })(),
-        icon: (() => {
-          let result = [];
-          
-          for(let i = 0, len = this.data.length; i < len; i++) {
-            result.push(startImage);
-            result.push(endImage);
-          }
-          
-          return result;
-        })(),
+        location: this.markerData,
+        icon: this.iconData,
       },
       realtime: true,
       onClick: (e) => {
         
+        isRelationalVision = !isRelationalVision;
+        
         if (isRelationalVision === true) {
           
-          polylinePalette.importData({
-            location: this.data,
-          });
-
-          polylinePalette.draw(true);
-
-          markerPalette.importData({
-            location: (() => {
-              let result = [];
-
-              this.data.forEach((currentLine) => {
-                result.push(currentLine[0]);
-                result.push(currentLine[1]);
-              });
-
-              return result;
-            })(),
-            icon: (() => {
-              let result = [];
-
-              for(let i = 0, len = this.data.length; i < len; i++) {
-                result.push(startImage);
-                result.push(endImage);
-              }
-
-              return result;
-            })(),
-          });
-
-          markerPalette.draw(true);
-          
-          isRelationalVision = false;
-          
-        } else {
-          let location, result = [], lines;
+          let location, result = [], lines, tooltipSource = [];
 
           for(let len = e.marker.length, i = len - 1; i >= 0; i--) {
             location = e.marker[i].location;
 
             //push index of founded line into the result
-            result.push(Util.findIndex(this.data, (element, index) => {
+            result.push(Util.findIndex(this.polylineData, (element, index) => {
               //check both starting and ending points
               return element.find((e) => {
                 return e[0] === location[0] && e[1] === location[1];
@@ -149,85 +99,80 @@ export default class OriginDestinationSummary extends React.Component {
           };
 
           lines = Util.unique(Util.flatten(result));
+          lines = lines.sort((a, b) => {return a > b});
           
           (() => {
             let result = [];
             
             for(let i = 0, len = lines.length; i < len; i++) {
-              result.push(this.data[lines[i]]);
+              result.push(this.polylineData[lines[i]]);
+              tooltipSource.push(this.mockData[lines[i]]);
             }
             
-            this.newData = result;
+            this.polylineData = result;
           })();
           
-          polylinePalette.importData({
-            location: this.newData,
-          });
-
-          polylinePalette.draw(true);
-
-          markerPalette.importData({
-            location: (() => {
-              let result = [];
-
-              this.newData.forEach((currentLine) => {
-                result.push(currentLine[0]);
-                result.push(currentLine[1]);
-              });
-
-              return result;
-            })(),
-            icon: (() => {
-              let result = [];
-
-              for(let i = 0, len = this.newData.length; i < len; i++) {
-                result.push(startImage);
-                result.push(endImage);
-              }
-
-              return result;
-            })(),
-          });
-
-          markerPalette.draw(true);
-
-//          tooltipPalette.importData({
-//            marker: (() => {
-//              let result = [];
-//
-//              this.newData.forEach((currentLine) => {
-//                result.push(currentLine[0]);
-//                result.push(currentLine[1]);
-//              });
-//
-//              return result;
-//            })(),
-//            tooltip: Util.pluck(data.slice(0,i), 'gmtTime'),
-//          });
-//
-//          tooltipPalette.draw();
+          this.makeMarkerData();
+          this.makeIconData();
+          this.makeTooltipData(tooltipSource);
           
-          isRelationalVision = true;
+          palettePolyline.importData({
+            location: this.polylineData,
+          });
+
+          palettePolyline.draw(true);
+
+          paletteMarker.importData({
+            location: this.markerData,
+            icon: this.iconData,
+          });
+
+          paletteMarker.draw(true);
+          
+          paletteTooltip.importData({
+            location: this.markerData,
+            markerSize: new Array(this.markerData.length).fill({width: startImage.width, height: startImage.height,}),
+            desc: this.tooltipData,
+          });
+
+          paletteTooltip.draw(true);
+          
+        } else {
+          
+          this.dataTransformation(this.mockData);
+          
+          palettePolyline.importData({
+            location: this.polylineData,
+          });
+
+          palettePolyline.draw(true);
+
+          paletteMarker.importData({
+            location: this.markerData,
+            icon: this.iconData,
+          });
+
+          paletteMarker.draw(true);
+          
+          paletteTooltip.importData({
+            location: this.markerData,
+            markerSize: new Array(this.markerData.length).fill({width: startImage.width, height: startImage.height,}),
+            desc: this.tooltipData,
+          });
+          
+          paletteTooltip.draw(true);
         }
       },
-      tooltip: (() => {
-        let result = [];
-        
-        let startStation = Util.pluck(this.mockData, 'startStation');
-        let endStation = Util.pluck(this.mockData, 'endStation');
-        let num = Util.pluck(this.mockData, 'num');
-        
-        for(let i = 0, len = startStation.length; i < len; i++) {
-          result.push(`起始站：${startStation[i]}，人数：${num[i]}`);
-          result.push(`终点站：${endStation[i]}，人数：${num[i]}`);
-        };
-        
-        return result;
-      })(),
     });
     
-    markerPalette = palette.palette;
-    tooltipPalette = palette.paletteTooltip;
+    paletteTooltip = this.mavas.createLayer({
+      type: 'tooltip',
+      data: {
+        location: this.markerData,
+        markerSize: new Array(this.markerData.length).fill({width: startImage.width, height: startImage.height,}),
+        desc: this.tooltipData,
+      },
+    });
     
     this.mavas.draw({
       zIndex: 150,
@@ -235,13 +180,49 @@ export default class OriginDestinationSummary extends React.Component {
   };
   
   dataTransformation(apiData) {
-    this.data = [];
+    this.makePolylineData(apiData);
+    this.makeMarkerData();
+    this.makeIconData();
+    this.makeTooltipData(this.mockData);
+  };
+  
+  makePolylineData(apiData) {
+    this.polylineData = [];
     
     apiData.forEach((currentRoute) => {
-      this.data.push([[currentRoute.startLocation.x, currentRoute.startLocation.y], [currentRoute.endLocation.x, currentRoute.endLocation.y]]);
+      this.polylineData.push([[currentRoute.startLocation.x, currentRoute.startLocation.y], [currentRoute.endLocation.x, currentRoute.endLocation.y]]);
     });
+  };
+  
+  makeMarkerData() {
+    this.markerData = [];
+
+    this.polylineData.forEach((currentLine) => {
+      this.markerData.push(currentLine[0]);
+      this.markerData.push(currentLine[1]);
+    });
+  };
+  
+  makeIconData() {
+    this.iconData = [];
+
+    for(let i = 0, len = this.polylineData.length; i < len; i++) {
+      this.iconData.push(startImage);
+      this.iconData.push(endImage);
+    }
+  };
+  
+  makeTooltipData(data) {
+    this.tooltipData = [];
     
-    return this.data;
+    let startStation = Util.pluck(data, 'startStation');
+    let endStation = Util.pluck(data, 'endStation');
+    let num = Util.pluck(data, 'num');
+
+    for(let i = 0, len = startStation.length; i < len; i++) {
+      this.tooltipData.push(`起始站：${startStation[i]}，人数：${num[i]}`);
+      this.tooltipData.push(`终点站：${endStation[i]}，人数：${num[i]}`);
+    };
   };
   
   render() {

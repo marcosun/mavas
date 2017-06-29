@@ -52,7 +52,7 @@ export default class Marker extends React.Component {
     *show static gps points
   */
   showStaticGpsRoute() {
-    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    let palettePolyline, paletteMarker, paletteTooltip;
     
     /*
       *create polyline
@@ -75,19 +75,29 @@ export default class Marker extends React.Component {
       *create marker
       *@param {String} type [compulsory]
       *@param {location, icon} data [optional: location is an array of marker locations, icon is array of canvases for marker icons]
-      *@param {Array} tooltip [optional]
       *@return {Palette} palette [Palette instance]
     */
-    palette = this.mavas.createLayer({
+    paletteMarker = this.mavas.createLayer({
       type: 'marker',
       data: {
         location: this.transformedData,
       },
-      tooltip: Util.pluck(data, 'gmtTime'),
     });
-
-    paletteMarker = palette.palette;
-    paletteTooltip = palette.paletteTooltip;
+    
+    /*
+      *create tooltip
+      *@param {String} type [compulsory]
+      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@return {Palette} palette [Palette instance]
+    */
+    paletteTooltip = this.mavas.createLayer({
+      type: 'tooltip',
+      data: {
+        location: this.transformedData,
+        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        desc: Util.pluck(data, 'gmtTime'),
+      },
+    });
 
     //see AMap.CustomLayer options
     this.mavas.draw({
@@ -99,7 +109,7 @@ export default class Marker extends React.Component {
   };
   
   showStaticGpsRouteWithCustomisedIcon() {
-    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    let palettePolyline, paletteMarker, paletteTooltip;
     
     /*
       *create polyline
@@ -126,7 +136,7 @@ export default class Marker extends React.Component {
       *@param {Array} tooltip [optional]
       *@return {Palette} palette [Palette instance]
     */
-    palette = this.mavas.createLayer({
+    paletteMarker = this.mavas.createLayer({
       type: 'marker',
       data: {
         location: this.transformedData,
@@ -141,11 +151,22 @@ export default class Marker extends React.Component {
           return result;
         })(),
       },
-      tooltip: Util.pluck(data, 'gmtTime'),
     });
-
-    paletteMarker = palette.palette;
-    paletteTooltip = palette.paletteTooltip;
+    
+    /*
+      *create tooltip
+      *@param {String} type [compulsory]
+      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@return {Palette} palette [Palette instance]
+    */
+    paletteTooltip = this.mavas.createLayer({
+      type: 'tooltip',
+      data: {
+        location: this.transformedData,
+        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        desc: Util.pluck(data, 'gmtTime'),
+      },
+    });
 
     //see AMap.CustomLayer options
     this.mavas.draw({
@@ -157,7 +178,7 @@ export default class Marker extends React.Component {
   };
   
   showRealtimeStaticGpsRoute() {
-    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    let palettePolyline, paletteMarker, paletteTooltip;
     
     /*
       *create polyline
@@ -185,22 +206,32 @@ export default class Marker extends React.Component {
       *@param {String} type [compulsory]
       *@param {String} id [optional]
       *@param {location, icon} data [optional: location is an array of marker locations, icon is array of canvases for marker icons]
-      *@param {Array} tooltip [optional]
       *@param {Boolean} realtime [optional]
       *@return {Palette} palette [Palette instance]
     */
-    palette = this.mavas.createLayer({
+    paletteMarker = this.mavas.createLayer({
       type: 'marker',
       id: 'marker',
       data: {
         location: this.transformedData,
       },
-      tooltip: Util.pluck(data, 'gmtTime'),
       realtime: true,
     });
 
-    paletteMarker = palette.palette;
-    paletteTooltip = palette.paletteTooltip;
+    /*
+      *create tooltip
+      *@param {String} type [compulsory]
+      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@return {Palette} palette [Palette instance]
+    */
+    paletteTooltip = this.mavas.createLayer({
+      type: 'tooltip',
+      data: {
+        location: this.transformedData,
+        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        desc: Util.pluck(data, 'gmtTime'),
+      },
+    });
 
     //see AMap.CustomLayer options
     this.mavas.draw({
@@ -215,7 +246,7 @@ export default class Marker extends React.Component {
     *show dynamic || real-time gps points
   */
   showDynamicGpsRoute() {
-    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    let palettePolyline, paletteMarker, paletteTooltip;
     
     /*
       *create polyline
@@ -238,19 +269,29 @@ export default class Marker extends React.Component {
       *create marker
       *@param {String} type [compulsory]
       *@param {location, icon} data [optional: location is an array of marker locations, icon is array of canvases for marker icons]
-      *@param {Array} tooltip [optional]
       *@return {Palette} palette [Palette instance]
     */
-    palette = this.mavas.createLayer({
+    paletteMarker = this.mavas.createLayer({
       type: 'marker',
       data: {
         location: this.transformedData.slice(0,2),
       },
-      tooltip: Util.pluck(data.slice(0,2), 'gmtTime'),
     });
     
-    paletteMarker = palette.palette;
-    paletteTooltip = palette.paletteTooltip;
+    /*
+      *create tooltip
+      *@param {String} type [compulsory]
+      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@return {Palette} palette [Palette instance]
+    */
+    paletteTooltip = this.mavas.createLayer({
+      type: 'tooltip',
+      data: {
+        location: this.transformedData,
+        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        desc: Util.pluck(data, 'gmtTime'),
+      },
+    });
     
     //see AMap.CustomLayer options
     this.mavas.draw({
@@ -278,8 +319,9 @@ export default class Marker extends React.Component {
         paletteMarker.draw();
 
         paletteTooltip.importData({
-          marker: this.transformedData.slice(0,i),
-          tooltip: Util.pluck(data.slice(0,i), 'gmtTime'),
+          location: this.transformedData.slice(0,i),
+          markerSize: new Array(i).fill({width: startImage.width, height: startImage.height,}),
+          desc: Util.pluck(data.slice(0,i), 'gmtTime'),
         });
 
         paletteTooltip.draw();
@@ -302,7 +344,7 @@ export default class Marker extends React.Component {
     *show dynamic || real-time FOCUS on new gps points
   */
   showDynamicFocusNewGpsRoute() {
-    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    let palettePolyline, paletteMarker, paletteTooltip;
     
     /*
       *create polyline
@@ -328,16 +370,27 @@ export default class Marker extends React.Component {
       *@param {Array} tooltip [optional]
       *@return {Palette} palette [Palette instance]
     */
-    palette = this.mavas.createLayer({
+    paletteMarker = this.mavas.createLayer({
       type: 'marker',
       data: {
         location: this.transformedData.slice(0,2),
       },
-      tooltip: Util.pluck(data.slice(0,2), 'gmtTime'),
     });
     
-    paletteMarker = palette.palette;
-    paletteTooltip = palette.paletteTooltip;
+    /*
+      *create tooltip
+      *@param {String} type [compulsory]
+      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@return {Palette} palette [Palette instance]
+    */
+    paletteTooltip = this.mavas.createLayer({
+      type: 'tooltip',
+      data: {
+        location: this.transformedData,
+        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        desc: Util.pluck(data, 'gmtTime'),
+      },
+    });
     
     //see AMap.CustomLayer options
     this.mavas.draw({
@@ -365,8 +418,9 @@ export default class Marker extends React.Component {
         paletteMarker.draw();
 
         paletteTooltip.importData({
-          marker: this.transformedData.slice(0,i),
-          tooltip: Util.pluck(data.slice(0,i), 'gmtTime'),
+          location: this.transformedData.slice(0,i),
+          markerSize: new Array(i).fill({width: startImage.width, height: startImage.height,}),
+          desc: Util.pluck(data.slice(0,i), 'gmtTime'),
         });
 
         paletteTooltip.draw();
@@ -391,7 +445,7 @@ export default class Marker extends React.Component {
   };
   
   showMarkerOnClick() {
-    let palette, palettePolyline, paletteMarker, paletteTooltip;
+    let palettePolyline, paletteMarker, paletteTooltip;
     
     /*
       *create polyline
@@ -415,10 +469,9 @@ export default class Marker extends React.Component {
       *@param {String} type [compulsory]
       *@param {location, icon} data [optional: location is an array of marker locations, icon is array of canvases for marker icons]
       *@param {Function} onClick [optional: click callback]
-      *@param {Array} tooltip [optional]
       *@return {Palette} palette [Palette instance]
     */
-    palette = this.mavas.createLayer({
+    paletteMarker = this.mavas.createLayer({
       type: 'marker',
       data: {
         location: this.transformedData,
@@ -436,11 +489,22 @@ export default class Marker extends React.Component {
         
         alert(`you are clicking on marker number ${result}`);
       },
-      tooltip: Util.pluck(data, 'gmtTime'),
     });
-
-    paletteMarker = palette.palette;
-    paletteTooltip = palette.paletteTooltip;
+    
+    /*
+      *create tooltip
+      *@param {String} type [compulsory]
+      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@return {Palette} palette [Palette instance]
+    */
+    paletteTooltip = this.mavas.createLayer({
+      type: 'tooltip',
+      data: {
+        location: this.transformedData,
+        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        desc: Util.pluck(data, 'gmtTime'),
+      },
+    });
 
     //see AMap.CustomLayer options
     this.mavas.draw({
