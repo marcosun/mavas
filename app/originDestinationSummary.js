@@ -13,6 +13,8 @@ let startImage = document.createElement('img'),
 startImage.src = startIcon;
 endImage.src = endIcon;
 
+let isRelationalVision = false;
+
 /*
   *Map component creates a container for map
   *container size is controlled by css styles
@@ -61,7 +63,9 @@ export default class OriginDestinationSummary extends React.Component {
     polylinePalette = this.mavas.createLayer({
       type: 'polyline',
       id: 'polyline',
-      data: this.data,
+      data: {
+        location: this.data,
+      },
       realtime: true,
       color: 'red',
     });
@@ -90,6 +94,121 @@ export default class OriginDestinationSummary extends React.Component {
           
           return result;
         })(),
+      },
+      realtime: true,
+      onClick: (e) => {
+        
+        if (isRelationalVision === true) {
+          
+          polylinePalette.importData({
+            location: this.data,
+          });
+
+          polylinePalette.draw(true);
+
+          markerPalette.importData({
+            location: (() => {
+              let result = [];
+
+              this.data.forEach((currentLine) => {
+                result.push(currentLine[0]);
+                result.push(currentLine[1]);
+              });
+
+              return result;
+            })(),
+            icon: (() => {
+              let result = [];
+
+              for(let i = 0, len = this.data.length; i < len; i++) {
+                result.push(startImage);
+                result.push(endImage);
+              }
+
+              return result;
+            })(),
+          });
+
+          markerPalette.draw(true);
+          
+          isRelationalVision = false;
+          
+        } else {
+          let location, result = [], lines;
+
+          for(let len = e.marker.length, i = len - 1; i >= 0; i--) {
+            location = e.marker[i].location;
+
+            //push index of founded line into the result
+            result.push(Util.findIndex(this.data, (element, index) => {
+              //check both starting and ending points
+              return element.find((e) => {
+                return e[0] === location[0] && e[1] === location[1];
+              }) !== undefined ? true : false;
+            }));
+          };
+
+          lines = Util.unique(Util.flatten(result));
+          
+          (() => {
+            let result = [];
+            
+            for(let i = 0, len = lines.length; i < len; i++) {
+              result.push(this.data[lines[i]]);
+            }
+            
+            this.newData = result;
+          })();
+          
+          polylinePalette.importData({
+            location: this.newData,
+          });
+
+          polylinePalette.draw(true);
+
+          markerPalette.importData({
+            location: (() => {
+              let result = [];
+
+              this.newData.forEach((currentLine) => {
+                result.push(currentLine[0]);
+                result.push(currentLine[1]);
+              });
+
+              return result;
+            })(),
+            icon: (() => {
+              let result = [];
+
+              for(let i = 0, len = this.newData.length; i < len; i++) {
+                result.push(startImage);
+                result.push(endImage);
+              }
+
+              return result;
+            })(),
+          });
+
+          markerPalette.draw(true);
+
+//          tooltipPalette.importData({
+//            marker: (() => {
+//              let result = [];
+//
+//              this.newData.forEach((currentLine) => {
+//                result.push(currentLine[0]);
+//                result.push(currentLine[1]);
+//              });
+//
+//              return result;
+//            })(),
+//            tooltip: Util.pluck(data.slice(0,i), 'gmtTime'),
+//          });
+//
+//          tooltipPalette.draw();
+          
+          isRelationalVision = true;
+        }
       },
       tooltip: (() => {
         let result = [];
