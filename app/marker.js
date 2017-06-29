@@ -57,7 +57,7 @@ export default class Marker extends React.Component {
     /*
       *create polyline
       *@param {String} type [compulsory]
-      *@param {Array} data [optional]
+      *@param {location: Array} data [optional]
       *@param {String} cacheAlgo [optional]
       *@param {String} color [optional]
       *@return {Palette} palette [Palette instance]
@@ -104,7 +104,7 @@ export default class Marker extends React.Component {
     /*
       *create polyline
       *@param {String} type [compulsory]
-      *@param {Array} data [optional]
+      *@param {location: Array} data [optional]
       *@param {String} cacheAlgo [optional]
       *@param {String} color [optional]
       *@return {Palette} palette [Palette instance]
@@ -163,7 +163,7 @@ export default class Marker extends React.Component {
       *create polyline
       *@param {String} type [compulsory]
       *@param {String} id [optional]
-      *@param {Array} data [optional]
+      *@param {location: Array} data [optional]
       *@param {String} cacheAlgo [optional]
       *@param {Boolean} realtime [optional]
       *@param {String} color [optional]
@@ -220,7 +220,7 @@ export default class Marker extends React.Component {
     /*
       *create polyline
       *@param {String} type [compulsory]
-      *@param {Array} data [optional]
+      *@param {location: Array} data [optional]
       *@param {String} cacheAlgo [optional]
       *@param {String} color [optional]
       *@return {Palette} palette [Palette instance]
@@ -307,7 +307,7 @@ export default class Marker extends React.Component {
     /*
       *create polyline
       *@param {String} type [compulsory]
-      *@param {Array} data [optional]
+      *@param {location: Array} data [optional]
       *@param {String} cacheAlgo [optional]
       *@param {String} color [optional]
       *@return {Palette} palette [Palette instance]
@@ -396,7 +396,7 @@ export default class Marker extends React.Component {
     /*
       *create polyline
       *@param {String} type [compulsory]
-      *@param {Array} data [optional]
+      *@param {location: Array} data [optional]
       *@param {String} cacheAlgo [optional]
       *@param {String} color [optional]
       *@return {Palette} palette [Palette instance]
