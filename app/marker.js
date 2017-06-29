@@ -64,7 +64,9 @@ export default class Marker extends React.Component {
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      data: [this.transformedData],
+      data: {
+        location: [this.transformedData],
+      },
       cacheAlgo: '9 blocks',
       color: 'red',
     });
@@ -109,7 +111,9 @@ export default class Marker extends React.Component {
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      data: [this.transformedData],
+      data: {
+        location: [this.transformedData],
+      },
       cacheAlgo: '9 blocks',
       color: 'red',
     });
@@ -168,7 +172,9 @@ export default class Marker extends React.Component {
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
       id: 'polyline',
-      data: [this.transformedData],
+      data: {
+        location: [this.transformedData],
+      },
       cacheAlgo: '9 blocks',
       realtime: true,
       color: 'red',
@@ -221,7 +227,9 @@ export default class Marker extends React.Component {
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      data: [this.transformedData.slice(0,2)],
+      data: {
+        location: [this.transformedData.slice(0,2)],
+      },
       cacheAlgo: '9 blocks',
       color: 'red',
     });
@@ -256,7 +264,9 @@ export default class Marker extends React.Component {
     
     var move = () => {
       if (i < len) {
-        palettePolyline.importData([this.transformedData.slice(0,i)]);
+        palettePolyline.importData({
+          location: [this.transformedData.slice(0,i)],
+        });
 
         palettePolyline.draw();
 
@@ -304,7 +314,9 @@ export default class Marker extends React.Component {
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      data: [this.transformedData.slice(0,2)],
+      data: {
+        location: [this.transformedData.slice(0,2)],
+      },
       cacheAlgo: '9 blocks',
       color: 'red',
     });
@@ -339,7 +351,9 @@ export default class Marker extends React.Component {
     
     var move = () => {
       if (i < len) {
-        palettePolyline.importData([this.transformedData.slice(0,i)]);
+        palettePolyline.importData({
+          location: [this.transformedData.slice(0,i)],
+        });
 
         palettePolyline.draw();
 
@@ -389,7 +403,9 @@ export default class Marker extends React.Component {
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      data: [this.transformedData],
+      data: {
+        location: [this.transformedData],
+      },
       cacheAlgo: '9 blocks',
       color: 'red',
     });
