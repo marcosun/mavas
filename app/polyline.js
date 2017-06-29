@@ -123,7 +123,7 @@ export default class Polyline extends React.Component {
       *create polyline
       *@param {String} type [compulsory]
       *@param {String} id [optional]
-      *@param {Array} data [optional]
+      *@param {location: Array} data [optional]
       *@param {String} cacheAlgo [optional]
       *@param {{interval: Number,String, size: Number,String }} delay [optional]
       *@param {Boolean} realtime [optional]
@@ -133,7 +133,9 @@ export default class Polyline extends React.Component {
     palette = this.mavas.createLayer({
       type: 'polyline',
       id: 'polyline',
-      data: this.transformedData,
+      data: {
+        location: this.transformedData,
+      },
       cacheAlgo: this.state.algo['9 blocks'] ? '9 blocks' : 'simple',
       delay: this.state.render.instant ? undefined : {
         interval: 100,

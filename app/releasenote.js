@@ -18,6 +18,7 @@ export default class Polyline extends React.Component {
             <li>Place an external canvas that fixed on somewhere on screen by calling createLayer with type property equals to 'fixedScreenExternal'</li>
             <li>Place an external canvas that fixed on a geographical location by calling createLayer with type property equals to 'fixedLocationExternal'</li>
             <li>canvasApi draw functions accept Boolean isForceDraw parameter to force redraw</li>
+            <li>{'createLayer now accepts data in the format of : data: {location: [Array], icon: [Array]}'}</li>
           </ol>
         </div>
         <div>
