@@ -88,6 +88,7 @@ export default class Marker extends React.Component {
       *create tooltip
       *@param {String} type [compulsory]
       *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@param {Boolean} cumulative [optional]
       *@return {Palette} palette [Palette instance]
     */
     paletteTooltip = this.mavas.createLayer({
@@ -97,6 +98,7 @@ export default class Marker extends React.Component {
         markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
         desc: Util.pluck(data, 'gmtTime'),
       },
+      cumulative: true,
     });
 
     //see AMap.CustomLayer options

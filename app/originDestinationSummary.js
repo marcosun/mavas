@@ -172,6 +172,7 @@ export default class OriginDestinationSummary extends React.Component {
         markerSize: new Array(this.markerData.length).fill({width: startImage.width, height: startImage.height,}),
         desc: this.tooltipData,
       },
+      cumulative: true,
     });
     
     this.mavas.draw({
