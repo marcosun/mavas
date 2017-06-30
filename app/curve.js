@@ -52,6 +52,7 @@ export default class Curve extends React.Component {
       resizeEnable: true,
       zoom: 12,
       center: [120.2388,30.354945],
+      mapStyle: 'amap://styles/darkblue',
     });
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
@@ -136,7 +137,7 @@ export default class Curve extends React.Component {
         size: 100,
       },
       realtime: this.state.render.realtime,
-      color: 'red',
+      color: '#00FF52',
     });
     
     this.mavas.draw();

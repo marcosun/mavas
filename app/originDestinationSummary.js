@@ -37,6 +37,7 @@ export default class OriginDestinationSummary extends React.Component {
       zoom: 16,
       center: [120.131537, 30.281016],
       animateEnable: false,
+      mapStyle: 'amap://styles/darkblue',
     });
     
     //init amap layers on demand; see amap api reference
@@ -76,7 +77,7 @@ export default class OriginDestinationSummary extends React.Component {
         location: [],
       },
       realtime: true,
-      color: 'blue',
+      color: '#00FF52',
     });
     
     this.paletteMarker = this.mavas.createLayer({

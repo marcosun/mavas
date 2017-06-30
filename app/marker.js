@@ -42,6 +42,7 @@ export default class Marker extends React.Component {
       zoom: 16,
       center: [120.057926,30.183576],
       animateEnable: false,
+      mapStyle: 'amap://styles/darkblue',
     });
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});

@@ -38,6 +38,7 @@ export default class External extends React.Component {
       resizeEnable: true,
       zoom: 16,
       center: [116.483467,39.987400],
+      mapStyle: 'amap://styles/darkblue',
     });
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});

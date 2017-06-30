@@ -58,6 +58,7 @@ export default class Polyline extends React.Component {
       resizeEnable: true,
       zoom: 12,
       center: [116.483467,39.987400],
+      mapStyle: 'amap://styles/darkblue',
     });
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
@@ -142,7 +143,7 @@ export default class Polyline extends React.Component {
         size: 100,
       },
       realtime: this.state.render.realtime,
-      color: 'red',
+      color: '#00FF52',
     });
     
     this.mavas.draw();

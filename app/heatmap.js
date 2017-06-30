@@ -19,6 +19,7 @@ export default class Heatmap extends React.Component {
       zoom: 16,
       center: [120.131537, 30.281016],
       animateEnable: true,
+      mapStyle: 'amap://styles/darkblue',
     });
     
     //init amap layers on demand; see amap api reference
