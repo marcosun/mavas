@@ -19,8 +19,10 @@ export default class Polyline extends React.Component {
             <li>Place an external canvas that fixed on a geographical location by calling createLayer with type property equals to 'fixedLocationExternal'</li>
             <li>canvasApi draw functions accept Boolean isForceDraw parameter to force redraw</li>
             <li>{'createLayer now accepts data in the format of : data: {location: [Array], icon: [Array]}'}</li>
+            <li>Expose curve contructor to link two data points by semi curves</li>
             <li>Users should explicitly call createLayer constructor to draw tooltip</li>
             <li>Tooltip will show all tooltips that covers a certain point by setting cumulative to true</li>
+            <li>Tooltip exposes config apis to control how tooltips should look like, such as padding, width, lineHeight, color, backgroundColor, and etc</li>
           </ol>
         </div>
         <div>
