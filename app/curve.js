@@ -137,7 +137,7 @@ export default class Curve extends React.Component {
         size: 100,
       },
       realtime: this.state.render.realtime,
-      color: '#00FF52',
+      color: '#00FFFF',
     });
     
     this.mavas.draw();
