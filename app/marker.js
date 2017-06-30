@@ -89,6 +89,13 @@ export default class Marker extends React.Component {
       *@param {String} type [compulsory]
       *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
       *@param {Boolean} cumulative [optional]
+      *@param {Number} left [optional: left margin, default to 10px]
+      *@param {Number} padding [optional: default to 6px]
+      *@param {Number} width [optional: width of context, default to 108px]
+      *@param {Number} lineHeight [optional: default to 1.6]
+      *@param {String} font [optional: default to '12px monospace']
+      *@param {String} color [optional: font color, default to 'white']
+      *@param {String} backgroundColor [optional: default to 'rgba(0, 0, 0, 0.7)']
       *@return {Palette} palette [Palette instance]
     */
     paletteTooltip = this.mavas.createLayer({
@@ -99,6 +106,13 @@ export default class Marker extends React.Component {
         desc: Util.pluck(data, 'gmtTime'),
       },
       cumulative: true,
+      left: 10,
+      padding: 6,
+      width: 108,
+      lineHeight: 1.6,
+      font: '12px monospace',
+      color: 'white',
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
     });
 
     //see AMap.CustomLayer options

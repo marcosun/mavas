@@ -145,6 +145,7 @@ export default class OriginDestinationSummary extends React.Component {
         desc: this.tooltipData,
       },
       cumulative: true,
+      width: 250,
     });
     
     this.mavas.draw({
