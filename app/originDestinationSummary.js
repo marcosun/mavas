@@ -58,9 +58,8 @@ export default class OriginDestinationSummary extends React.Component {
   };
   
   draw() {
-    let palettePolyline, paletteMarker, paletteTooltip;
     
-    palettePolyline = this.mavas.createLayer({
+    this.palettePolyline = this.mavas.createLayer({
       type: 'polyline',
       id: 'polyline',
       data: {
@@ -70,7 +69,17 @@ export default class OriginDestinationSummary extends React.Component {
       color: 'red',
     });
     
-    paletteMarker = this.mavas.createLayer({
+    this.paletteCurve = this.mavas.createLayer({
+      type: 'curve',
+      id: 'curve',
+      data: {
+        location: [],
+      },
+      realtime: true,
+      color: 'blue',
+    });
+    
+    this.paletteMarker = this.mavas.createLayer({
       type: 'marker',
       id: 'marker',
       data: {
@@ -116,56 +125,19 @@ export default class OriginDestinationSummary extends React.Component {
           this.makeIconData();
           this.makeTooltipData(tooltipSource);
           
-          palettePolyline.importData({
-            location: this.polylineData,
-          });
-
-          palettePolyline.draw(true);
-
-          paletteMarker.importData({
-            location: this.markerData,
-            icon: this.iconData,
-          });
-
-          paletteMarker.draw(true);
-          
-          paletteTooltip.importData({
-            location: this.markerData,
-            markerSize: new Array(this.markerData.length).fill({width: startImage.width, height: startImage.height,}),
-            desc: this.tooltipData,
-          });
-
-          paletteTooltip.draw(true);
+          this.showCurves();
           
         } else {
           
           this.dataTransformation(this.mockData);
           
-          palettePolyline.importData({
-            location: this.polylineData,
-          });
-
-          palettePolyline.draw(true);
-
-          paletteMarker.importData({
-            location: this.markerData,
-            icon: this.iconData,
-          });
-
-          paletteMarker.draw(true);
+          this.showPolylines();
           
-          paletteTooltip.importData({
-            location: this.markerData,
-            markerSize: new Array(this.markerData.length).fill({width: startImage.width, height: startImage.height,}),
-            desc: this.tooltipData,
-          });
-          
-          paletteTooltip.draw(true);
         }
       },
     });
     
-    paletteTooltip = this.mavas.createLayer({
+    this.paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
       data: {
         location: this.markerData,
@@ -224,6 +196,65 @@ export default class OriginDestinationSummary extends React.Component {
       this.tooltipData.push(`起始站：${startStation[i]}，人数：${num[i]}`);
       this.tooltipData.push(`终点站：${endStation[i]}，人数：${num[i]}`);
     };
+  };
+  
+  showCurves() {
+    this.palettePolyline.importData({
+      location: [],
+    });
+
+    this.palettePolyline.draw(true);
+    
+    this.paletteCurve.importData({
+      location: this.polylineData,
+    });
+
+    this.paletteCurve.draw(true);
+
+    this.paletteMarker.importData({
+      location: this.markerData,
+      icon: this.iconData,
+    });
+
+    this.paletteMarker.draw(true);
+
+    this.paletteTooltip.importData({
+      location: this.markerData,
+      markerSize: new Array(this.markerData.length).fill({width: startImage.width, height: startImage.height,}),
+      desc: this.tooltipData,
+    });
+
+    this.paletteTooltip.draw(true);
+  };
+  
+  showPolylines() {
+
+    this.palettePolyline.importData({
+      location: this.polylineData,
+    });
+
+    this.palettePolyline.draw(true);
+    
+    this.paletteCurve.importData({
+      location: [],
+    });
+
+    this.paletteCurve.draw(true);
+
+    this.paletteMarker.importData({
+      location: this.markerData,
+      icon: this.iconData,
+    });
+
+    this.paletteMarker.draw(true);
+
+    this.paletteTooltip.importData({
+      location: this.markerData,
+      markerSize: new Array(this.markerData.length).fill({width: startImage.width, height: startImage.height,}),
+      desc: this.tooltipData,
+    });
+
+    this.paletteTooltip.draw(true);
   };
   
   render() {
