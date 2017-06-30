@@ -19,7 +19,7 @@ export default class PhonePaySummary extends React.Component {
     this.myChart = echarts.init(this.canvas);
     
     var request = new XMLHttpRequest();
-    request.open('POST', 'http://10.88.1.227:8080/trend', true);
+    request.open('POST', 'http://10.85.1.171:8080/trend', true);
     request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     request.send('startDate=2017-06-06&endDate=2017-06-23');
     request.onreadystatechange = () => {
