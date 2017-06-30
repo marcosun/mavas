@@ -8,6 +8,7 @@ import {
 
 import Home from './home';
 import Polyline from './polyline';
+import Curve from './curve';
 import Marker from './marker';
 import External from './external';
 import ReleaseNote from './releasenote';
@@ -25,6 +26,7 @@ render(
     <div>
       <Route exact path='/' component={Home} />
       <Route exact path='/polyline' component={Polyline} />
+      <Route exact path='/curve' component={Curve} />
       <Route exact path='/marker' component={Marker} />
       <Route exact path='/external' component={External} />
       <Route exact path='/phonePaySummary' component={PhonePaySummary} />

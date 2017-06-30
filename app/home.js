@@ -16,6 +16,7 @@ export default class Home extends React.Component {
         <ul>
           <h2>Mavas Demo</h2>
           <li><Link to="/polyline">polyline 曲线图</Link></li>
+          <li><Link to="/curve">curve 曲线图</Link></li>
           <li><Link to="/marker">marker 气泡图</Link></li>
           <li><Link to="/external">external 第三方图像集成</Link></li>
           <br />
