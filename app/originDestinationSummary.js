@@ -71,13 +71,13 @@ export default class OriginDestinationSummary extends React.Component {
     });
     
     this.paletteCurve = this.mavas.createLayer({
-      type: 'curve',
-      id: 'curve',
+      type: 'quadraticCurve',
+      id: 'quadraticCurve',
       data: {
         location: [],
       },
       realtime: true,
-      color: '#00FF52',
+      color: '#00FFFF',
     });
     
     this.paletteMarker = this.mavas.createLayer({

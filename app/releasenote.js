@@ -23,6 +23,7 @@ export default class Polyline extends React.Component {
             <li>Users should explicitly call createLayer constructor to draw tooltip</li>
             <li>Tooltip will show all tooltips that covers a certain point by setting cumulative to true</li>
             <li>Tooltip exposes config apis to control how tooltips should look like, such as padding, width, lineHeight, color, backgroundColor, and etc</li>
+            <li>Expose quadraticCurve contructor to link two data points by Bezier curve</li>
           </ol>
         </div>
         <div>
