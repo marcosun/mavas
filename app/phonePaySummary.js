@@ -19,13 +19,13 @@ export default class PhonePaySummary extends React.Component {
     this.myChart = echarts.init(this.canvas);
     
     let today = new Date(),
-      endDate = new Date();
-    endDate.setDate(endDate.getDate() - 15);
+      startDate = new Date();
+    startDate.setDate(startDate.getDate() - 15);
     
     var request = new XMLHttpRequest();
     request.open('POST', 'http://10.85.1.171:8080/trend', true);
     request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-    request.send(`startDate=${endDate.getFullYear()}-${endDate.getMonth().toString().length === 1 ? '0' + endDate.getMonth() : endDate.getMonth()}-${endDate.getDate().toString().length === 1 ? '0' + endDate.getDate() : endDate.getDate()}&endDate=${today.getFullYear()}-${today.getMonth().toString().length === 1 ? '0' + today.getMonth() : today.getMonth()}-${today.getDate().toString().length === 1 ? '0' + today.getDate() : today.getDate()}`);
+    request.send(`startDate=${startDate.getFullYear()}-${startDate.getMonth().toString().length === 1 ? '0' + startDate.getMonth() : startDate.getMonth()}-${startDate.getDate().toString().length === 1 ? '0' + startDate.getDate() : startDate.getDate()}&endDate=${today.getFullYear()}-${today.getMonth().toString().length === 1 ? '0' + today.getMonth() : today.getMonth()}-${today.getDate().toString().length === 1 ? '0' + today.getDate() : today.getDate()}`);
     request.onreadystatechange = () => {
       if (request.readyState === 4 && request.status === 200){
         this.setState({
