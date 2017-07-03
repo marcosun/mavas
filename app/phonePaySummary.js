@@ -25,7 +25,7 @@ export default class PhonePaySummary extends React.Component {
     var request = new XMLHttpRequest();
     request.open('POST', 'http://10.85.1.171:8080/trend', true);
     request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-    request.send(`startDate=${startDate.getFullYear()}-${startDate.getMonth().toString().length === 1 ? '0' + startDate.getMonth() : startDate.getMonth()}-${startDate.getDate().toString().length === 1 ? '0' + startDate.getDate() : startDate.getDate()}&endDate=${today.getFullYear()}-${today.getMonth().toString().length === 1 ? '0' + today.getMonth() : today.getMonth()}-${today.getDate().toString().length === 1 ? '0' + today.getDate() : today.getDate()}`);
+    request.send(`startDate=${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().length === 1 ? '0' + (startDate.getMonth() + 1) : startDate.getMonth() + 1}-${startDate.getDate().toString().length === 1 ? '0' + startDate.getDate() : startDate.getDate()}&endDate=${today.getFullYear()}-${(today.getMonth() + 1).toString().length === 1 ? '0' + (today.getMonth() + 1) : today.getMonth() + 1}-${today.getDate().toString().length === 1 ? '0' + today.getDate() : today.getDate()}`);
     request.onreadystatechange = () => {
       if (request.readyState === 4 && request.status === 200){
         this.setState({
