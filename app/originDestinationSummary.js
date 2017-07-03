@@ -14,8 +14,6 @@ let startImage = document.createElement('img'),
 startImage.src = startIcon;
 endImage.src = endIcon;
 
-let isRelationalVision = false;
-
 /*
   *Map component creates a container for map
   *container size is controlled by css styles
@@ -25,10 +23,20 @@ export default class OriginDestinationSummary extends React.Component {
   
   constructor(props) {
     super(props);
+    
+    let endTime = new Date(),
+      startTime = new Date();
+    startTime.setMinutes(startTime.getMinutes() - 10);
+    
     this.props = props;
     this.state = {
       isFetching: true,
+      startTime: `${startTime.getHours()}:${Math.floor(startTime.getMinutes() / 10)}0:00`,
+      endTime: `${endTime.getHours()}:${Math.floor(endTime.getMinutes() / 10)}0:00`,
     };
+    
+    this.delayExecute = new Util.Delay(1000);
+    this.isRelationalVision = false;
   };
   
   componentDidMount() {
@@ -44,14 +52,37 @@ export default class OriginDestinationSummary extends React.Component {
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
-    request.get('http://10.85.1.171:8080/od')
+    this.fetchAndDraw();
+  };
+  
+  fetchAndDraw(isUpdate) {
+    this.fetchData()
       .then((res) => {
         this.setState({
+          ...this.state,
           isFetching: false,
         });
         this.mockData = res.body;
         this.dataTransformation(this.mockData);
-        this.draw();
+        if (isUpdate === true) {
+          this.redraw();
+        } else {
+          this.draw();
+        }
+      });
+  };
+  
+  fetchData() {
+    this.setState({
+      ...this.state,
+      isFetching: true,
+    });
+    
+    return request.post('http://10.85.1.171:8080/odByTime')
+      .type('form')
+      .send({
+        startTime: this.state.startTime,
+        endTime: this.state.endTime,
       });
   };
   
@@ -87,9 +118,9 @@ export default class OriginDestinationSummary extends React.Component {
       realtime: true,
       onClick: (e) => {
         
-        isRelationalVision = !isRelationalVision;
+        this.isRelationalVision = !this.isRelationalVision;
         
-        if (isRelationalVision === true) {
+        if (this.isRelationalVision === true) {
           
           let location, result = [], lines, tooltipSource = [];
 
@@ -150,6 +181,12 @@ export default class OriginDestinationSummary extends React.Component {
       zIndex: 150,
     });
   };
+  
+  redraw() {
+    this.isRelationalVision = false;
+    this.showPolylines();
+  };
+  
   
   dataTransformation(apiData) {
     this.makePolylineData(apiData);
@@ -256,12 +293,43 @@ export default class OriginDestinationSummary extends React.Component {
     this.paletteTooltip.draw(true);
   };
   
+  onStartTimeChange(e) {
+    this.setState({
+      ...this.state,
+      startTime: e.target.value,
+    });
+    this.delayExecute.exec(this.fetchAndDraw.bind(this, true));
+  };
+  
+  onEndTimeChange(e) {
+    this.setState({
+      ...this.state,
+      endTime: e.target.value,
+    });
+    this.delayExecute.exec(this.fetchAndDraw.bind(this, true));
+  };
+  
+  onAllDayClick() {
+    this.setState({
+      ...this.state,
+      startTime: '00:00:00',
+      endTime: '23:59:59',
+    });
+    
+    setTimeout(() => {
+      this.delayExecute.execNodelay(this.fetchAndDraw.bind(this, true));
+    });
+  };
+  
   render() {
     return (
       <div>
         <h1>Origin Destination Summary</h1>
         <strong>请求API状态：<em>{this.state.isFetching ? '正在请求' : '请求成功'}</em></strong>
         <strong style={{'color': 'red', 'marginLeft': '30px'}}>点击气泡看看？</strong>
+        <label>起始时间</label><input value={this.state.startTime} onChange={this.onStartTimeChange.bind(this)}/>
+        <label>结束时间</label><input value={this.state.endTime} onChange={this.onEndTimeChange.bind(this)}/>
+        <a href="javascript:;" onClick={this.onAllDayClick.bind(this)}>全天</a>
         <div className="map-container" id="map" style={{'height': 'calc(100vh - 110px)'}}></div>
       </div>
     );
