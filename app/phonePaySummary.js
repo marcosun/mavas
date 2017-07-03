@@ -61,11 +61,15 @@ export default class PhonePaySummary extends React.Component {
         },
         xAxis: {
             type: 'category',
+            name: '日期',
+            nameLocation: 'middle',
+            nameGap: 20,
             boundaryGap: false,
             data: Util.pluck(this.data.alipay, 'date'),
         },
         yAxis: {
             type: 'value',
+            name: '使用频率（单位：次）',
         },
         series: [
             {
@@ -103,7 +107,7 @@ export default class PhonePaySummary extends React.Component {
       <div>
         <h1>Bus Phone Pay Summary</h1>
         <strong>请求API状态：<em>{this.state.isFetching ? '正在请求' : '请求成功'}</em></strong>
-        <div id="canvas" style={{"width": "100%", "height": "600px"}}></div>
+        <div id="canvas" style={{"width": "100%", "height": "calc(100vh - 110px)"}}></div>
       </div>
     );
   };
