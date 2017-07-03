@@ -1,5 +1,6 @@
 import React from 'react';
 import echarts from 'echarts';
+import request from 'superagent';
 
 import Mavas from '../lib/mavas/main';
 import Util from '../lib/mavas/util';
@@ -43,19 +44,15 @@ export default class OriginDestinationSummary extends React.Component {
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
-    var request = new XMLHttpRequest();
-    request.open('GET', 'http://10.85.1.171:8080/od', true);
-    request.send();
-    request.onreadystatechange = () => {
-      if (request.readyState === 4 && request.status === 200){
+    request.get('http://10.85.1.171:8080/od')
+      .then((res) => {
         this.setState({
           isFetching: false,
         });
-        this.mockData = JSON.parse(request.response);
+        this.mockData = res.body;
         this.dataTransformation(this.mockData);
         this.draw();
-      };
-    };
+      });
   };
   
   draw() {
