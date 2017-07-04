@@ -23,7 +23,7 @@ export default class Home extends React.Component {
           <li><Link to="/releasenote">releasenote</Link></li>
           <br />
           <h2>Public Transport Dept. Demo 公交云需求</h2>
-          <li><Link to="/phonePaySummary">bus phone pay summary 公交车无线支付统计</Link></li>
+          <li><Link to="/statistics">Statistics 统计数据汇总</Link></li>
           <li><Link to="/originDestinationSummary">origin destination summary 交通量调查</Link></li>
           <li><Link to="/heatmap">heatmap 无线支付热力图</Link></li>
         </ul>

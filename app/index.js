@@ -12,7 +12,7 @@ import Curve from './curve';
 import Marker from './marker';
 import External from './external';
 import ReleaseNote from './releasenote';
-import PhonePaySummary from './phonePaySummary';
+import Statistics from './statistics';
 import OriginDestinationSummary from './originDestinationSummary';
 import Heatmap from './heatmap';
 
@@ -29,7 +29,7 @@ render(
       <Route exact path='/curve' component={Curve} />
       <Route exact path='/marker' component={Marker} />
       <Route exact path='/external' component={External} />
-      <Route exact path='/phonePaySummary' component={PhonePaySummary} />
+      <Route exact path='/statistics' component={Statistics} />
       <Route exact path='/originDestinationSummary' component={OriginDestinationSummary} />
       <Route exact path='/heatmap' component={Heatmap} />
       <Route exact path='/releasenote' component={ReleaseNote} />
