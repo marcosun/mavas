@@ -177,6 +177,12 @@ export default class OriginDestinationSummary extends React.Component {
       width: 250,
     });
     
+    this.timeAxis = this.mavas.createComponent({
+      type: 'timeAxis',
+      id: 'time-axis',
+      
+    });
+    
     this.mavas.draw({
       zIndex: 150,
     });
@@ -331,6 +337,7 @@ export default class OriginDestinationSummary extends React.Component {
         <label>结束时间</label><input value={this.state.endTime} onChange={this.onEndTimeChange.bind(this)}/>
         <a href="javascript:;" onClick={this.onAllDayClick.bind(this)}>全天</a>
         <div className="map-container" id="map" style={{'height': 'calc(100vh - 110px)'}}></div>
+        <canvas id="time-axis"></canvas>
       </div>
     );
   };
