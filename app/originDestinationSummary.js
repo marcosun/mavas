@@ -24,15 +24,11 @@ export default class OriginDestinationSummary extends React.Component {
   constructor(props) {
     super(props);
     
-    let endTime = new Date(),
-      startTime = new Date();
-    startTime.setMinutes(startTime.getMinutes() - 10);
-    
     this.props = props;
     this.state = {
       isFetching: true,
-      startTime: `${startTime.getHours()}:${Math.floor(startTime.getMinutes() / 10)}0:00`,
-      endTime: `${endTime.getHours()}:${Math.floor(endTime.getMinutes() / 10)}0:00`,
+      startTime: '00:00:00',
+      endTime: '23:59:59',
     };
     
     this.delayExecute = new Util.Delay(1000);
@@ -180,7 +176,17 @@ export default class OriginDestinationSummary extends React.Component {
     this.timeAxis = this.mavas.createComponent({
       type: 'timeAxis',
       id: 'time-axis',
-      
+      data: this.timeAxisData,
+      onDrag: (e, timeAxis) => {
+        
+        this.setState({
+          ...this.state,
+          startTime: timeAxis.labelLeft.text,
+          endTime: timeAxis.labelRight.text,
+        });
+
+        this.delayExecute.exec(this.fetchAndDraw.bind(this, true));
+      },
     });
     
     this.mavas.draw({
@@ -195,10 +201,21 @@ export default class OriginDestinationSummary extends React.Component {
   
   
   dataTransformation(apiData) {
+    this.makeTimeAxisData();
     this.makePolylineData(apiData);
     this.makeMarkerData();
     this.makeIconData();
     this.makeTooltipData(this.mockData);
+  };
+  
+  makeTimeAxisData() {
+    this.timeAxisData = new Array(145);
+
+    for (let i = 0; i < 144; i++) {
+      this.timeAxisData[i] = `${Math.floor(i / 6).toString().length === 1 ? '0' + Math.floor(i / 6) : Math.floor(i / 6)}:${i % 6}0:00`;
+    }
+
+    this.timeAxisData[144] = '23:59:59';
   };
   
   makePolylineData(apiData) {
@@ -299,43 +316,12 @@ export default class OriginDestinationSummary extends React.Component {
     this.paletteTooltip.draw(true);
   };
   
-  onStartTimeChange(e) {
-    this.setState({
-      ...this.state,
-      startTime: e.target.value,
-    });
-    this.delayExecute.exec(this.fetchAndDraw.bind(this, true));
-  };
-  
-  onEndTimeChange(e) {
-    this.setState({
-      ...this.state,
-      endTime: e.target.value,
-    });
-    this.delayExecute.exec(this.fetchAndDraw.bind(this, true));
-  };
-  
-  onAllDayClick() {
-    this.setState({
-      ...this.state,
-      startTime: '00:00:00',
-      endTime: '23:59:59',
-    });
-    
-    setTimeout(() => {
-      this.delayExecute.execNodelay(this.fetchAndDraw.bind(this, true));
-    });
-  };
-  
   render() {
     return (
       <div>
         <h1>Origin Destination Summary</h1>
         <strong>请求API状态：<em>{this.state.isFetching ? '正在请求' : '请求成功'}</em></strong>
         <strong style={{'color': 'red', 'marginLeft': '30px'}}>点击气泡看看？</strong>
-        <label>起始时间</label><input value={this.state.startTime} onChange={this.onStartTimeChange.bind(this)}/>
-        <label>结束时间</label><input value={this.state.endTime} onChange={this.onEndTimeChange.bind(this)}/>
-        <a href="javascript:;" onClick={this.onAllDayClick.bind(this)}>全天</a>
         <div className="map-container" id="map" style={{'height': 'calc(100vh - 110px)'}}></div>
         <canvas id="time-axis"></canvas>
       </div>
