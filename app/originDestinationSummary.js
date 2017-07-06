@@ -323,8 +323,8 @@ export default class OriginDestinationSummary extends React.Component {
         <h1>Origin Destination Summary</h1>
         <strong>请求API状态：<em>{this.state.isFetching ? '正在请求' : '请求成功'}</em></strong>
         <strong style={{'color': 'red', 'marginLeft': '30px'}}>点击气泡看看？</strong>
-        <div className="map-container" id="map" style={{'height': 'calc(100vh - 110px)'}}></div>
         <canvas id="time-axis" style={{'width': '100%', 'padding': '20px 0'}}></canvas>
+        <div className="map-container" id="map" style={{'height': 'calc(100vh - 200px)'}}></div>
       </div>
     );
   };
