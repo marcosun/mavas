@@ -12,24 +12,25 @@ export default class Polyline extends React.Component {
       <div>
         <h1>Mavas Release Note</h1>
         <div>
-          <h2>Pre Release Version 0.0.3</h2>
-          <em>Scheduled July 27, 2017</em>
+          <h2>Version 0.0.3</h2>
+          <em>July 6, 2017</em>
           <ol>
             <li>Place an external canvas that fixed on somewhere on screen by calling createLayer with type property equals to 'fixedScreenExternal'</li>
             <li>Place an external canvas that fixed on a geographical location by calling createLayer with type property equals to 'fixedLocationExternal'</li>
-            <li>canvasApi draw functions accept Boolean isForceDraw parameter to force redraw</li>
+            <li>Expose curve constructor to link two data points by semi curves</li>
+            <li>Expose quadraticCurve contructor to link two data points by quadratic curve</li>
             <li>{'createLayer now accepts data in the format of : data: {location: [Array], icon: [Array]}'}</li>
-            <li>Expose curve contructor to link two data points by semi curves</li>
             <li>Users should explicitly call createLayer constructor to draw tooltip</li>
-            <li>Tooltip will show all tooltips that covers a certain point by setting cumulative to true</li>
             <li>Tooltip exposes config apis to control how tooltips should look like, such as padding, width, lineHeight, color, backgroundColor, and etc</li>
-            <li>Expose quadraticCurve contructor to link two data points by Bezier curve</li>
+            <li>Tooltip will show all tooltips that covers a certain point by setting cumulative to true</li>
+            <li>canvasApi draw function accepts isForceDraw (Boolean) parameter to force redraw</li>
             <li>class Delay manages delayed function calls: it cancels a previous callback in the given time and put the new callback as a candidate, then fire the candidate when there is no fresh callbacks coming in in the given time.</li>
+            <li>Introduce new component: timeAxis. It is independent from amap</li>
           </ol>
         </div>
         <div>
           <h2>Version 0.0.2</h2>
-          <em>July 20, 2017</em>
+          <em>June 20, 2017</em>
           <ol>
             <li>Redraw and show extended areas when map moves by configuring realtime property. Be aware of lattency in case of big data</li>
             <li>Exposes api to reset centre and zoom level of the map to cover all data points of a palette</li>
@@ -38,7 +39,7 @@ export default class Polyline extends React.Component {
         </div>
         <div>
           <h2>Version 0.0.1</h2>
-          <em>July 14, 2017</em>
+          <em>June 14, 2017</em>
           <ol>
             <li>Mavas can be splitted into four parts based on their functions: Mavas-Composer-Palette-CanvasApi(Polyline/Marker)</li>
             <li>Mavas exposes constructor, stores amap instance, and it inherits from Composer.</li>
