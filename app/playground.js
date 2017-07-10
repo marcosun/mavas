@@ -257,7 +257,6 @@ export default class Playground extends React.Component {
   };
   
   render() {
-    console.log(this.state);
     return (
       <div>
         <h1>Playground 咱自个儿画图</h1>
@@ -280,6 +279,3 @@ export default class Playground extends React.Component {
     );
   };
 };
-
-//[[120.2388,30.354945], [120.183522,30.245954], [120.044934,30.277273]]
-//[[120.129484,30.269454], [120.091262,30.275145], [120.16632,30.24948]]
