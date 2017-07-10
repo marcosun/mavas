@@ -15,6 +15,7 @@ import ReleaseNote from './releasenote';
 import Statistics from './statistics';
 import OriginDestinationSummary from './originDestinationSummary';
 import Heatmap from './heatmap';
+import Playground from './playground';
 
 import Styles from './index.css';
 
@@ -32,6 +33,7 @@ render(
       <Route exact path='/statistics' component={Statistics} />
       <Route exact path='/originDestinationSummary' component={OriginDestinationSummary} />
       <Route exact path='/heatmap' component={Heatmap} />
+      <Route exact path='/playground' component={Playground} />
       <Route exact path='/releasenote' component={ReleaseNote} />
     </div>
   </Router>,
