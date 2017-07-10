@@ -16,8 +16,8 @@ export default class Heatmap extends React.Component {
     //init mavas; see amap api reference
     this.mavas = new Mavas('map',{
       resizeEnable: true,
-      zoom: 16,
-      center: [120.131537, 30.281016],
+      zoom: 14,
+      center: [120.16405,30.254651],
       animateEnable: true,
       mapStyle: 'amap://styles/darkblue',
     });

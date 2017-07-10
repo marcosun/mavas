@@ -25,8 +25,8 @@ export default class Playground extends React.Component {
     //init mavas; see amap api reference
     this.mavas = new Mavas('map',{
       resizeEnable: true,
-      zoom: 13,
-      center: [120.057926,30.183576],
+      zoom: 11,
+      center: [120.16405,30.254651],
       animateEnable: false,
       mapStyle: 'amap://styles/darkblue',
     });
@@ -274,7 +274,7 @@ export default class Playground extends React.Component {
         <div>
           <button onClick={this.draw.bind(this)}>做图</button>
         </div>
-        <div className="map-container" id="map" style={{'height': 'calc(100vh - 400px)'}}></div>
+        <div className="map-container" id="map" style={{'height': 'calc(100vh - 100px)'}}></div>
       </div>
     );
   };

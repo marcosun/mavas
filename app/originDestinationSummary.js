@@ -39,8 +39,8 @@ export default class OriginDestinationSummary extends React.Component {
     //init mavas; see amap api reference
     this.mavas = new Mavas('map',{
       resizeEnable: true,
-      zoom: 16,
-      center: [120.131537, 30.281016],
+      zoom: 11,
+      center: [120.16405,30.254651],
       animateEnable: false,
       mapStyle: 'amap://styles/darkblue',
     });
