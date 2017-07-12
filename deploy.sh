@@ -38,7 +38,7 @@ echo $fg[cyan] "backup previous release"
 cp -r server server_copy
 
 #delete dist in server
-echo $fg[cyan] "clean server"
+echo $fg[cyan] "clean static files"
 cd server/public
 ls | grep -v index.html | xargs rm
 
@@ -65,9 +65,13 @@ echo $fg[cyan] "docker image build process completes"
 #server up
 echo $fg[cyan] "stop previous server"
 sudo docker stop mavasDemo
-sudo docker rm mavasDemo
 echo $fg[cyan] "start server"
 sudo docker run -d -p 18110:80 --name mavasDemo mavasdemo:latest
+
+#clean docker
+echo $fg[cyan] "docker clean"
+sudo docker rm $(sudo docker ps -aq)
+sudo docker rmi $(sudo docker images -q)
 
 #docker swarm
 #sudo docker swarm init
