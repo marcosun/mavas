@@ -19,7 +19,7 @@ cd mavas
 
 #frontend build
 chmod 755 frontend_build.sh
-sudo docker run -v /home/marco/app/mavasDemo/mavas:/app/ node:8 /app/npm_build.sh
+sudo docker run -v /home/marco/app/mavasDemo/mavas:/app/ node:8 /app/frontend_build.sh
 
 cd ..
 
