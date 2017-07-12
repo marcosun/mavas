@@ -72,7 +72,7 @@ sudo docker run -d -p 18110:80 --name mavasDemo mavasdemo:latest
 #clean docker
 echo $fg[cyan] "docker clean"
 sudo docker rm $(sudo docker ps -aq)
-sudo docker rmi $(sudo docker images -q)
+sudo docker rmi $(sudo docker images -f "dangling=true" -q)
 
 #docker swarm
 #sudo docker swarm init
