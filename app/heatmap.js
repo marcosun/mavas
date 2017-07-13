@@ -1,4 +1,5 @@
 import React from 'react';
+import request from 'superagent';
 
 import Mavas from '../lib/mavas/main';
 
@@ -25,20 +26,18 @@ export default class Heatmap extends React.Component {
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.Heatmap'], () => {});
     
-    //TODO: STRONGLY recommand superagent in production
-    var request = new XMLHttpRequest();
-    request.open('POST', 'http://10.85.1.171:8080/getByStation', true);
-    request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-    request.send('startDate=2017-6-2&endDate=2017-6-22');
-    request.onreadystatechange = () => {
-      if (request.readyState === 4 && request.status === 200){
+    return request.get('http://10.85.1.171:8080/getByStation')
+      .query({
+        startDate: '2017-6-2',
+        endDate: '2017-6-22',
+      })
+      .then((res) => {
         this.setState({
           isFetching: false,
         });
-        this.dataTransformation(JSON.parse(request.response))
+        this.dataTransformation(res.body);
         this.draw();
-      };
-    };
+      });
   };
   
   draw() {
