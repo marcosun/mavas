@@ -43,6 +43,11 @@ export default class Heatmap extends React.Component {
   draw() {
     let heatmap = new AMap.Heatmap(this.mavas.map, {
       radius: 15, //给定半径
+      gradient: {
+        '.5': 'blue',
+        '.8': 'red',
+        '.95': 'white'
+      },
       opacity: [0, 0.8],
     });
     heatmap.setDataSet({
