@@ -20,6 +20,7 @@ export default class Statistics extends React.Component {
         busRoute: 'http://10.85.1.171:8080/groupByBusline',
         busStop: 'http://10.85.1.171:8080/getByStation?limit=10',
         multipleConfirmation: 'http://10.85.1.171:8080/groupMulConfirm',
+        noConfirmation: 'http://10.85.1.171:8080/groupOnlyCard',
       }
       
       return mapping[canvasName];
@@ -36,6 +37,7 @@ export default class Statistics extends React.Component {
     this.busRoute = {...this.base};
     this.busStop = {...this.base};
     this.multipleConfirmation = {...this.base};
+    this.noConfirmation = {...this.base};
     
     this.startDate = new Date();
     this.startDate.setDate(this.startDate.getDate() - 15);
@@ -55,6 +57,7 @@ export default class Statistics extends React.Component {
     this.busRoute = assignCanvas('busRoute');
     this.busStop = assignCanvas('busStop');
     this.multipleConfirmation = assignCanvas('multipleConfirmation');
+    this.noConfirmation = assignCanvas('noConfirmation');
     
     this.init();
   };
@@ -210,9 +213,97 @@ export default class Statistics extends React.Component {
       this.busStop.echart.setOption(this.busStop.option, true);
     };
     
+    const drawMultipleConfirmation = () => {
+      this.multipleConfirmation.option = {
+          color: ['#3398DB'],
+          title: {
+              text: '一条刷卡记录存在多条确认记录',
+          },
+          tooltip : {
+              trigger: 'axis',
+              axisPointer : {
+                  type : 'shadow'
+              }
+          },
+          grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true,
+          },
+          xAxis: {
+              type: 'category',
+              name: '日期',
+              nameLocation: 'middle',
+              nameGap: 20,
+              boundaryGap: false,
+              data: Util.pluck(this.multipleConfirmation.data, 'date'),
+          },
+          yAxis: {
+              type: 'value',
+              name: '次数',
+          },
+          series: [
+              {
+                  name:'count',
+                  type:'line',
+                  smooth: true,
+                  data: Util.pluck(this.multipleConfirmation.data, 'count'),
+              },
+          ],
+      };
+
+      this.multipleConfirmation.echart.setOption(this.multipleConfirmation.option, true);
+    };
+    
+    const drawNoConfirmation = () => {
+      this.noConfirmation.option = {
+          color: ['#3398DB'],
+          title: {
+              text: '只有刷卡记录，无确认记录',
+          },
+          tooltip : {
+              trigger: 'axis',
+              axisPointer : {
+                  type : 'shadow'
+              }
+          },
+          grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true,
+          },
+          xAxis: {
+              type: 'category',
+              name: '日期',
+              nameLocation: 'middle',
+              nameGap: 20,
+              boundaryGap: false,
+              data: Util.pluck(this.noConfirmation.data, 'date'),
+          },
+          yAxis: {
+              type: 'value',
+              name: '次数',
+          },
+          series: [
+              {
+                  name:'count',
+                  type:'line',
+                  smooth: true,
+                  data: Util.pluck(this.noConfirmation.data, 'count'),
+              },
+          ],
+      };
+
+      this.noConfirmation.echart.setOption(this.noConfirmation.option, true);
+    };
+    
     drawPhonePay();
     drawBusRoute();
     drawBusStop();
+    drawMultipleConfirmation();
+    drawNoConfirmation();
   };
   
   init() {
@@ -240,8 +331,9 @@ export default class Statistics extends React.Component {
     const initBusRoute = initConstructor('busRoute');
     const initBusStop = initConstructor('busStop');
     const initMultipleConfirmation = initConstructor('multipleConfirmation');
+    const initNoConfirmation = initConstructor('noConfirmation');
     
-    Promise.all([initPhonePay(), initBusRoute(), initBusStop(), initMultipleConfirmation()])
+    Promise.all([initPhonePay(), initBusRoute(), initBusStop(), initMultipleConfirmation(), initNoConfirmation()])
       .then(() => {
         this.setState({
           ...this.state,
@@ -268,6 +360,7 @@ export default class Statistics extends React.Component {
         <div id="busRoute" style={{"width": "100%", "height": "600px"}}></div>
         <div id="busStop" style={{"width": "100%", "height": "600px"}}></div>
         <div id="multipleConfirmation" style={{"width": "100%", "height": "600px"}}></div>
+        <div id="noConfirmation" style={{"width": "100%", "height": "600px"}}></div>
       </div>
     );
   };
