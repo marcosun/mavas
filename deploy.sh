@@ -64,8 +64,7 @@ echo $fg[cyan] "docker image build process completes"
 
 #server up
 echo $fg[cyan] "stop previous server"
-sudo docker stop mavasDemo
-sudo docker rm mavasDemo
+sudo docker rm -f mavasDemo
 echo $fg[cyan] "start server"
 sudo docker run -d -p 18110:80 --name mavasDemo mavasdemo:latest
 
