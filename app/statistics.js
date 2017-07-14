@@ -18,7 +18,7 @@ export default class Statistics extends React.Component {
       const mapping = {
         phonePay: 'http://10.85.1.171:8080/trend',
         busRoute: 'http://10.85.1.171:8080/groupByBusline',
-        busStop: 'http://10.85.1.171:8080/getByStation?limit=10',
+        busStop: 'http://10.85.1.171:8080/groupByStation?limit=10',
         multipleConfirmation: 'http://10.85.1.171:8080/groupMulConfirm',
         noConfirmation: 'http://10.85.1.171:8080/groupOnlyCard',
       }
