@@ -83,21 +83,11 @@ export default class OriginDestinationSummary extends React.Component {
   
   draw() {
     
-    this.palettePolyline = this.mavas.createLayer({
-      type: 'polyline',
-      id: 'polyline',
-      data: {
-        location: this.polylineData,
-      },
-      realtime: true,
-      color: 'red',
-    });
-    
     this.paletteCurve = this.mavas.createLayer({
       type: 'quadraticCurve',
       id: 'quadraticCurve',
       data: {
-        location: [],
+        location: this.polylineData,
       },
       realtime: true,
       color: '#00FFFF',
@@ -149,15 +139,13 @@ export default class OriginDestinationSummary extends React.Component {
           this.makeIconData();
           this.makeTooltipData(tooltipSource);
           
-          this.showCurves();
-          
         } else {
           
           this.dataTransformation(this.mockData);
           
-          this.showPolylines();
-          
         }
+        
+        this.updateCurves();
       },
     });
     
@@ -196,9 +184,8 @@ export default class OriginDestinationSummary extends React.Component {
   
   redraw() {
     this.isRelationalVision = false;
-    this.showPolylines();
+    this.updateCurves();
   };
-  
   
   dataTransformation(apiData) {
     this.makeTimeAxisData();
@@ -257,45 +244,10 @@ export default class OriginDestinationSummary extends React.Component {
     };
   };
   
-  showCurves() {
-    this.palettePolyline.importData({
-      location: [],
-    });
-
-    this.palettePolyline.draw(true);
+  updateCurves() {
     
     this.paletteCurve.importData({
       location: this.polylineData,
-    });
-
-    this.paletteCurve.draw(true);
-
-    this.paletteMarker.importData({
-      location: this.markerData,
-      icon: this.iconData,
-    });
-
-    this.paletteMarker.draw(true);
-
-    this.paletteTooltip.importData({
-      location: this.markerData,
-      markerSize: new Array(this.markerData.length).fill({width: startImage.width, height: startImage.height,}),
-      desc: this.tooltipData,
-    });
-
-    this.paletteTooltip.draw(true);
-  };
-  
-  showPolylines() {
-
-    this.palettePolyline.importData({
-      location: this.polylineData,
-    });
-
-    this.palettePolyline.draw(true);
-    
-    this.paletteCurve.importData({
-      location: [],
     });
 
     this.paletteCurve.draw(true);
