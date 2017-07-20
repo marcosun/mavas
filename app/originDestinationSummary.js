@@ -82,15 +82,22 @@ export default class OriginDestinationSummary extends React.Component {
   };
   
   draw() {
-    
     this.paletteCurve = this.mavas.createLayer({
       type: 'quadraticCurve',
       id: 'quadraticCurve',
-      data: {
-        location: this.polylineData,
-      },
-      realtime: true,
-      color: '#00FFFF',
+      data: (() => {
+        let result = [];
+        for(let i = 0, len = this.polylineData.length; i < len; i++) {
+          result.push({
+            coords: this.polylineData[i],
+            lineStyle: {
+              type: 'dash',
+              color: (() => {return Math.floor(Math.random() * 10) < 5 ? '#00FFFF' : 'red'})(),
+            },
+          });
+        };
+        return result;
+      })(),
     });
     
     this.paletteMarker = this.mavas.createLayer({
