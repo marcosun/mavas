@@ -52,11 +52,7 @@ export default class Playground extends React.Component {
       type: 'polyline',
       id: this.nextPolylineId++ && `polyline${this.nextPolylineId - 1}`,
       globalId: this.nextMarkerId + this.nextPolylineId - 2,
-      data: {
-        location: [],
-      },
-      cacheAlgo: '9 blocks',
-      realtime: true,
+      data: [],
     };
   };
   
@@ -156,9 +152,15 @@ export default class Playground extends React.Component {
               {},
               this.state.options[i],
               {
-                data: {
-                  location: [location],
-                },
+                data: (() => {
+                  let result = [];
+                  console.log(location);
+                  result.push({
+                    coords: location,
+                  });
+                  return result;
+                  //location: [location],
+                })(),
               },
             ));
           } else {
@@ -236,7 +238,9 @@ export default class Playground extends React.Component {
               {},
               this.state.options[i],
               {
-                color: color,
+                lineStyle: {
+                  color: color,
+                },
               },
             ));
           } else {
