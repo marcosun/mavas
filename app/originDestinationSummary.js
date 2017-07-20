@@ -5,14 +5,9 @@ import request from 'superagent';
 import Mavas from '../lib/mavas/main';
 import Util from '../lib/mavas/util';
 
-import startIcon from './image/start.png';
-import endIcon from './image/end.png';
-
-let startImage = document.createElement('img'),
-    endImage = document.createElement('img');
-
-startImage.src = startIcon;
-endImage.src = endIcon;
+import balloonIcon from './image/balloon.png';
+let baloonImage = document.createElement('img');
+baloonImage.src = balloonIcon;
 
 /*
   *Map component creates a container for map
@@ -49,6 +44,7 @@ export default class OriginDestinationSummary extends React.Component {
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
     this.fetchAndDraw();
+    window.mavas = this.mavas;
   };
   
   fetchAndDraw(isUpdate) {
@@ -87,19 +83,20 @@ export default class OriginDestinationSummary extends React.Component {
       id: 'quadraticCurve',
       data: (() => {
         let result = [];
-        for(let i = 0, len = this.polylineData.length; i < len; i++) {
-          result.push({
-            coords: this.polylineData[i],
-            symbol: {
-              symbol: ['none', 'arrow'],
-              color: i < 10 ? '#00FFFF' : 'rgb(64, 69, 78)',
-            },
-            lineStyle: {
-              type: i < 10 ? 'line' : 'dash',
-              color: i < 10 ? '#00FFFF' : 'rgb(64, 69, 78)',
-            },
-          });
-        };
+//        for(let i = 0, len = this.polylineData.length; i < len; i++) {
+//          result.push({
+//            coords: this.polylineData[i],
+//            symbol: {
+//              symbol: ['none', 'arrow'],
+//              size: [15, 15],
+//              color: '#00FFFF',
+//            },
+//            lineStyle: {
+//              type: 'dash',
+//              color: '#00FFFF',
+//            },
+//          });
+//        };
         return result;
       })(),
     });
@@ -164,7 +161,7 @@ export default class OriginDestinationSummary extends React.Component {
       type: 'tooltip',
       data: {
         location: this.markerData,
-        markerSize: new Array(this.markerData.length).fill({width: startImage.width, height: startImage.height,}),
+        markerSize: new Array(this.markerData.length).fill({width: baloonImage.width, height: baloonImage.height,}),
         desc: this.tooltipData,
       },
       cumulative: true,
@@ -237,8 +234,8 @@ export default class OriginDestinationSummary extends React.Component {
     this.iconData = [];
 
     for(let i = 0, len = this.polylineData.length; i < len; i++) {
-      this.iconData.push(startImage);
-      this.iconData.push(endImage);
+      this.iconData.push(baloonImage);
+      this.iconData.push(baloonImage);
     }
   };
   
@@ -257,9 +254,30 @@ export default class OriginDestinationSummary extends React.Component {
   
   updateCurves() {
     
-    this.paletteCurve.importData({
-      location: this.polylineData,
-    });
+    this.paletteCurve.importData(
+      (() => {
+        let result = [];
+        
+        if (this.isRelationalVision === false) {
+          return result;
+        };
+        for(let i = 0, len = this.polylineData.length; i < len; i++) {
+          result.push({
+            coords: this.polylineData[i],
+            symbol: {
+              symbol: ['none', 'arrow'],
+              size: [15, 15],
+              color: '#00FFFF',
+            },
+            lineStyle: {
+              type: 'dash',
+              color: '#00FFFF',
+            },
+          });
+        };
+        return result;
+      })()
+    );
 
     this.paletteCurve.draw(true);
 
@@ -272,7 +290,7 @@ export default class OriginDestinationSummary extends React.Component {
 
     this.paletteTooltip.importData({
       location: this.markerData,
-      markerSize: new Array(this.markerData.length).fill({width: startImage.width, height: startImage.height,}),
+      markerSize: new Array(this.markerData.length).fill({width: baloonImage.width, height: baloonImage.height,}),
       desc: this.tooltipData,
     });
 
