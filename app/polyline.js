@@ -22,7 +22,7 @@ export default class Polyline extends React.Component {
       render: {
         'instant': false,
         'delay': false,
-        'realtime': false,
+        'isRealtime': false,
       },
     };
     this.state = {
@@ -103,12 +103,12 @@ export default class Polyline extends React.Component {
           },
         });
         break;
-      case 'realtime':
+      case 'isRealtime':
         this.setState({
           ...this.state,
           render: {
             ...this.defaultState.render,
-            'realtime': true,
+            'isRealtime': true,
           },
         });
         break;
@@ -127,23 +127,33 @@ export default class Polyline extends React.Component {
       *@param {location: Array} data [optional]
       *@param {String} cacheAlgo [optional]
       *@param {{interval: Number,String, size: Number,String }} delay [optional]
-      *@param {Boolean} realtime [optional]
+      *@param {Boolean} isRealtime [optional]
       *@param {String} color [optional]
       *@return {Palette} palette [Palette instance]
     */
     palette = this.mavas.createLayer({
       type: 'polyline',
       id: 'polyline',
-      data: {
-        location: this.transformedData,
+      data: (() => {
+        let result = [];
+        for(let i = 0, len = this.transformedData.length; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+          });
+        };
+        return result;
+      })(),
+      algo: {
+        cacheAlgo: this.state.algo['9 blocks'] ? '9 blocks' : 'simple',
+        delay: this.state.render.instant || this.state.render.isRealtime ? undefined : {
+          interval: 100,
+          size: 100,
+        },
+        isRealtime: this.state.render.isRealtime,
       },
-      cacheAlgo: this.state.algo['9 blocks'] ? '9 blocks' : 'simple',
-      delay: this.state.render.instant ? undefined : {
-        interval: 100,
-        size: 100,
+      lineStyle: {
+        color: '#00FFFF',
       },
-      realtime: this.state.render.realtime,
-      color: '#00FFFF',
     });
     
     this.mavas.draw();
@@ -168,7 +178,7 @@ export default class Polyline extends React.Component {
             <h5 style={{'margin': '5px 0'}}>渲染方式（必选、单选）</h5>
             <label style={{"padding": "2px 5px"}}><input name="instant" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.instant}></input>instant</label>
             <label style={{"padding": "2px 5px"}}><input name="delay" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.delay}></input>delay</label>
-            <label style={{"padding": "2px 5px"}}><input name="realtime" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.realtime}></input>realtime</label>
+            <label style={{"padding": "2px 5px"}}><input name="isRealtime" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.isRealtime}></input>isRealtime</label>
           </div>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
           <a className="btn" onClick={this.draw.bind(this)} href="javascript:;">draw</a>

@@ -91,8 +91,8 @@ export default class OriginDestinationSummary extends React.Component {
           result.push({
             coords: this.polylineData[i],
             lineStyle: {
-              type: 'dash',
-              color: (() => {return Math.floor(Math.random() * 10) < 5 ? '#00FFFF' : 'red'})(),
+              type: i < 10 ? 'line' : 'dash',
+              color: i < 10 ? '#00FFFF' : 'rgb(64, 69, 78)',
             },
           });
         };
