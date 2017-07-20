@@ -83,13 +83,17 @@ export default class OriginDestinationSummary extends React.Component {
   
   draw() {
     this.paletteCurve = this.mavas.createLayer({
-      type: 'quadraticCurve',
+      type: 'polyline',
       id: 'quadraticCurve',
       data: (() => {
         let result = [];
         for(let i = 0, len = this.polylineData.length; i < len; i++) {
           result.push({
             coords: this.polylineData[i],
+            symbol: {
+              symbol: ['none', 'arrow'],
+              color: i < 10 ? '#00FFFF' : 'rgb(64, 69, 78)',
+            },
             lineStyle: {
               type: i < 10 ? 'line' : 'dash',
               color: i < 10 ? '#00FFFF' : 'rgb(64, 69, 78)',
