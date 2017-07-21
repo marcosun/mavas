@@ -24,6 +24,7 @@ export default class Home extends React.Component {
           <br />
           <h2>Public Transport Dept. Demo 公交云需求</h2>
           <li><Link to="/statistics">Statistics 统计数据汇总</Link></li>
+          <li><Link to="/migration">Migration 区域人口流动</Link></li>
           <li><Link to="/originDestinationSummary">Origin Destination Summary 交通量调查</Link></li>
           <li><Link to="/heatmap">Heatmap 无线支付热力图</Link></li>
           <li><Link to="/playground">Playground 咱自个儿画图</Link></li>
