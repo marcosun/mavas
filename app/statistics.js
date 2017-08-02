@@ -16,11 +16,11 @@ export default class Statistics extends React.Component {
     
     this.mapCanvasToApi = (canvasName) => {
       const mapping = {
-        phonePay: 'http://10.85.1.171:8080/trend',
-        busRoute: 'http://10.85.1.171:8080/groupByBusline',
-        busStop: 'http://10.85.1.171:8080/groupByStation?limit=10',
-        multipleConfirmation: 'http://10.85.1.171:8080/groupMulConfirm',
-        noConfirmation: 'http://10.85.1.171:8080/groupOnlyCard',
+        phonePay: `${__API_ROOT__}/trend`,
+        busRoute: `${__API_ROOT__}/groupByBusline`,
+        busStop: `${__API_ROOT__}/groupByStation?limit=10`,
+        multipleConfirmation: `${__API_ROOT__}/groupMulConfirm`,
+        noConfirmation: `${__API_ROOT__}/groupOnlyCard`,
       }
       
       return mapping[canvasName];

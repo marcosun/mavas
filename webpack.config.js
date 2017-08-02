@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -170,7 +171,28 @@ module.exports = {
   
   devServer: {
     disableHostCheck: true
-  }
+  },
 
-  /* Advanced configuration (click to show) */
+  plugins: [
+    new ExtractTextPlugin('styles.css'),
+    new webpack.DefinePlugin({
+      __API_ROOT__: (() => {
+        //config root path of api
+        switch(process.env.NODE_ENV) {
+          case 'dev':
+            return JSON.stringify('http://10.85.1.171:8080');
+            break;
+          case 'aliyun':
+            return JSON.stringify('http://10.0.101.183:54000');
+            break;
+          case 'prod':
+            return JSON.stringify('http://10.88.0.230:8082/test/admin');
+            break;
+          default:
+            return JSON.stringify('http://10.88.0.230:8082/test/admin');
+            break;
+        }
+      })(),
+    }),
+  ],
 }

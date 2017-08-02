@@ -6,7 +6,7 @@ cd /app/
 npm install
 
 #build
-npm run build
+npm run dev
 
 #change owner of modified files
 #find user id from host machine

@@ -17,7 +17,7 @@ export default class Migration extends React.Component {
     
     this.mapCanvasToApi = (canvasName) => {
       const mapping = {
-        migration: 'http://10.85.1.171:8080/groupByDistrictName',
+        migration: `${__API_ROOT__}/groupByDistrictName`,
       }
       
       return mapping[canvasName];

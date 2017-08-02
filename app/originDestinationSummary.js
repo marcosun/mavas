@@ -70,7 +70,7 @@ export default class OriginDestinationSummary extends React.Component {
       isFetching: true,
     });
     
-    return request.get('http://10.85.1.171:8080/odByTime')
+    return request.get(`${__API_ROOT__}/odByTime`)
       .query({
         startTime: this.state.startTime,
         endTime: this.state.endTime,

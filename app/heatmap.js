@@ -55,8 +55,8 @@ export default class Heatmap extends React.Component {
     
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.Heatmap'], () => {});
-    
-    return request.get('http://10.85.1.171:8080/groupByStation')
+
+    return request.get(`${__API_ROOT__}/groupByStation`)
       .query({
         startDate: `${this.startDate.getFullYear()}-${this.startDate.getMonth() + 1}-${this.startDate.getDate()}`,
         endDate: `${this.endDate.getFullYear()}-${this.endDate.getMonth() + 1}-${this.endDate.getDate()}`,
