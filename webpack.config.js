@@ -183,7 +183,7 @@ module.exports = {
             return JSON.stringify('http://10.85.1.171:8080');
             break;
           case 'aliyun':
-            return JSON.stringify('http://10.0.101.183:54000');
+            return JSON.stringify('http://101.37.105.67:54000');
             break;
           case 'prod':
             return JSON.stringify('http://10.88.0.230:8082/test/admin');
