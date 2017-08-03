@@ -33,7 +33,7 @@ module.exports = {
       // rules for modules (configure loaders, parser options, etc.)
 
       {
-        test: /\.js?$/,
+        test: /\.(js|jsx)$/,
         exclude: [
           path.resolve(__dirname, "node_modules/")
         ],

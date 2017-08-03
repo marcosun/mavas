@@ -13,6 +13,8 @@ import Marker from './pages/marker';
 import External from './pages/external';
 import ReleaseNote from './pages/releasenote';
 import Statistics from './pages/statistics';
+import StationWithCitizenCard from './pages/stationWithCitizenCard';
+import RouteWithCitizenCard from './pages/routeWithCitizenCard';
 import Migration from './pages/migration';
 import OriginDestinationSummary from './pages/originDestinationSummary';
 import Heatmap from './pages/heatmap';
@@ -32,6 +34,8 @@ render(
       <Route exact path='/marker' component={Marker} />
       <Route exact path='/external' component={External} />
       <Route exact path='/statistics' component={Statistics} />
+      <Route exact path='/stationWithCitizenCard' component={StationWithCitizenCard} />
+      <Route exact path='/routeWithCitizenCard' component={RouteWithCitizenCard} />
       <Route exact path='/migration' component={Migration} />
       <Route exact path='/originDestinationSummary' component={OriginDestinationSummary} />
       <Route exact path='/heatmap' component={Heatmap} />
