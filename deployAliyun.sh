@@ -15,7 +15,7 @@ git clone git@10.96.6.9:zeta/mavas.git mavas_source
 scp -r mavas_source marco@121.196.210.95:~/app/mavasDemo
 
 #login to access gateway
-ssh -t marco@121.196.210.95
+ssh -t -t marco@121.196.210.95
 cd ~/app/mavasDemo
 
 #copy to aliyun server
@@ -25,7 +25,7 @@ scp -r mavas_source marco@10.0.101.185:~/app/mavasDemo
 rm -rf mavas_source
 
 #login to aliyun server
-ssh -t marco@10.0.101.185
+ssh -t -t marco@10.0.101.185
 cd ~/app/mavasDemo
 
 #delete copy
