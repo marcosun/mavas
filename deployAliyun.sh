@@ -4,6 +4,9 @@ echo $fg[cyan] "deploy aliyun now begins"
 
 cd ~/app/mavasDemo
 
+#clean mavas folder on access gateway
+rm -rf mavas_source
+
 #fetch code
 echo $fg[cyan] "fetch source code"
 git clone git@10.96.6.9:zeta/mavas.git mavas_source
