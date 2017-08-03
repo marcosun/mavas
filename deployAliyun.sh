@@ -25,7 +25,7 @@ ssh marco@121.196.210.95 << EOF
   rm -rf mavas_source
 
   #login to aliyun server
-  ssh marco@10.0.101.185 '
+  ssh -t -t marco@10.0.101.185 '
   cd ~/app/mavasDemo
 
   #delete copy
