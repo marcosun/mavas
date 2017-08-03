@@ -34,9 +34,6 @@ module.exports = {
 
       {
         test: /\.js?$/,
-        include: [
-          path.resolve(__dirname, "app")
-        ],
         exclude: [
           path.resolve(__dirname, "node_modules/")
         ],
