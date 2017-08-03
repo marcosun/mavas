@@ -99,7 +99,8 @@ ssh marco@121.196.210.95 << EOF
   #docker swarm
   #sudo docker swarm init
   #sudo docker stack deploy -c docker-compose.yml mavasDemo
-  '
 
   echo $fg[cyan] "deploy aliyun completes"
+  exit
+  '
 EOF
