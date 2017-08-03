@@ -301,7 +301,7 @@ export default class OriginDestinationSummary extends React.Component {
     return (
       <div>
         <h1>Origin Destination Summary</h1>
-        <strong>TEST请求API状态：<em>{this.state.isFetching ? '正在请求' : '请求成功'}</em></strong>
+        <strong>请求API状态：<em>{this.state.isFetching ? '正在请求' : '请求成功'}</em></strong>
         <strong style={{'color': 'red', 'marginLeft': '30px'}}>点击气泡看看？</strong>
         <div style={{'padding': '20px 0'}}>
           <canvas id="time-axis" style={{'width': '100%'}}></canvas>
