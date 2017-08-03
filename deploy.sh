@@ -23,8 +23,8 @@ cd mavas
 
 #frontend build
 echo $fg[cyan] "frontend build process begins"
-chmod 755 frontend_build.sh
-sudo docker run -v /home/marco/app/mavasDemo/mavas:/app/ node:8 /app/frontend_build.sh
+chmod 755 frontend_dev.sh
+sudo docker run -v /home/marco/app/mavasDemo/mavas:/app/ node:8 /app/frontend_dev.sh
 echo $fg[cyan] "frontend build process completes"
 
 cd ..
