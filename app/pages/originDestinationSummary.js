@@ -2,10 +2,10 @@ import React from 'react';
 import echarts from 'echarts';
 import request from 'superagent';
 
-import Mavas from '../lib/mavas/main';
-import Util from '../lib/mavas/util';
+import Mavas from '../../lib/mavas/main';
+import Util from '../../lib/mavas/util';
 
-import balloonIcon from './image/balloon.png';
+import balloonIcon from '../image/balloon.png';
 let baloonImage = document.createElement('img');
 baloonImage.src = balloonIcon;
 

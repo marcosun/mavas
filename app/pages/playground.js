@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Util from '../lib/mavas/util';
-import Mavas from '../lib/mavas/main';
+import Util from '../../lib/mavas/util';
+import Mavas from '../../lib/mavas/main';
 
 /*
   *Map component creates a container for map

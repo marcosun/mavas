@@ -1,8 +1,8 @@
 import React from 'react';
 import request from 'superagent';
 
-import Mavas from '../lib/mavas/main';
-import Util from '../lib/mavas/util';
+import Mavas from '../../lib/mavas/main';
+import Util from '../../lib/mavas/util';
 
 export default class Heatmap extends React.Component {
   

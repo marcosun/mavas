@@ -1,9 +1,9 @@
 import React from 'react';
 import echarts from 'echarts';
 
-import Util from '../lib/mavas/util';
-import Mavas from '../lib/mavas/main';
-import data from './mockData/busRouteData';
+import Util from '../../lib/mavas/util';
+import Mavas from '../../lib/mavas/main';
+import data from '../mockData/busRouteData';
 
 /*
   *Map component creates a container for map

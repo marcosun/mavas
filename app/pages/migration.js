@@ -2,7 +2,7 @@ import React from 'react';
 import echarts from 'echarts';
 import request from 'superagent';
 
-import Util from '../lib/mavas/util';
+import Util from '../../lib/mavas/util';
 
 export default class Migration extends React.Component {
   

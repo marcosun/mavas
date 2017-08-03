@@ -6,17 +6,17 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import Home from './home';
-import Polyline from './polyline';
-import Curve from './curve';
-import Marker from './marker';
-import External from './external';
-import ReleaseNote from './releasenote';
-import Statistics from './statistics';
-import Migration from './migration';
-import OriginDestinationSummary from './originDestinationSummary';
-import Heatmap from './heatmap';
-import Playground from './playground';
+import Home from './pages/home';
+import Polyline from './pages/polyline';
+import Curve from './pages/curve';
+import Marker from './pages/marker';
+import External from './pages/external';
+import ReleaseNote from './pages/releasenote';
+import Statistics from './pages/statistics';
+import Migration from './pages/migration';
+import OriginDestinationSummary from './pages/originDestinationSummary';
+import Heatmap from './pages/heatmap';
+import Playground from './pages/playground';
 
 import Styles from './index.css';
 

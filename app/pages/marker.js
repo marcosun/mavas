@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Util from '../lib/mavas/util';
-import Mavas from '../lib/mavas/main';
-import data from './mockData/markerData';
+import Util from '../../lib/mavas/util';
+import Mavas from '../../lib/mavas/main';
+import data from '../mockData/markerData';
 
-import startIcon from './image/start.png';
-import endIcon from './image/end.png';
+import startIcon from '../image/start.png';
+import endIcon from '../image/end.png';
 
 let startImage = document.createElement('img'),
     endImage = document.createElement('img');
