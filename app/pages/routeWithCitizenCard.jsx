@@ -3,7 +3,6 @@ import DatePicker from 'material-ui/DatePicker';
 import echarts from 'echarts';
 import request from 'superagent';
 
-
 import Util from '../../lib/mavas/util';
 
 export default class RouteWithCitizenCard extends React.Component {
@@ -11,13 +10,13 @@ export default class RouteWithCitizenCard extends React.Component {
     super();
     this.props = props;
     
-    const startDate = new Date(),
-          endDate = new Date();
-    startDate.setDate(startDate.getDate() - 15);
+    this.defaultStartDate = new Date();
+    this.defaultStartDate.setDate(this.defaultStartDate.getDate() - 15);
+    this.defaultEndDate = new Date();
     
     this.state = {
-      defaultStartDate: startDate,
-      defaultEndDate: endDate,
+      startDate: `${this.defaultStartDate.getFullYear()}-${this.defaultStartDate.getMonth() + 1}-${this.defaultStartDate.getDate()}`,
+      endDate: `${this.defaultEndDate.getFullYear()}-${this.defaultEndDate.getMonth() + 1}-${this.defaultEndDate.getDate()}`,
       isError: false,
       isFetching: true,
     };
@@ -61,14 +60,9 @@ export default class RouteWithCitizenCard extends React.Component {
   };
   
   getDates() {
-//    return {
-//      startDate: this.state.defaultStartDate.toJSON().slice(0, 10),
-//      endDate: this.state.defaultEndDate.toJSON().slice(0, 10),
-//    };
-    
     return {
-      startDate: '2017-01-01',
-      endDate: '2017-08-02',
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
     };
   };
   
@@ -121,14 +115,33 @@ export default class RouteWithCitizenCard extends React.Component {
     this.chart.echarts.setOption(this.chart.options, true);
   };
   
+  dateChangeHandler(type, ignore, date) {
+    switch(type) {
+      case 'startDate':
+        this.setState({
+          ...this.state,
+          startDate: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+        });
+        break;
+      case 'endDate':
+        this.setState({
+          ...this.state,
+          endDate: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+        });
+        break;
+    };
+    
+    setTimeout(() => this.draw());
+  };
+  
   render() {
     return (
       <div>
         <h1>市民卡线路统计</h1>
         <strong>请求API状态：<em>{this.state.isError ? '请求失败' : (this.state.isFetching ? '正在请求' : '请求成功')}</em></strong>
         <div style={{'display': 'flex'}}>
-          <DatePicker hintText="起始日期" defaultDate={this.state.defaultStartDate}/>
-          <DatePicker hintText="结束日期" defaultDate={this.state.defaultEndDate}/>
+          <DatePicker floatingLabelText="起始日期" defaultDate={this.defaultStartDate} onChange={this.dateChangeHandler.bind(this, 'startDate')}/>
+          <DatePicker floatingLabelText="结束日期" defaultDate={this.defaultEndDate} onChange={this.dateChangeHandler.bind(this, 'endDate')}/>
         </div>
         <div className="map-container" id="chart"></div>
       </div>
