@@ -1,6 +1,8 @@
 import React from 'react';
+import DatePicker from 'material-ui/DatePicker';
 import echarts from 'echarts';
 import request from 'superagent';
+
 
 import Util from '../../lib/mavas/util';
 
@@ -8,7 +10,14 @@ export default class RouteWithCitizenCard extends React.Component {
   constructor(props) {
     super();
     this.props = props;
+    
+    const startDate = new Date(),
+          endDate = new Date();
+    startDate.setDate(startDate.getDate() - 15);
+    
     this.state = {
+      defaultStartDate: startDate,
+      defaultEndDate: endDate,
       isError: false,
       isFetching: true,
     };
@@ -52,13 +61,9 @@ export default class RouteWithCitizenCard extends React.Component {
   };
   
   getDates() {
-    const startDate = new Date(),
-          endDate = new Date();
-    startDate.setDate(startDate.getDate() - 15);
-    
 //    return {
-//      startDate: startDate.toJSON().slice(0, 10),
-//      endDate: endDate.toJSON().slice(0, 10),
+//      startDate: this.state.defaultStartDate.toJSON().slice(0, 10),
+//      endDate: this.state.defaultEndDate.toJSON().slice(0, 10),
 //    };
     
     return {
@@ -121,6 +126,10 @@ export default class RouteWithCitizenCard extends React.Component {
       <div>
         <h1>市民卡线路统计</h1>
         <strong>请求API状态：<em>{this.state.isError ? '请求失败' : (this.state.isFetching ? '正在请求' : '请求成功')}</em></strong>
+        <div style={{'display': 'flex'}}>
+          <DatePicker hintText="起始日期" defaultDate={this.state.defaultStartDate}/>
+          <DatePicker hintText="结束日期" defaultDate={this.state.defaultEndDate}/>
+        </div>
         <div className="map-container" id="chart"></div>
       </div>
     );
