@@ -254,7 +254,7 @@ export default class OriginDestinationSummary extends React.Component {
   
   updateCurves() {
     
-    this.paletteCurve.importData(
+    this.paletteCurve.import(
       (() => {
         let result = [];
         
@@ -281,14 +281,14 @@ export default class OriginDestinationSummary extends React.Component {
 
     this.paletteCurve.draw(true);
 
-    this.paletteMarker.importData({
+    this.paletteMarker.import({
       location: this.markerData,
       icon: this.iconData,
     });
 
     this.paletteMarker.draw(true);
 
-    this.paletteTooltip.importData({
+    this.paletteTooltip.import({
       location: this.markerData,
       markerSize: new Array(this.markerData.length).fill({width: baloonImage.width, height: baloonImage.height,}),
       desc: this.tooltipData,

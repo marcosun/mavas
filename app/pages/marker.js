@@ -322,20 +322,20 @@ export default class Marker extends React.Component {
     
     var move = () => {
       if (i < len) {
-        palettePolyline.importData({
+        palettePolyline.import({
           location: [this.transformedData.slice(0,i)],
         });
 
         palettePolyline.draw();
 
-        paletteMarker.importData({
+        paletteMarker.import({
           location: this.transformedData.slice(0,i),
           icon: [],
         });
 
         paletteMarker.draw();
 
-        paletteTooltip.importData({
+        paletteTooltip.import({
           location: this.transformedData.slice(0,i),
           markerSize: new Array(i).fill({width: startImage.width, height: startImage.height,}),
           desc: Util.pluck(data.slice(0,i), 'gmtTime'),
@@ -421,20 +421,20 @@ export default class Marker extends React.Component {
     
     var move = () => {
       if (i < len) {
-        palettePolyline.importData({
+        palettePolyline.import({
           location: [this.transformedData.slice(0,i)],
         });
 
         palettePolyline.draw();
 
-        paletteMarker.importData({
+        paletteMarker.import({
           location: this.transformedData.slice(0,i),
           icon: [],
         });
 
         paletteMarker.draw();
 
-        paletteTooltip.importData({
+        paletteTooltip.import({
           location: this.transformedData.slice(0,i),
           markerSize: new Array(i).fill({width: startImage.width, height: startImage.height,}),
           desc: Util.pluck(data.slice(0,i), 'gmtTime'),
