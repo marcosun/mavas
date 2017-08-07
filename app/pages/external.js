@@ -189,8 +189,8 @@ export default class External extends React.Component {
       option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
       myChart.setOption(option, true);
 
-      //use drawImage api to update canvas
-      externalPalette.drawImage(canvas);
+      //use update api to update canvas
+      externalPalette.update(canvas);
     },2000);
 
     //see AMap.CustomLayer options
