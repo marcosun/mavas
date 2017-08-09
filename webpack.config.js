@@ -6,21 +6,21 @@ module.exports = {
   // click on the name of the option to get to the detailed documentation
   // click on the items with arrows to show more examples / advanced options
 
-  entry: "./app/index.js", // string | object | array
+  entry: './app/index.js', // string | object | array
   // Here the application starts executing
   // and webpack starts bundling
 
   output: {
     // options related to how webpack emits results
 
-    path: path.resolve(__dirname, "public"), // string
+    path: path.resolve(__dirname, 'public'), // string
     // the target directory for all output files
     // must be an absolute path (use the Node.js path module)
 
-    filename: "bundle.js", // string
+    filename: 'bundle.js', // string
     // the filename template for entry chunks
 
-    publicPath: "/", // string
+    publicPath: '/', // string
     // the url to the output directory resolved relative to the HTML page
 
     /* Advanced output configuration (click to show) */
@@ -35,7 +35,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: [
-          path.resolve(__dirname, "node_modules/")
+          path.resolve(__dirname, 'node_modules/')
         ],
         
         /*
@@ -55,7 +55,7 @@ module.exports = {
         // flags to apply these rules, even if they are overridden (advanced option)
         */
         
-        loader: "babel-loader",
+        loader: 'babel-loader',
         
         
         // the loader which should be applied, it'll be resolved relative to the context
@@ -63,7 +63,7 @@ module.exports = {
         // see webpack 1 upgrade guide
 
         options: {
-          presets: ["es2015", "react", "stage-0"]
+          presets: ['es2015', 'react', 'stage-0']
         },
         // options for the loader
         
@@ -73,25 +73,25 @@ module.exports = {
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
+          fallback: 'style-loader',
           use: [
             {
-              loader: "css-loader",
+              loader: 'css-loader',
               options: {
                 camelCase: true,
                 modules: true,
                 importLoaders: 1,
                 sourceMap: true,
-                localIdentName: "[name]__[local]__[hash:base64:5]",
+                localIdentName: '[name]__[local]__[hash:base64:5]',
               },
             },
             {
-              loader: "postcss-loader",
+              loader: 'postcss-loader',
               options: {
-                sourceMap: "inline",
+                sourceMap: 'inline',
                 plugins: function() {
                   return [
-                    require("autoprefixer")
+                    require('autoprefixer')
                   ];
                 },
               },
@@ -117,24 +117,24 @@ module.exports = {
     // (does not apply to resolving to loaders)
 
     modules: [
-      "node_modules",
-      path.resolve(__dirname, "app")
+      'node_modules',
+      path.resolve(__dirname, 'app')
     ],
     // directories where to look for modules
 
-    extensions: [".js", ".json", ".jsx", ".css"],
+    extensions: ['.js', '.json', '.jsx', '.css'],
     // extensions that are used
 
     alias: {
       // a list of module name aliases
 
-      "module": "new-module",
+      'module': 'new-module',
       // alias "module" -> "new-module" and "module/path/file" -> "new-module/path/file"
 
-      "only-module$": "new-module",
+      'only-module$': 'new-module',
       // alias "only-module" -> "new-module", but not "module/path/file" -> "new-module/path/file"
 
-      "module": path.resolve(__dirname, "app/third/module.js"),
+      'module': path.resolve(__dirname, 'app/third/module.js')
       // alias "module" -> "./app/third/module.js" and "module/file" results in error
       // modules aliases are imported relative to the current context
     },
@@ -144,7 +144,7 @@ module.exports = {
   },
 
   performance: {
-    hints: "warning", // enum
+    hints: 'warning', // enum
     maxAssetSize: 200000, // int (in bytes),
     maxEntrypointSize: 400000, // int (in bytes)
     assetFilter: function(assetFilename) { 
@@ -153,7 +153,7 @@ module.exports = {
     }
   },
 
-  devtool: "source-map", // enum
+  devtool: 'source-map', // enum
   // enhance debugging by adding meta info for the browser devtools
   // source-map most detailed at the expense of build speed.
 
@@ -161,10 +161,6 @@ module.exports = {
   // the home directory for webpack
   // the entry and module.rules.loader option
   //   is resolved relative to this directory
-
-  plugins: [
-    new ExtractTextPlugin("styles.css"),
-  ],
   
   devServer: {
     disableHostCheck: true
@@ -176,20 +172,16 @@ module.exports = {
       __API_ROOT__: (() => {
         //config root path of api
         switch(process.env.NODE_ENV) {
-          case 'dev':
-            return JSON.stringify('http://10.85.1.171:8080');
-            break;
-          case 'aliyun':
-            return JSON.stringify('http://101.37.105.67:54000');
-            break;
-          case 'prod':
-            return JSON.stringify('http://10.88.0.230:8082/test/admin');
-            break;
-          default:
-            return JSON.stringify('http://10.88.0.230:8082/test/admin');
-            break;
+        case 'dev':
+          return JSON.stringify('http://101.37.105.67:54000');
+        case 'aliyun':
+          return JSON.stringify('http://101.37.105.67:54000');
+        case 'prod':
+          return JSON.stringify('http://10.88.0.230:8082/test/admin');
+        default:
+          return JSON.stringify('http://10.88.0.230:8082/test/admin');
         }
       })(),
     }),
   ],
-}
+};
