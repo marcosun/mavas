@@ -8,7 +8,7 @@ import startIcon from '../image/start.png';
 import endIcon from '../image/end.png';
 
 let startImage = document.createElement('img'),
-    endImage = document.createElement('img');
+  endImage = document.createElement('img');
 
 startImage.src = startIcon;
 endImage.src = endIcon;
@@ -23,7 +23,7 @@ export default class Marker extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
-  };
+  }
   
   componentDidMount() {
     //prepare data to this format: [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number
@@ -47,7 +47,7 @@ export default class Marker extends React.Component {
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
-  };
+  }
   
   /*
     *show static gps points
@@ -65,11 +65,17 @@ export default class Marker extends React.Component {
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      data: {
-        location: [this.transformedData],
+      id: 'polyline',
+      data: [{
+        coords: this.transformedData,
+      }],
+      algo: {
+        cacheAlgo: '9 blocks',
+        isRealtime: false,
       },
-      cacheAlgo: '9 blocks',
-      color: 'red',
+      lineStyle: {
+        color: 'red',
+      },
     });
 
     /*
@@ -82,6 +88,9 @@ export default class Marker extends React.Component {
       type: 'marker',
       data: {
         location: this.transformedData,
+      },
+      algo: {
+        isRealtime: false,
       },
     });
     
@@ -123,7 +132,7 @@ export default class Marker extends React.Component {
     
     //set correct centre and zoom to cover all data points of a particular palette
     this.mavas.setFit(paletteMarker);
-  };
+  }
   
   showStaticGpsRouteWithCustomisedIcon() {
     let palettePolyline, paletteMarker, paletteTooltip;
@@ -138,11 +147,17 @@ export default class Marker extends React.Component {
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      data: {
-        location: [this.transformedData],
+      id: 'polyline',
+      data: [{
+        coords: this.transformedData,
+      }],
+      algo: {
+        cacheAlgo: '9 blocks',
+        isRealtime: false,
       },
-      cacheAlgo: '9 blocks',
-      color: 'red',
+      lineStyle: {
+        color: 'red',
+      },
     });
 
     /*
@@ -168,6 +183,9 @@ export default class Marker extends React.Component {
           return result;
         })(),
       },
+      algo: {
+        isRealtime: false,
+      },
     });
     
     /*
@@ -192,7 +210,7 @@ export default class Marker extends React.Component {
     
     //set correct centre and zoom to cover all data points of a particular palette
     this.mavas.setFit(paletteMarker);
-  };
+  }
   
   showRealtimeStaticGpsRoute() {
     let palettePolyline, paletteMarker, paletteTooltip;
@@ -210,12 +228,16 @@ export default class Marker extends React.Component {
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
       id: 'polyline',
-      data: {
-        location: [this.transformedData],
+      data: [{
+        coords: this.transformedData,
+      }],
+      algo: {
+        cacheAlgo: '9 blocks',
+        isRealtime: true,
       },
-      cacheAlgo: '9 blocks',
-      realtime: true,
-      color: 'red',
+      lineStyle: {
+        color: 'red',
+      },
     });
 
     /*
@@ -232,7 +254,9 @@ export default class Marker extends React.Component {
       data: {
         location: this.transformedData,
       },
-      realtime: true,
+      algo: {
+        isRealtime: true,
+      },
     });
 
     /*
@@ -257,7 +281,7 @@ export default class Marker extends React.Component {
     
     //set correct centre and zoom to cover all data points of a particular palette
     this.mavas.setFit(paletteMarker);
-  };
+  }
   
   /*
     *show dynamic || real-time gps points
@@ -275,11 +299,17 @@ export default class Marker extends React.Component {
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      data: {
-        location: [this.transformedData.slice(0,2)],
+      id: 'polyline',
+      data: [{
+        coords: this.transformedData.slice(0,2),
+      }],
+      algo: {
+        cacheAlgo: '9 blocks',
+        isRealtime: true,
       },
-      cacheAlgo: '9 blocks',
-      color: 'red',
+      lineStyle: {
+        color: 'red',
+      },
     });
     
     /*
@@ -355,7 +385,7 @@ export default class Marker extends React.Component {
       *performance: requestAnimationFrame > setInterval
     */
     window.requestAnimationFrame(move);
-  };
+  }
   
   /*
     *show dynamic || real-time FOCUS on new gps points
@@ -373,11 +403,17 @@ export default class Marker extends React.Component {
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      data: {
-        location: [this.transformedData.slice(0,2)],
+      id: 'polyline',
+      data: [{
+        coords: this.transformedData.slice(0,2),
+      }],
+      algo: {
+        cacheAlgo: '9 blocks',
+        isRealtime: true,
       },
-      cacheAlgo: '9 blocks',
-      color: 'red',
+      lineStyle: {
+        color: 'red',
+      },
     });
     
     /*
@@ -450,7 +486,7 @@ export default class Marker extends React.Component {
     };
     
     var setCenter = () => {
-      this.mavas.map.setCenter(new AMap.LngLat(this.transformedData[i - 1][0], this.transformedData[i - 1][1]));
+      this.mavas.map.setCenter(new window.AMap.LngLat(this.transformedData[i - 1][0], this.transformedData[i - 1][1]));
       window.requestAnimationFrame(move);
     };
     
@@ -459,7 +495,7 @@ export default class Marker extends React.Component {
       *performance: requestAnimationFrame > setInterval
     */
     window.requestAnimationFrame(move);
-  };
+  }
   
   showMarkerOnClick() {
     let palettePolyline, paletteMarker, paletteTooltip;
@@ -474,11 +510,17 @@ export default class Marker extends React.Component {
     */
     palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      data: {
-        location: [this.transformedData],
+      id: 'polyline',
+      data: [{
+        coords: this.transformedData,
+      }],
+      algo: {
+        cacheAlgo: '9 blocks',
+        isRealtime: true,
       },
-      cacheAlgo: '9 blocks',
-      color: 'red',
+      lineStyle: {
+        color: 'red',
+      },
     });
 
     /*
@@ -499,10 +541,10 @@ export default class Marker extends React.Component {
         for(let len = e.marker.length, i = len - 1; i >= 0; i--) {
           location = e.marker[i].location;
           
-          result.push(Util.findIndex(this.transformedData, (element, index) => {
+          result.push(Util.findIndex(this.transformedData, (element) => {
             return element === location;
           }));
-        };
+        }
         
         alert(`you are clicking on marker number ${result}`);
       },
@@ -530,18 +572,18 @@ export default class Marker extends React.Component {
     
     //set correct centre and zoom to cover all data points of a particular palette
     this.mavas.setFit(paletteMarker);
-  };
+  }
   
   clear() {
     this.mavas.map.destroy();
     this.componentDidMount();
-  };
+  }
   
   render() {
     return (
       <div>
         <h1>Marker Demo</h1>
-        <div style={{"height": "50px"}}>
+        <div style={{'height': '50px'}}>
           <a className="btn" onClick={this.showStaticGpsRoute.bind(this)} href="javascript:;">静态gps轨迹</a>
           <a className="btn" onClick={this.showStaticGpsRouteWithCustomisedIcon.bind(this)} href="javascript:;">自定义气泡静态gps轨迹</a>
           <a className="btn" onClick={this.showRealtimeStaticGpsRoute.bind(this)} href="javascript:;">静态实时重绘gps轨迹</a>
@@ -553,5 +595,5 @@ export default class Marker extends React.Component {
         <div className="map-container" id="map"></div>
       </div>
     );
-  };
-};
+  }
+}
