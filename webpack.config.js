@@ -173,7 +173,7 @@ module.exports = {
         //config root path of api
         switch(process.env.NODE_ENV) {
         case 'dev':
-          return JSON.stringify('http://10.80.92.54:8080');
+          return JSON.stringify('http://10.80.92.54:8081');
         case 'aliyun':
           return JSON.stringify('http://101.37.105.67:54000');
         case 'prod':
