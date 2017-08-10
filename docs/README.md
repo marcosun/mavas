@@ -55,10 +55,13 @@ const markerPalette = this.mavas.createLayer({
   type: 'marker',
   id: 'marker',
   data: [{
-    coords: [[123.123, 123.123], [456.456, 456.456], [789.789, 789.789]],
+    coords: [123.123, 123.123],
+  }, {
+    coords: [456.456, 456.456],
+  }, {
+    coords: [789.789, 789.789],
   }],
   algo: {
-    cacheAlgo: '9 blocks',
     isRealtime: true,
   },
   onClick: (e) => {
@@ -111,4 +114,4 @@ mavas.draw();
 | ** onClick **                                            | Function | O                   |             | 点击标记后的回调 (e) => {}  |
 | ** data **                                               | [Object] | O                   |             | [{coords: [123.123, 123.123]}, {coords: [456.456, 456.456]}] 表示标记此坐标 |
 | &nbsp;&nbsp;&nbsp;&nbsp;coords                           | Array    | O                   | []          | 坐标点                    |
-| &nbsp;&nbsp;&nbsp;&nbsp;icon                             | [Image]  | O                   | 蓝色气泡带自增id | 接受Image标签、Canvas 如不为空，icon array的长度必须和coords一致，也即一个icon对应一个坐标点 |
+| &nbsp;&nbsp;&nbsp;&nbsp;icon                             | [Image]  | O                   | 蓝色气泡带自增id | 接受Image标签、Canvas   |
