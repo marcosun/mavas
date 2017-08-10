@@ -86,9 +86,16 @@ export default class Marker extends React.Component {
     */
     paletteMarker = this.mavas.createLayer({
       type: 'marker',
-      data: {
-        location: this.transformedData,
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = this.transformedData.length; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+          });
+        }
+        return result;
+      })(),
       algo: {
         isRealtime: false,
       },
@@ -170,19 +177,17 @@ export default class Marker extends React.Component {
     */
     paletteMarker = this.mavas.createLayer({
       type: 'marker',
-      data: {
-        location: this.transformedData,
-        icon: (() => {
-          let result = [];
-          
-          for(let i = 0, len = this.transformedData.length; i < len; i = i + 2) {
-            result.push(startImage);
-            result.push(endImage);
-          }
-          
-          return result;
-        })(),
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = this.transformedData.length; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+            icon: i % 2 === 0 ? startImage : endImage,
+          });
+        }
+        return result;
+      })(),
       algo: {
         isRealtime: false,
       },
@@ -251,9 +256,16 @@ export default class Marker extends React.Component {
     paletteMarker = this.mavas.createLayer({
       type: 'marker',
       id: 'marker',
-      data: {
-        location: this.transformedData,
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = this.transformedData.length; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+          });
+        }
+        return result;
+      })(),
       algo: {
         isRealtime: true,
       },
@@ -320,9 +332,16 @@ export default class Marker extends React.Component {
     */
     paletteMarker = this.mavas.createLayer({
       type: 'marker',
-      data: {
-        location: this.transformedData.slice(0,2),
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = 2; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+          });
+        }
+        return result;
+      })(),
     });
     
     /*
@@ -348,19 +367,40 @@ export default class Marker extends React.Component {
     /*
       *alernate drawing canvas and calling browser refresh function
     */
-    var i = 3, len = this.transformedData.length;
+    let i = 3, len = this.transformedData.length;
+//    let i = 3, len = 4;
     
     var move = () => {
       if (i < len) {
-        palettePolyline.import({
-          location: [this.transformedData.slice(0,i)],
+        palettePolyline.updatePalette({
+          type: 'polyline',
+          id: 'polyline',
+          data: [{
+            coords: this.transformedData.slice(0,i),
+          }],
+          algo: {
+            cacheAlgo: '9 blocks',
+            isRealtime: true,
+          },
+          lineStyle: {
+            color: 'red',
+          },
         });
 
         palettePolyline.draw();
 
-        paletteMarker.import({
-          location: this.transformedData.slice(0,i),
-          icon: [],
+        paletteMarker.updatePalette({
+          type: 'marker',
+          data: (() => {
+            let result = [];
+
+            for(let index = 0; index < i; index++) {
+              result.push({
+                coords: this.transformedData[index],
+              });
+            }
+            return result;
+          })(),
         });
 
         paletteMarker.draw();
@@ -425,9 +465,16 @@ export default class Marker extends React.Component {
     */
     paletteMarker = this.mavas.createLayer({
       type: 'marker',
-      data: {
-        location: this.transformedData.slice(0,2),
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = 2; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+          });
+        }
+        return result;
+      })(),
     });
     
     /*
@@ -532,9 +579,16 @@ export default class Marker extends React.Component {
     */
     paletteMarker = this.mavas.createLayer({
       type: 'marker',
-      data: {
-        location: this.transformedData,
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = this.transformedData.length; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+          });
+        }
+        return result;
+      })(),
       onClick: (e) => {
         let location, result = [];
         
