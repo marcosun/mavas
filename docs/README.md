@@ -5,6 +5,9 @@
 > ### Initialise
 
 ``` javascript
+严重提醒
+本示例采用ES6模块化，CMD、AMD等其它模块化方案请自行学习
+
 import Mavas from './lib/mavas';
 
 //初始化步骤：
@@ -19,13 +22,13 @@ const mavas = new Mavas('map',{
   mapStyle: 'amap://styles/darkblue',
 });
 
-//2. 开启自定义涂层
+//2. 开启自定义图层
 //详见http://lbs.amap.com/api/javascript-api/reference/layer#AMap.CustomLayer
 mavas.map.plugin(['AMap.CustomLayer'], () => {});
 
 //3. 创建自定义图层
 //createLayer支持polyline，marker
-const polylinePalette = this.mavas.createLayer({
+const polylinePalette = mavas.createLayer({
   type: 'polyline',
   id: 'polyline',
   data: [{
@@ -51,7 +54,7 @@ const polylinePalette = this.mavas.createLayer({
   },
 });
 
-const markerPalette = this.mavas.createLayer({
+const markerPalette = mavas.createLayer({
   type: 'marker',
   id: 'marker',
   data: [{
@@ -69,7 +72,7 @@ const markerPalette = this.mavas.createLayer({
   },
 });
 
-//4. 渲染自定义涂层
+//4. 渲染自定义图层
 mavas.draw();
 
 ```
@@ -114,4 +117,4 @@ mavas.draw();
 | ** onClick **                                            | Function | O                   |             | 点击标记后的回调 (e) => {}  |
 | ** data **                                               | [Object] | O                   |             | [{coords: [123.123, 123.123]}, {coords: [456.456, 456.456]}] 表示标记此坐标 |
 | &nbsp;&nbsp;&nbsp;&nbsp;coords                           | Array    | O                   | []          | 坐标点                    |
-| &nbsp;&nbsp;&nbsp;&nbsp;icon                             | [Image]  | O                   | 蓝色气泡带自增id | 接受Image标签、Canvas   |
+| &nbsp;&nbsp;&nbsp;&nbsp;icon                             | [Image]  | O                   | 蓝色气泡带自增id | 接受Image标签、Canvas；默认id自增的蓝色气泡 |
