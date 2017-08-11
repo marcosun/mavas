@@ -1,13 +1,12 @@
 import React from 'react';
-import echarts from 'echarts';
 import request from 'superagent';
 
 import Mavas from '../../lib/mavas/main';
 import Util from '../../lib/mavas/util';
 
 import balloonIcon from '../image/balloon.png';
-let baloonImage = document.createElement('img');
-baloonImage.src = balloonIcon;
+let balloonImage = document.createElement('img');
+balloonImage.src = balloonIcon;
 
 /*
   *Map component creates a container for map
@@ -28,7 +27,7 @@ export default class OriginDestinationSummary extends React.Component {
     
     this.delayExecute = new Util.Delay(1000);
     this.isRelationalVision = false;
-  };
+  }
   
   componentDidMount() {
     //init mavas; see amap api reference
@@ -44,8 +43,7 @@ export default class OriginDestinationSummary extends React.Component {
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
     this.fetchAndDraw();
-    window.mavas = this.mavas;
-  };
+  }
   
   fetchAndDraw(isUpdate) {
     this.fetchData()
@@ -54,15 +52,15 @@ export default class OriginDestinationSummary extends React.Component {
           ...this.state,
           isFetching: false,
         });
-        this.mockData = res.body;
-        this.dataTransformation(this.mockData);
+        this.apiData = res.body;
+        this.dataTransformation(this.apiData);
         if (isUpdate === true) {
           this.redraw();
         } else {
           this.draw();
         }
       });
-  };
+  }
   
   fetchData() {
     this.setState({
@@ -75,98 +73,86 @@ export default class OriginDestinationSummary extends React.Component {
         startTime: this.state.startTime,
         endTime: this.state.endTime,
       });
-  };
+  }
   
   draw() {
-    this.paletteCurve = this.mavas.createLayer({
+    this.palettePolyline = this.mavas.createLayer({
       type: 'polyline',
-      id: 'quadraticCurve',
-      data: (() => {
-        let result = [];
-//        for(let i = 0, len = this.polylineData.length; i < len; i++) {
-//          result.push({
-//            coords: this.polylineData[i],
-//            symbol: {
-//              symbol: ['none', 'arrow'],
-//              size: [15, 15],
-//              color: '#00FFFF',
-//            },
-//            lineStyle: {
-//              type: 'dash',
-//              color: '#00FFFF',
-//            },
-//          });
-//        };
-        return result;
-      })(),
+      id: 'polyline',
+      data: [],
+      lineStyle: {
+        type: 'dash',
+        color: '#00FFFF',
+      },
     });
     
     this.paletteMarker = this.mavas.createLayer({
       type: 'marker',
       id: 'marker',
-      data: {
-        location: this.markerData,
-        icon: this.iconData,
-      },
-      realtime: true,
+      data: this.markerData,
       onClick: (e) => {
+        const removeDuplicatedMarker = (marker) => {
+          const isExist = (coords) => {
+            for(let i = 0, len = result.length; i < len; i++) {
+              if(Util.isEqual(coords, result[i].coords)) {
+                return true;
+              }
+              return false;
+            }
+          };
+          
+          let result = [];
+          
+          for(let i = 0, len = marker.length; i < len; i++) {
+            let coords = marker[i].coords;
+            if(!isExist(coords)) {
+              result.push(marker[i]);
+            }
+          }
+          
+          return result;
+        };
         
         this.isRelationalVision = !this.isRelationalVision;
         
         if (this.isRelationalVision === true) {
+          let uniqueClickedMarker = [], targetCoords, matchedList = [], lines, tooltipSource = [];
           
-          let location, result = [], lines, tooltipSource = [];
-
-          for(let len = e.marker.length, i = len - 1; i >= 0; i--) {
-            location = e.marker[i].location;
-
-            //push index of founded line into the result
-            result.push(Util.findIndex(this.polylineData, (element, index) => {
-              //check both starting and ending points
-              return element.find((e) => {
-                return e[0] === location[0] && e[1] === location[1];
-              }) !== undefined ? true : false;
-            }));
-          };
-
-          lines = Util.unique(Util.flatten(result));
-          lines = lines.sort((a, b) => {return a > b});
+          //remove duplicated marker
+          let clickMarkerList = removeDuplicatedMarker(e.marker);
           
-          (() => {
-            let result = [];
-            
-            for(let i = 0, len = lines.length; i < len; i++) {
-              result.push(this.polylineData[lines[i]]);
-              tooltipSource.push(this.mockData[lines[i]]);
+          for(let ia = clickMarkerList.length - 1; ia >= 0; ia--) {
+            targetCoords = clickMarkerList[ia].coords;
+
+            for(let ib = this.apiData.length - 1; ib >= 0; ib--) {
+              let startCoords = this.apiData[ib].startLocation.coordinates,
+                endCoords = this.apiData[ib].endLocation.coordinates;
+
+              if(Util.isEqual(targetCoords, startCoords) || Util.isEqual(targetCoords, endCoords)) {
+                matchedList.push(this.apiData[ib]);
+              }
             }
-            
-            this.polylineData = result;
-          })();
-          
-          this.makeMarkerData();
-          this.makeIconData();
-          this.makeTooltipData(tooltipSource);
-          
+          }
+          this.dataTransformation(matchedList);
         } else {
-          
-          this.dataTransformation(this.mockData);
-          
+          this.dataTransformation(this.apiData);
+          this.makePolylineData([]);
         }
         
         this.updateCurves();
       },
     });
     
-    this.paletteTooltip = this.mavas.createLayer({
-      type: 'tooltip',
-      data: {
-        location: this.markerData,
-        markerSize: new Array(this.markerData.length).fill({width: baloonImage.width, height: baloonImage.height,}),
-        desc: this.tooltipData,
-      },
-      cumulative: true,
-      width: 250,
-    });
+//    this.paletteTooltip = this.mavas.createLayer({
+//      type: 'tooltip',
+//      data: {
+//        location: this.markerData,
+//        markerSize: new Array(this.markerData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
+//        desc: this.tooltipData,
+//      },
+//      cumulative: true,
+//      width: 250,
+//    });
     
     this.timeAxis = this.mavas.createComponent({
       type: 'timeAxis',
@@ -188,20 +174,23 @@ export default class OriginDestinationSummary extends React.Component {
     this.mavas.draw({
       zIndex: 150,
     });
-  };
+  }
   
   redraw() {
     this.isRelationalVision = false;
     this.updateCurves();
-  };
+  }
   
-  dataTransformation(apiData) {
+  dataTransformation(data) {
+    //prepare time axis
     this.makeTimeAxisData();
-    this.makePolylineData(apiData);
-    this.makeMarkerData();
-    this.makeIconData();
-    this.makeTooltipData(this.mockData);
-  };
+    //prepare polyline data
+    this.makePolylineData(data);
+    //prepare marker data
+    this.makeMarkerData(data);
+    //prepare tooltip data
+    this.makeTooltipData(data);
+  }
   
   makeTimeAxisData() {
     this.timeAxisData = new Array(145);
@@ -211,33 +200,31 @@ export default class OriginDestinationSummary extends React.Component {
     }
 
     this.timeAxisData[144] = '23:59:59';
-  };
+  }
   
-  makePolylineData(apiData) {
+  makePolylineData(data) {
     this.polylineData = [];
     
-    apiData.forEach((currentRoute) => {
-      this.polylineData.push([[currentRoute.startLocation.x, currentRoute.startLocation.y], [currentRoute.endLocation.x, currentRoute.endLocation.y]]);
+    data.forEach((currentRoute) => {
+      this.polylineData.push({
+        coords: [[currentRoute.startLocation.x, currentRoute.startLocation.y], [currentRoute.endLocation.x, currentRoute.endLocation.y]],
+        symbol: {
+          symbol: ['none', 'arrow'],
+          size: [10, 10],
+          color: '#00FFFF',
+        },
+      });
     });
-  };
+  }
   
-  makeMarkerData() {
+  makeMarkerData(data) {
     this.markerData = [];
 
-    this.polylineData.forEach((currentLine) => {
-      this.markerData.push(currentLine[0]);
-      this.markerData.push(currentLine[1]);
+    data.forEach((currentRoute) => {
+      this.markerData.push({coords: [currentRoute.startLocation.x, currentRoute.startLocation.y], icon: balloonImage});
+      this.markerData.push({coords: [currentRoute.endLocation.x, currentRoute.endLocation.y], icon: balloonImage});
     });
-  };
-  
-  makeIconData() {
-    this.iconData = [];
-
-    for(let i = 0, len = this.polylineData.length; i < len; i++) {
-      this.iconData.push(baloonImage);
-      this.iconData.push(baloonImage);
-    }
-  };
+  }
   
   makeTooltipData(data) {
     this.tooltipData = [];
@@ -249,53 +236,39 @@ export default class OriginDestinationSummary extends React.Component {
     for(let i = 0, len = startStation.length; i < len; i++) {
       this.tooltipData.push(`起始站：${startStation[i]}，人数：${num[i]}`);
       this.tooltipData.push(`终点站：${endStation[i]}，人数：${num[i]}`);
-    };
-  };
+    }
+  }
   
   updateCurves() {
-    
-    this.paletteCurve.import(
-      (() => {
-        let result = [];
-        
-        if (this.isRelationalVision === false) {
-          return result;
-        };
-        for(let i = 0, len = this.polylineData.length; i < len; i++) {
-          result.push({
-            coords: this.polylineData[i],
-            symbol: {
-              symbol: ['none', 'arrow'],
-              size: [15, 15],
-              color: '#00FFFF',
-            },
-            lineStyle: {
-              type: 'dash',
-              color: '#00FFFF',
-            },
-          });
-        };
-        return result;
-      })()
-    );
+    console.log(this.polylineData);
+    this.palettePolyline.updatePalette({
+      type: 'polyline',
+      id: 'polyline',
+      data: this.polylineData,
+      lineStyle: {
+        type: 'dash',
+        color: '#00FFFF',
+      },
+    });
 
-    this.paletteCurve.draw(true);
+    this.palettePolyline.draw(true);
 
-    this.paletteMarker.import({
-      location: this.markerData,
-      icon: this.iconData,
+    this.paletteMarker.updatePalette({
+      type: 'marker',
+      id: 'marker',
+      data: this.markerData,
     });
 
     this.paletteMarker.draw(true);
 
-    this.paletteTooltip.import({
-      location: this.markerData,
-      markerSize: new Array(this.markerData.length).fill({width: baloonImage.width, height: baloonImage.height,}),
-      desc: this.tooltipData,
-    });
-
-    this.paletteTooltip.draw(true);
-  };
+//    this.paletteTooltip.import({
+//      location: this.markerData,
+//      markerSize: new Array(this.markerData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
+//      desc: this.tooltipData,
+//    });
+//
+//    this.paletteTooltip.draw(true);
+  }
   
   render() {
     return (
@@ -309,5 +282,5 @@ export default class OriginDestinationSummary extends React.Component {
         <div className="map-container" id="map" style={{'height': 'calc(100vh - 200px)'}}></div>
       </div>
     );
-  };
-};
+  }
+}
