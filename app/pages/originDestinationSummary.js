@@ -146,8 +146,8 @@ export default class OriginDestinationSummary extends React.Component {
 //    this.paletteTooltip = this.mavas.createLayer({
 //      type: 'tooltip',
 //      data: {
-//        location: this.markerData,
-//        markerSize: new Array(this.markerData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
+//        coords: this.markerData,
+//        size: new Array(this.markerData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
 //        desc: this.tooltipData,
 //      },
 //      cumulative: true,
@@ -262,8 +262,8 @@ export default class OriginDestinationSummary extends React.Component {
     this.paletteMarker.draw(true);
 
 //    this.paletteTooltip.import({
-//      location: this.markerData,
-//      markerSize: new Array(this.markerData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
+//      coords: this.markerData,
+//      size: new Array(this.markerData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
 //      desc: this.tooltipData,
 //    });
 //

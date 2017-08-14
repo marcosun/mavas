@@ -104,7 +104,7 @@ export default class Marker extends React.Component {
     /*
       *create tooltip
       *@param {String} type [compulsory]
-      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@param {coords: Array, size: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; size = [pixel, pixel], desc: [String, String]]
       *@param {Boolean} cumulative [optional]
       *@param {Number} left [optional: left margin, default to 10px]
       *@param {Number} padding [optional: default to 6px]
@@ -118,8 +118,8 @@ export default class Marker extends React.Component {
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
       data: {
-        location: this.transformedData,
-        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        coords: this.transformedData,
+        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
         desc: Util.pluck(data, 'gmtTime'),
       },
       cumulative: true,
@@ -196,14 +196,14 @@ export default class Marker extends React.Component {
     /*
       *create tooltip
       *@param {String} type [compulsory]
-      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@param {coords: Array, size: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; size = [pixel, pixel], desc: [String, String]]
       *@return {Palette} palette [Palette instance]
     */
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
       data: {
-        location: this.transformedData,
-        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        coords: this.transformedData,
+        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
         desc: Util.pluck(data, 'gmtTime'),
       },
     });
@@ -274,14 +274,14 @@ export default class Marker extends React.Component {
     /*
       *create tooltip
       *@param {String} type [compulsory]
-      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@param {coords: Array, size: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; size = [pixel, pixel], desc: [String, String]]
       *@return {Palette} palette [Palette instance]
     */
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
       data: {
-        location: this.transformedData,
-        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        coords: this.transformedData,
+        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
         desc: Util.pluck(data, 'gmtTime'),
       },
     });
@@ -347,14 +347,14 @@ export default class Marker extends React.Component {
     /*
       *create tooltip
       *@param {String} type [compulsory]
-      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@param {coords: Array, size: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; size = [pixel, pixel], desc: [String, String]]
       *@return {Palette} palette [Palette instance]
     */
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
       data: {
-        location: this.transformedData,
-        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        coords: this.transformedData,
+        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
         desc: Util.pluck(data, 'gmtTime'),
       },
     });
@@ -407,7 +407,7 @@ export default class Marker extends React.Component {
 
         paletteTooltip.import({
           location: this.transformedData.slice(0,i),
-          markerSize: new Array(i).fill({width: startImage.width, height: startImage.height,}),
+          size: new Array(i).fill({width: startImage.width, height: startImage.height,}),
           desc: Util.pluck(data.slice(0,i), 'gmtTime'),
         });
 
@@ -480,14 +480,14 @@ export default class Marker extends React.Component {
     /*
       *create tooltip
       *@param {String} type [compulsory]
-      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@param {coords: Array, size: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; size = [pixel, pixel], desc: [String, String]]
       *@return {Palette} palette [Palette instance]
     */
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
       data: {
-        location: this.transformedData,
-        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        coords: this.transformedData,
+        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
         desc: Util.pluck(data, 'gmtTime'),
       },
     });
@@ -519,7 +519,7 @@ export default class Marker extends React.Component {
 
         paletteTooltip.import({
           location: this.transformedData.slice(0,i),
-          markerSize: new Array(i).fill({width: startImage.width, height: startImage.height,}),
+          size: new Array(i).fill({width: startImage.width, height: startImage.height,}),
           desc: Util.pluck(data.slice(0,i), 'gmtTime'),
         });
 
@@ -607,14 +607,14 @@ export default class Marker extends React.Component {
     /*
       *create tooltip
       *@param {String} type [compulsory]
-      *@param {location: Array, markerSize: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; markerSize = [pixel, pixel], desc: [String, String]]
+      *@param {coords: Array, size: Array, desc: Array} data [optional: data = [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number; size = [pixel, pixel], desc: [String, String]]
       *@return {Palette} palette [Palette instance]
     */
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
       data: {
-        location: this.transformedData,
-        markerSize: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
+        coords: this.transformedData,
+        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
         desc: Util.pluck(data, 'gmtTime'),
       },
     });
