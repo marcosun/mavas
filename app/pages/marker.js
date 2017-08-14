@@ -117,11 +117,21 @@ export default class Marker extends React.Component {
     */
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
-      data: {
-        coords: this.transformedData,
-        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
-        desc: Util.pluck(data, 'gmtTime'),
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = this.transformedData.length; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+            size: {
+              width: startImage.width,
+              height: startImage.height,
+            },
+            desc: data[i].gmtTime,
+          });
+        }
+        return result;
+      })(),
       style: {
         left: 10,
         padding: 6,
