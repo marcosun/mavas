@@ -32,13 +32,13 @@ const polylinePalette = mavas.createLayer({
   type: 'polyline',
   id: 'polyline',
   data: [{
-    coords: [[123.123, 123.123], [456.456, 456.456], [789.789, 789.789]],
+    coords: [[10.123, 10.123], [10.456, 10.456], [10.789, 10.789]],
     lineStyle: {
       type: 'dash',
       color: 'blue',
     },
   },{
-    coords: [[321.321, 321.321], [654.654, 654.654], [987.987, 987.987]],
+    coords: [[10.321, 10.321], [10.654, 10.654], [10.987, 10.987]],
   }],
   algo: {
     cacheAlgo: '9 blocks',
@@ -58,11 +58,11 @@ const markerPalette = mavas.createLayer({
   type: 'marker',
   id: 'marker',
   data: [{
-    coords: [123.123, 123.123],
+    coords: [10.123, 10.123],
   }, {
-    coords: [456.456, 456.456],
+    coords: [10.456, 10.456],
   }, {
-    coords: [789.789, 789.789],
+    coords: [10.789, 10.789],
   }],
   algo: {
     isRealtime: true,
@@ -94,7 +94,7 @@ mavas.draw();
 | ** lineStyle **                                          | Object   | O                   |             | 全部线的样式                |
 | &nbsp;&nbsp;&nbsp;&nbsp;type                             | Sring    | O                   | line        | 直线 -> line 虚线 -> dash   |
 | &nbsp;&nbsp;&nbsp;&nbsp;color                            | Sring    | O                   | black       | 颜色                       |
-| ** data **                                               | [Object] | O                   |             | 每一条线一个Array i.e. [{coords: [[123.123, 123.123], [456.456, 456.456], [789.789, 789.789]]}] 表示一条线经过三个坐标点 |
+| ** data **                                               | [Object] | O                   |             | 每一条线一个Array i.e. [{coords: [[10.123, 10.123], [10.456, 10.456], [10.789, 10.789]]}] 表示一条线经过三个坐标点 |
 | &nbsp;&nbsp;&nbsp;&nbsp;coords                           | Array    | O                   | []          | 线的坐标点                  |
 | &nbsp;&nbsp;&nbsp;&nbsp;lineStyle                        | Object   | O                   |             | 针对这条线的样式，优先级高于全部线样式 |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type     | Sring    | O                   | line        | 直线 -> line 虚线 -> dash   |
@@ -115,6 +115,6 @@ mavas.draw();
 | ** algo **                                               | Object   | O                   |             | 做图算法                  |
 | &nbsp;&nbsp;&nbsp;&nbsp;isRealtime                       | Object   | O                   | true        | 是否在托拉拽的时候实时重绘   |
 | ** onClick **                                            | Function | O                   |             | 点击标记后的回调 (e) => {}  |
-| ** data **                                               | [Object] | O                   |             | [{coords: [123.123, 123.123]}, {coords: [456.456, 456.456]}] 表示标记此坐标 |
+| ** data **                                               | [Object] | O                   |             | [{coords: [10.123, 10.123]}, {coords: [10.456, 10.456]}] 表示标记此坐标 |
 | &nbsp;&nbsp;&nbsp;&nbsp;coords                           | Array    | O                   | []          | 坐标点                    |
 | &nbsp;&nbsp;&nbsp;&nbsp;icon                             | [Image]  | O                   | 蓝色气泡带自增id | 接受Image标签、Canvas；默认id自增的蓝色气泡 |
