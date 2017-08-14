@@ -275,10 +275,9 @@ export default class OriginDestinationSummary extends React.Component {
 
     this.paletteMarker.draw(true);
 
-    this.paletteTooltip.import({
-      coords: this.tooltipTmpData,
-      size: new Array(this.tooltipTmpData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
-      desc: this.tooltipData,
+    this.paletteTooltip.updatePalette({
+      type: 'tooltip',
+      data: this.tooltipData,
     });
 
     this.paletteTooltip.draw(true);
