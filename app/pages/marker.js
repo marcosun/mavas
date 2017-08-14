@@ -122,14 +122,16 @@ export default class Marker extends React.Component {
         size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
         desc: Util.pluck(data, 'gmtTime'),
       },
+      style: {
+        left: 10,
+        padding: 6,
+        width: 108,
+        lineHeight: 1.6,
+        font: '12px monospace',
+        color: 'white',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      },
       cumulative: true,
-      left: 10,
-      padding: 6,
-      width: 108,
-      lineHeight: 1.6,
-      font: '12px monospace',
-      color: 'white',
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',
     });
 
     //see AMap.CustomLayer options

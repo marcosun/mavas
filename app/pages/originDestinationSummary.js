@@ -143,16 +143,18 @@ export default class OriginDestinationSummary extends React.Component {
       },
     });
     
-//    this.paletteTooltip = this.mavas.createLayer({
-//      type: 'tooltip',
-//      data: {
-//        coords: this.markerData,
-//        size: new Array(this.markerData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
-//        desc: this.tooltipData,
-//      },
-//      cumulative: true,
-//      width: 250,
-//    });
+    this.paletteTooltip = this.mavas.createLayer({
+      type: 'tooltip',
+      data: {
+        coords: this.tooltipTmpData,
+        size: new Array(this.tooltipTmpData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
+        desc: this.tooltipData,
+      },
+      style: {
+        width: 250,
+      },
+      cumulative: true,
+    });
     
     this.timeAxis = this.mavas.createComponent({
       type: 'timeAxis',
@@ -227,6 +229,7 @@ export default class OriginDestinationSummary extends React.Component {
   }
   
   makeTooltipData(data) {
+    this.tooltipTmpData = Util.pluck(this.markerData, 'coords');
     this.tooltipData = [];
     
     let startStation = Util.pluck(data, 'startStation');
@@ -240,7 +243,6 @@ export default class OriginDestinationSummary extends React.Component {
   }
   
   updateCurves() {
-    console.log(this.polylineData);
     this.palettePolyline.updatePalette({
       type: 'polyline',
       id: 'polyline',
@@ -261,13 +263,13 @@ export default class OriginDestinationSummary extends React.Component {
 
     this.paletteMarker.draw(true);
 
-//    this.paletteTooltip.import({
-//      coords: this.markerData,
-//      size: new Array(this.markerData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
-//      desc: this.tooltipData,
-//    });
-//
-//    this.paletteTooltip.draw(true);
+    this.paletteTooltip.import({
+      coords: this.tooltipTmpData,
+      size: new Array(this.tooltipTmpData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
+      desc: this.tooltipData,
+    });
+
+    this.paletteTooltip.draw(true);
   }
   
   render() {
