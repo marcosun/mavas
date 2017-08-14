@@ -94,8 +94,9 @@ mavas.draw();
 参考createPalette的参数
 
 ``` javascript
-
+//更新图层
 polylinePalette.updatePalette({
+  type: 'polyline',
   data: [{
     coords: [[120.26405,30.354651], [120.27405,30.364651], [120.28405,30.374651]],
     lineStyle: {
@@ -107,7 +108,8 @@ polylinePalette.updatePalette({
   }],
 });
 
-polylinePalette.draw();
+//强制刷新 此处必须
+polylinePalette.draw(true);
 
 ```
 
@@ -182,8 +184,9 @@ mavas.draw();
 参考createPalette的参数
 
 ``` javascript
-
+//更新图层
 markerPalette.updatePalette({
+  type: 'marker',
   data: [{
     coords: [120.26405,30.354651],
   }, {
@@ -193,6 +196,7 @@ markerPalette.updatePalette({
   }],
 });
 
-markerPalette.draw();
+//强制刷新 此处必须
+markerPalette.draw(true);
 
 ```
