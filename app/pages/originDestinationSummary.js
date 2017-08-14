@@ -116,7 +116,7 @@ export default class OriginDestinationSummary extends React.Component {
         this.isRelationalVision = !this.isRelationalVision;
         
         if (this.isRelationalVision === true) {
-          let uniqueClickedMarker = [], targetCoords, matchedList = [], lines, tooltipSource = [];
+          let targetCoords, matchedList = [];
           
           //remove duplicated marker
           let clickMarkerList = removeDuplicatedMarker(e.marker);
@@ -145,11 +145,7 @@ export default class OriginDestinationSummary extends React.Component {
     
     this.paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
-      data: {
-        coords: this.tooltipTmpData,
-        size: new Array(this.tooltipTmpData.length).fill({width: balloonImage.width, height: balloonImage.height,}),
-        desc: this.tooltipData,
-      },
+      data: this.tooltipData,
       style: {
         width: 250,
       },
@@ -229,16 +225,32 @@ export default class OriginDestinationSummary extends React.Component {
   }
   
   makeTooltipData(data) {
-    this.tooltipTmpData = Util.pluck(this.markerData, 'coords');
     this.tooltipData = [];
-    
-    let startStation = Util.pluck(data, 'startStation');
-    let endStation = Util.pluck(data, 'endStation');
-    let num = Util.pluck(data, 'num');
 
-    for(let i = 0, len = startStation.length; i < len; i++) {
-      this.tooltipData.push(`起始站：${startStation[i]}，人数：${num[i]}`);
-      this.tooltipData.push(`终点站：${endStation[i]}，人数：${num[i]}`);
+    for(let i = 0, len = data.length; i < len; i++) {
+      let startCoords = data[i].startLocation.coordinates,
+        startStation = data[i].startStation,
+        endCoords = data[i].endLocation.coordinates,
+        endStation = data[i].endStation,
+        num = data[i].num;
+      
+      this.tooltipData.push({
+        coords: startCoords,
+        size: {
+          width: balloonImage.width,
+          height: balloonImage.height,
+        },
+        desc: `起始站：${startStation}，人数：${num}`,
+      });
+
+      this.tooltipData.push({
+        coords: endCoords,
+        size: {
+          width: balloonImage.width,
+          height: balloonImage.height,
+        },
+        desc: `终点站：${endStation}，人数：${num}`,
+      });
     }
   }
   
