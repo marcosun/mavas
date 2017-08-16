@@ -244,9 +244,9 @@ const mavas = new Mavas('map',{
 mavas.map.plugin(['AMap.CustomLayer'], () => {});
 
 //3. 创建自定义图层
-const markerPalette = mavas.createLayer({
-  type: 'marker',
-  id: 'marker',
+const infoWindowPalette = mavas.createLayer({
+  type: 'infoWindow',
+  id: 'infoWindow',
   data: [{
     coords: [120.16405,30.254651],
     offset: [-80, 20],
@@ -257,7 +257,7 @@ const markerPalette = mavas.createLayer({
   }, {
     coords: [120.17405,30.264651],
     offset: [-80, 20],
-    content: '凤起路站',
+    content: '龙翔桥',
   }],
 });
 
