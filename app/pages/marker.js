@@ -42,7 +42,6 @@ export default class Marker extends React.Component {
       zoom: 16,
       center: [120.057926,30.183576],
       animateEnable: false,
-      mapStyle: 'amap://styles/darkblue',
     });
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
@@ -53,7 +52,7 @@ export default class Marker extends React.Component {
     *show static gps points
   */
   showStaticGpsRoute() {
-    let palettePolyline, paletteMarker, paletteTooltip;
+    let palettePolyline, paletteMarker, paletteTooltip, paletteInfoWindow;
     
     /*
       *create polyline
@@ -132,16 +131,23 @@ export default class Marker extends React.Component {
         }
         return result;
       })(),
-      style: {
-        left: 10,
-        padding: 6,
-        width: 108,
-        lineHeight: 1.6,
-        font: '12px monospace',
-        color: 'white',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-      },
-      cumulative: true,
+    });
+    
+    paletteInfoWindow = this.mavas.createLayer({
+      type: 'infoWindow',
+      id: 'infoWindow',
+      data: [{
+        coords: [120.057926, 30.183576],
+        offset: [-80, 20],
+        content: '凤起路站',
+        style: {
+          
+        },
+      }, {
+        coords: [120.058511, 30.183206],
+        offset: [-80, 20],
+        content: '龙翔桥',
+      }],
     });
 
     //see AMap.CustomLayer options
@@ -213,11 +219,21 @@ export default class Marker extends React.Component {
     */
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
-      data: {
-        coords: this.transformedData,
-        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
-        desc: Util.pluck(data, 'gmtTime'),
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = this.transformedData.length; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+            size: {
+              width: startImage.width,
+              height: startImage.height,
+            },
+            desc: data[i].gmtTime,
+          });
+        }
+        return result;
+      })(),
     });
 
     //see AMap.CustomLayer options
@@ -291,11 +307,21 @@ export default class Marker extends React.Component {
     */
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
-      data: {
-        coords: this.transformedData,
-        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
-        desc: Util.pluck(data, 'gmtTime'),
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = this.transformedData.length; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+            size: {
+              width: startImage.width,
+              height: startImage.height,
+            },
+            desc: data[i].gmtTime,
+          });
+        }
+        return result;
+      })(),
     });
 
     //see AMap.CustomLayer options
@@ -364,11 +390,21 @@ export default class Marker extends React.Component {
     */
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
-      data: {
-        coords: this.transformedData,
-        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
-        desc: Util.pluck(data, 'gmtTime'),
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = this.transformedData.length; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+            size: {
+              width: startImage.width,
+              height: startImage.height,
+            },
+            desc: data[i].gmtTime,
+          });
+        }
+        return result;
+      })(),
     });
     
     //see AMap.CustomLayer options
@@ -497,11 +533,21 @@ export default class Marker extends React.Component {
     */
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
-      data: {
-        coords: this.transformedData,
-        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
-        desc: Util.pluck(data, 'gmtTime'),
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = this.transformedData.length; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+            size: {
+              width: startImage.width,
+              height: startImage.height,
+            },
+            desc: data[i].gmtTime,
+          });
+        }
+        return result;
+      })(),
     });
     
     //see AMap.CustomLayer options
@@ -624,11 +670,21 @@ export default class Marker extends React.Component {
     */
     paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
-      data: {
-        coords: this.transformedData,
-        size: new Array(this.transformedData.length).fill({width: startImage.width, height: startImage.height,}),
-        desc: Util.pluck(data, 'gmtTime'),
-      },
+      data: (() => {
+        let result = [];
+        
+        for(let i = 0, len = this.transformedData.length; i < len; i++) {
+          result.push({
+            coords: this.transformedData[i],
+            size: {
+              width: startImage.width,
+              height: startImage.height,
+            },
+            desc: data[i].gmtTime,
+          });
+        }
+        return result;
+      })(),
     });
 
     //see AMap.CustomLayer options

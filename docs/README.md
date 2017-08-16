@@ -45,7 +45,6 @@ const mavas = new Mavas('map',{
   zoom: 11,
   center: [120.16405,30.254651],
   animateEnable: false,
-  mapStyle: 'amap://styles/darkblue',
 });
 
 //2. 开启自定义图层
@@ -144,7 +143,6 @@ const mavas = new Mavas('map',{
   zoom: 11,
   center: [120.16405,30.254651],
   animateEnable: false,
-  mapStyle: 'amap://styles/darkblue',
 });
 
 //2. 开启自定义图层
@@ -198,5 +196,72 @@ markerPalette.updatePalette({
 
 //强制刷新 此处必须
 markerPalette.draw(true);
+
+```
+
+> # InfoWindow
+
+> ## createPalette
+
+创建图层
+
+** config **
+
+| name                                                     | Type     | Compulsory/Optional | Default     | Description              |
+| :------------------------------------------------------- | :-----   | :------------------ | :---------- | :----------------------- |
+| ** type **                                               | String   | C                   |             | 标记做图类型，信息窗体:infoWindow |
+| ** id **                                                 | String   | O                   |             | html canvas id           |
+| ** data **                                               | [Object] | O                   |             | [{coords: [120.057926, 30.183576], offset: [-80, 20], desc: '凤起路站'}] 表示标记此坐标 |
+| &nbsp;&nbsp;&nbsp;&nbsp;coords                           | Array    | O                   | []          | 坐标点                    |
+| &nbsp;&nbsp;&nbsp;&nbsp;offset                           | Array    | O                   | [0, 0]      | 信息窗体中心位置的偏移距离    |
+| &nbsp;&nbsp;&nbsp;&nbsp;content                          | String   | O                   | [0, 0]      | 信息窗题文本内容            |
+| &nbsp;&nbsp;&nbsp;&nbsp;style                            | Object   | O                   |             | 样式                      |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width    | Number   | O                   | 80          | 宽度                      |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height   | Number   | O                   | 20          | 高度                      |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;borderWidth | Number | O                  | 1           | 边框宽度                   |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;borderColor | String | O                  | green       | 边框颜色                   |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font     | String   | O                   | 12px monospace | 字体                   |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color    | String   | O                   | black       | 字体颜色                   |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width    | Number   | O                   | 80          | 宽度                      |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundColor | String | O              | white       | 背景颜色                   |
+
+``` javascript
+import Mavas from './lib/mavas';
+
+//初始化步骤：
+
+//1. 初始化地图层
+//详见http://lbs.amap.com/api/javascript-api/reference/map
+const mavas = new Mavas('map',{
+  resizeEnable: true,
+  zoom: 11,
+  center: [120.16405,30.254651],
+  animateEnable: false,
+});
+
+//2. 开启自定义图层
+//详见http://lbs.amap.com/api/javascript-api/reference/layer#AMap.CustomLayer
+mavas.map.plugin(['AMap.CustomLayer'], () => {});
+
+//3. 创建自定义图层
+const markerPalette = mavas.createLayer({
+  type: 'marker',
+  id: 'marker',
+  data: [{
+    coords: [120.16405,30.254651],
+    offset: [-80, 20],
+    content: '凤起路站',
+    style: {
+    
+    },
+  }, {
+    coords: [120.17405,30.264651],
+    offset: [-80, 20],
+    content: '凤起路站',
+  }],
+});
+
+//4. 渲染自定义图层
+mavas.draw();
 
 ```
