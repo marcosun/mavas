@@ -73,7 +73,7 @@ export default class Marker extends React.Component {
         isRealtime: false,
       },
       lineStyle: {
-        color: 'red',
+        color: '#0077FF',
       },
     });
 
@@ -181,7 +181,7 @@ export default class Marker extends React.Component {
         isRealtime: false,
       },
       lineStyle: {
-        color: 'red',
+        color: '#999999',
       },
     });
 
