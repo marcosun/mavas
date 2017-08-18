@@ -74,6 +74,7 @@ export default class Marker extends React.Component {
       },
       lineStyle: {
         color: '#0077FF',
+        lineWidth: 5,
       },
     });
 

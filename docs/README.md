@@ -22,11 +22,13 @@
 | &nbsp;&nbsp;&nbsp;&nbsp;isRealtime                       | Object   | O                   | true        | 是否在托拉拽的时候实时重绘     |
 | ** lineStyle **                                          | Object   | O                   |             | 全部线的样式                |
 | &nbsp;&nbsp;&nbsp;&nbsp;type                             | Sring    | O                   | line        | 直线 -> line 虚线 -> dash   |
+| &nbsp;&nbsp;&nbsp;&nbsp;lineWidth                        | Number   | O                   | 1           | 线的粗细，用数字表示宽度px    |
 | &nbsp;&nbsp;&nbsp;&nbsp;color                            | Sring    | O                   | black       | 颜色                       |
 | ** data **                                               | [Object] | O                   |             | 每一条线一个Array i.e. [{coords: [[10.123, 10.123], [10.456, 10.456], [10.789, 10.789]]}] 表示一条线经过三个坐标点 |
 | &nbsp;&nbsp;&nbsp;&nbsp;coords                           | Array    | O                   | []          | 线的坐标点                  |
 | &nbsp;&nbsp;&nbsp;&nbsp;lineStyle                        | Object   | O                   |             | 针对这条线的样式，优先级高于全部线样式 |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type     | Sring    | O                   | line        | 直线 -> line 虚线 -> dash   |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lineWidth | Number  | O                   | 1           | 线的粗细，用数字表示宽度px    |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color    | Sring    | O                   | black       | 颜色                       |
 | &nbsp;&nbsp;&nbsp;&nbsp;symbol                           | Object   | O                   |             | 线条上增加标志               |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;symbol   | Array    | O                   | ['none', 'none'] | 不显示 -> none 箭头 -> arrow 第一个代表线段起点，第二个代表线段终点 |
@@ -75,6 +77,7 @@ const polylinePalette = mavas.createLayer({
   },
   lineStyle: {
     type: 'line',
+    lineWidth: 5,
     color: '#00FFFF',
   },
 });
