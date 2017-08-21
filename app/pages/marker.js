@@ -203,6 +203,7 @@ export default class Marker extends React.Component {
           result.push({
             coords: this.transformedData[i],
             icon: i % 2 === 0 ? startImage : endImage,
+            offsetY: startImage.height / 2,
           });
         }
         return result;
