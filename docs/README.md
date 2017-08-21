@@ -133,6 +133,8 @@ polylinePalette.draw(true);
 | ** data **                                               | [Object] | O                   |             | [{coords: [10.123, 10.123]}, {coords: [10.456, 10.456]}] 表示标记此坐标 |
 | &nbsp;&nbsp;&nbsp;&nbsp;coords                           | Array    | O                   | []          | 坐标点                    |
 | &nbsp;&nbsp;&nbsp;&nbsp;icon                             | [Image]  | O                   | 蓝色气泡带自增id | 接受Image标签、Canvas；默认id自增的蓝色气泡 |
+| &nbsp;&nbsp;&nbsp;&nbsp;offsetX                          | Number   | O                   | 0           | icon中心与坐标的横向偏移量, 右侧为正 |
+| &nbsp;&nbsp;&nbsp;&nbsp;offsetY                          | Number   | O                   | 0           | icon中心与坐标的纵向偏移量, 上方为正 |
 
 ``` javascript
 import Mavas from './lib/mavas';
