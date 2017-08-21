@@ -219,8 +219,8 @@ export default class OriginDestinationSummary extends React.Component {
     this.markerData = [];
 
     data.forEach((currentRoute) => {
-      this.markerData.push({coords: [currentRoute.startLocation.x, currentRoute.startLocation.y], icon: balloonImage});
-      this.markerData.push({coords: [currentRoute.endLocation.x, currentRoute.endLocation.y], icon: balloonImage});
+      this.markerData.push({coords: [currentRoute.startLocation.x, currentRoute.startLocation.y], icon: balloonImage, offsetY: balloonImage.height / 2,});
+      this.markerData.push({coords: [currentRoute.endLocation.x, currentRoute.endLocation.y], icon: balloonImage, offsetY: balloonImage.height / 2,});
     });
   }
   
