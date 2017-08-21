@@ -39,11 +39,9 @@ export default class Playground extends React.Component {
       type: 'marker',
       id: this.nextMarkerId++ && `marker${this.nextMarkerId - 1}`,
       globalId: this.nextMarkerId + this.nextPolylineId - 2,
-      data: {
-        location: [],
-        icon: [],
-      },
-      realtime: true,
+      data: [{
+        coords: [],
+      }],
     };
   };
   
@@ -52,7 +50,9 @@ export default class Playground extends React.Component {
       type: 'polyline',
       id: this.nextPolylineId++ && `polyline${this.nextPolylineId - 1}`,
       globalId: this.nextMarkerId + this.nextPolylineId - 2,
-      data: [],
+      data: [{
+        coords: [],
+      }],
     };
   };
   
@@ -120,10 +120,12 @@ export default class Playground extends React.Component {
               {},
               this.state.options[i],
               {
-                data: {
-                  location: location,
-                  icon: (new Array(location.length)).fill(this.state.options[i].image),
-                },
+                data: location.map((item) => {
+                  return {
+                    coords: item,
+                    icon: this.state.options[i].image,
+                  };
+                }),
               },
             ));
           } else {
@@ -154,7 +156,6 @@ export default class Playground extends React.Component {
               {
                 data: (() => {
                   let result = [];
-                  console.log(location);
                   result.push({
                     coords: location,
                   });
