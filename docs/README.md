@@ -270,3 +270,27 @@ const infoWindowPalette = mavas.createLayer({
 mavas.draw();
 
 ```
+
+> ## updatePalette
+
+更新图层，只有data对象可以更新
+
+** config **
+
+参考createPalette的参数
+
+``` javascript
+//更新图层
+infoWindowPalette.updatePalette({
+  type: 'infoWindow',
+  data: [{
+    coords: [120.16405,30.254651],
+    offset: [80, 20],
+    content: '凤起路站',
+  }],
+});
+
+//刷新
+infoWindowPalette.draw();
+
+```
