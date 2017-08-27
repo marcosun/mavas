@@ -221,9 +221,11 @@ markerPalette.draw(true);
 | &nbsp;&nbsp;&nbsp;&nbsp;offset                           | Array    | O                   | [0, 0]      | 信息窗体中心位置的偏移距离    |
 | &nbsp;&nbsp;&nbsp;&nbsp;content                          | String   | O                   | [0, 0]      | 信息窗题文本内容            |
 | &nbsp;&nbsp;&nbsp;&nbsp;style                            | Object   | O                   |             | 样式                      |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shape    | String   | O                   | rect        | 边框类型: rect -> 矩形, roundRect -> 圆角矩形 |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width    | Number   | O                   | 80          | 宽度                      |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height   | Number   | O                   | 20          | 高度                      |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;borderWidth | Number | O                  | 1           | 边框宽度                   |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;borderRadius | Number | O                 | 0           | 边框弧度,仅当rect = roundRect时生效 |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;borderColor | String | O                  | green       | 边框颜色                   |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font     | String   | O                   | 12px monospace | 字体                   |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color    | String   | O                   | black       | 字体颜色                   |
