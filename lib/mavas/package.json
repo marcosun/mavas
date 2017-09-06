@@ -4,7 +4,8 @@
   "description": "build your canvas on amap",
   "main": "main.js",
   "scripts": {
-    "build": "webpack -p "
+    "build": "webpack -p ",
+    "dev": "webpack"
   },
   "keywords": [
     "map",
