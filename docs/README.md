@@ -219,7 +219,7 @@ markerPalette.draw(true);
 | ** data **                                               | [Object] | O                   |             | [{coords: [120.057926, 30.183576], offset: [-80, 20], desc: '凤起路站'}] 表示标记此坐标 |
 | &nbsp;&nbsp;&nbsp;&nbsp;coords                           | Array    | O                   | []          | 坐标点                    |
 | &nbsp;&nbsp;&nbsp;&nbsp;offset                           | Array    | O                   | [0, 0]      | 信息窗体中心位置的偏移距离    |
-| &nbsp;&nbsp;&nbsp;&nbsp;content                          | String   | O                   | [0, 0]      | 信息窗题文本内容            |
+| &nbsp;&nbsp;&nbsp;&nbsp;content                          | String   | O                   | ''          | 信息窗题文本内容            |
 | &nbsp;&nbsp;&nbsp;&nbsp;style                            | Object   | O                   |             | 样式                      |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shape    | String   | O                   | rect        | 边框类型: rect -> 矩形, roundRect -> 圆角矩形 |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width    | Number   | O                   | 80          | 宽度                      |
@@ -294,5 +294,98 @@ infoWindowPalette.updatePalette({
 
 //刷新
 infoWindowPalette.draw();
+
+```
+
+> # Tooltip
+
+> ## createPalette
+
+创建图层
+
+** config **
+
+| name                                                     | Type     | Compulsory/Optional | Default     | Description              |
+| :------------------------------------------------------- | :-----   | :------------------ | :---------- | :----------------------- |
+| ** type **                                               | String   | C                   |             | 标记做图类型, tooltip      |
+| ** id **                                                 | String   | O                   |             | html canvas id           |
+| ** cumulative **                                         | Boolean  | O                   | false       | 是否显示覆盖区域的全部重叠tooltip |
+| ** style **                                              | Object   | O                   |             | 样式                      |
+| &nbsp;&nbsp;&nbsp;&nbsp;left                             | Number   | O                   | 10          | 同css left |
+| &nbsp;&nbsp;&nbsp;&nbsp;width                            | Number   | O                   | 108         | 同css width              |
+| &nbsp;&nbsp;&nbsp;&nbsp;padding                          | Number   | O                   | 6           | 同css padding            |
+| &nbsp;&nbsp;&nbsp;&nbsp;lineHeight                       | Number   | O                   | 1.6         | 同css line-height        |
+| &nbsp;&nbsp;&nbsp;&nbsp;font                             | String   | O                   | 12px monospace | 同css font; 不是font-size哦! |
+| &nbsp;&nbsp;&nbsp;&nbsp;color                            | String   | O                   | white       | 同css color              |
+| &nbsp;&nbsp;&nbsp;&nbsp;backgroundColor                  | String   | O                   | rgba(0, 0, 0, 0.7) | 同css background-color |
+| ** data **                                               | [Object] | O                   |             | [{coords: [10.123, 10.123]}, {coords: [10.456, 10.456]}] |
+| &nbsp;&nbsp;&nbsp;&nbsp;coords                           | Array    | O                   | []          | 坐标点                    |
+| &nbsp;&nbsp;&nbsp;&nbsp;width                            | String   | O                   | 38          | 覆盖区域的宽度             |
+| &nbsp;&nbsp;&nbsp;&nbsp;height                           | String   | O                   | 56          | 覆盖区域的高度             |
+| &nbsp;&nbsp;&nbsp;&nbsp;desc                             | String   | O                   | ''          | tooltip内容               |
+| &nbsp;&nbsp;&nbsp;&nbsp;offsetX                          | Number   | O                   | 0           | 覆盖区域与坐标的横向偏移量, 右侧为正 |
+| &nbsp;&nbsp;&nbsp;&nbsp;offsetY                          | Number   | O                   | 0           | 覆盖区域与坐标的纵向偏移量, 上方为正 |
+| &nbsp;&nbsp;&nbsp;&nbsp;style                            | Object   | O                   |             | 样式, 设置每一个tooltip的样式 |
+
+``` javascript
+import Mavas from './lib/mavas';
+
+//初始化步骤：
+
+//1. 初始化地图层
+//详见http://lbs.amap.com/api/javascript-api/reference/map
+const mavas = new Mavas('map',{
+  resizeEnable: true,
+  zoom: 11,
+  center: [120.16405,30.254651],
+  animateEnable: false,
+});
+
+//2. 开启自定义图层
+//详见http://lbs.amap.com/api/javascript-api/reference/layer#AMap.CustomLayer
+mavas.map.plugin(['AMap.CustomLayer'], () => {});
+
+//3. 创建自定义图层
+const tooltipPalette = mavas.createLayer({
+  type: 'tooltip',
+  id: 'tooltip',
+  style: {
+    left: 20,
+  },
+  data: [{
+    coords: [120.16405,30.254651],
+    width: 10,
+    height: 10,
+    desc: '凤起路',
+  }],
+});
+
+//4. 渲染自定义图层
+mavas.draw();
+
+```
+
+> ## updatePalette
+
+更新图层，只有data对象可以更新
+
+** config **
+
+参考createPalette的参数
+
+``` javascript
+//更新图层
+tooltipPalette.updatePalette({
+  type: 'tooltip',
+  data: [{
+    coords: [120.26405,30.354651],
+    width: 10,
+    height: 10,
+    desc: '龙翔桥',
+  }],
+});
+
+//刷新
+tooltipPalette.draw();
 
 ```
