@@ -218,7 +218,8 @@ markerPalette.draw(true);
 | ** id **                                                 | String   | O                   |             | html canvas id           |
 | ** data **                                               | [Object] | O                   |             | [{coords: [120.057926, 30.183576], offset: [-80, 20], desc: '凤起路站'}] 表示标记此坐标 |
 | &nbsp;&nbsp;&nbsp;&nbsp;coords                           | Array    | O                   | []          | 坐标点                    |
-| &nbsp;&nbsp;&nbsp;&nbsp;offset                           | Array    | O                   | [0, 0]      | 信息窗体中心位置的偏移距离    |
+| &nbsp;&nbsp;&nbsp;&nbsp;offsetX                          | Number   | O                   | 0           | 信息窗体中心位置的偏移距离    |
+| &nbsp;&nbsp;&nbsp;&nbsp;offsetY                          | Number   | O                   | 0           | 信息窗体中心位置的偏移距离    |
 | &nbsp;&nbsp;&nbsp;&nbsp;content                          | String   | O                   | ''          | 信息窗题文本内容            |
 | &nbsp;&nbsp;&nbsp;&nbsp;style                            | Object   | O                   |             | 样式                      |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shape    | String   | O                   | rect        | 边框类型: rect -> 矩形, roundRect -> 圆角矩形 |
@@ -256,14 +257,16 @@ const infoWindowPalette = mavas.createLayer({
   id: 'infoWindow',
   data: [{
     coords: [120.16405,30.254651],
-    offset: [-80, 20],
+    offsetX: -80,
+    offsetY: 20,
     content: '凤起路站',
     style: {
     
     },
   }, {
     coords: [120.17405,30.264651],
-    offset: [-80, 20],
+    offsetX: -80,
+    offsetY: 20,
     content: '龙翔桥',
   }],
 });
@@ -287,7 +290,8 @@ infoWindowPalette.updatePalette({
   type: 'infoWindow',
   data: [{
     coords: [120.16405,30.254651],
-    offset: [80, 20],
+    offsetX: 80,
+    offsetY: 20,
     content: '凤起路站',
   }],
 });

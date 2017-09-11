@@ -138,14 +138,16 @@ export default class Marker extends React.Component {
       id: 'infoWindow',
       data: [{
         coords: [120.057926, 30.183576],
-        offset: [-80, 20],
+        offsetX: -80,
+        offsetY: 20,
         content: '凤起路站',
         style: {
           shape: 'rect',
         },
       }, {
         coords: [120.058511, 30.183206],
-        offset: [-80, 20],
+        offsetX: -80,
+        offsetY: 20,
         content: '龙翔桥',
         style: {
           shape: 'roundRect',
