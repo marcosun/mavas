@@ -42,7 +42,9 @@ export default class OriginDestinationSummary extends React.Component {
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
-    this.fetchAndDraw();
+    balloonImage.onload = () => {
+      this.fetchAndDraw();
+    };
   }
   
   fetchAndDraw(isUpdate) {
@@ -146,9 +148,7 @@ export default class OriginDestinationSummary extends React.Component {
     this.paletteTooltip = this.mavas.createLayer({
       type: 'tooltip',
       data: this.tooltipData,
-      style: {
-        width: 250,
-      },
+      width: 250,
       cumulative: true,
     });
     
@@ -236,20 +236,18 @@ export default class OriginDestinationSummary extends React.Component {
       
       this.tooltipData.push({
         coords: startCoords,
-        size: {
-          width: balloonImage.width,
-          height: balloonImage.height,
-        },
+        width: balloonImage.width,
+        height: balloonImage.height,
         desc: `起始站：${startStation}，人数：${num}`,
+        offsetY: balloonImage.height / 2,
       });
 
       this.tooltipData.push({
         coords: endCoords,
-        size: {
-          width: balloonImage.width,
-          height: balloonImage.height,
-        },
+        width: balloonImage.width,
+        height: balloonImage.height,
         desc: `终点站：${endStation}，人数：${num}`,
+        offsetY: balloonImage.height / 2,
       });
     }
   }

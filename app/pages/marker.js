@@ -123,11 +123,10 @@ export default class Marker extends React.Component {
         for(let i = 0, len = this.transformedData.length; i < len; i++) {
           result.push({
             coords: this.transformedData[i],
-            size: {
-              width: startImage.width,
-              height: startImage.height,
-            },
+            width: startImage.width,
+            height: startImage.height,
             desc: data[i].gmtTime,
+            offsetY: 28,
           });
         }
         return result;
@@ -232,11 +231,10 @@ export default class Marker extends React.Component {
         for(let i = 0, len = this.transformedData.length; i < len; i++) {
           result.push({
             coords: this.transformedData[i],
-            size: {
-              width: startImage.width,
-              height: startImage.height,
-            },
+            width: startImage.width,
+            height: startImage.height,
             desc: data[i].gmtTime,
+            offsetY: 28,
           });
         }
         return result;
@@ -320,11 +318,10 @@ export default class Marker extends React.Component {
         for(let i = 0, len = this.transformedData.length; i < len; i++) {
           result.push({
             coords: this.transformedData[i],
-            size: {
-              width: startImage.width,
-              height: startImage.height,
-            },
+            width: startImage.width,
+            height: startImage.height,
             desc: data[i].gmtTime,
+            offsetY: 28,
           });
         }
         return result;
@@ -403,11 +400,10 @@ export default class Marker extends React.Component {
         for(let i = 0, len = this.transformedData.length; i < len; i++) {
           result.push({
             coords: this.transformedData[i],
-            size: {
-              width: startImage.width,
-              height: startImage.height,
-            },
+            width: startImage.width,
+            height: startImage.height,
             desc: data[i].gmtTime,
+            offsetY: 28,
           });
         }
         return result;
@@ -546,11 +542,10 @@ export default class Marker extends React.Component {
         for(let i = 0, len = this.transformedData.length; i < len; i++) {
           result.push({
             coords: this.transformedData[i],
-            size: {
-              width: startImage.width,
-              height: startImage.height,
-            },
+            width: startImage.width,
+            height: startImage.height,
             desc: data[i].gmtTime,
+            offsetY: 28,
           });
         }
         return result;
@@ -683,11 +678,10 @@ export default class Marker extends React.Component {
         for(let i = 0, len = this.transformedData.length; i < len; i++) {
           result.push({
             coords: this.transformedData[i],
-            size: {
-              width: startImage.width,
-              height: startImage.height,
-            },
+            width: startImage.width,
+            height: startImage.height,
             desc: data[i].gmtTime,
+            offsetY: 28,
           });
         }
         return result;
