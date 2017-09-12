@@ -4,7 +4,7 @@
 
 > # Polyline
 
-> ## createPalette
+> ## createLayer
 
 创建图层
 
@@ -93,7 +93,7 @@ mavas.draw();
 
 ** config **
 
-参考createPalette的参数
+参考createLayer的参数
 
 ``` javascript
 //更新图层
@@ -117,7 +117,7 @@ polylinePalette.draw(true);
 
 > # Marker
 
-> ## createPalette
+> ## createLayer
 
 创建图层
 
@@ -184,7 +184,7 @@ mavas.draw();
 
 ** config **
 
-参考createPalette的参数
+参考createLayer的参数
 
 ``` javascript
 //更新图层
@@ -206,7 +206,7 @@ markerPalette.draw(true);
 
 > # InfoWindow
 
-> ## createPalette
+> ## createLayer
 
 创建图层
 
@@ -282,7 +282,7 @@ mavas.draw();
 
 ** config **
 
-参考createPalette的参数
+参考createLayer的参数
 
 ``` javascript
 //更新图层
@@ -303,7 +303,7 @@ infoWindowPalette.draw();
 
 > # Tooltip
 
-> ## createPalette
+> ## createLayer
 
 创建图层
 
@@ -375,7 +375,7 @@ mavas.draw();
 
 ** config **
 
-参考createPalette的参数
+参考createLayer的参数
 
 ``` javascript
 //更新图层
@@ -391,5 +391,27 @@ tooltipPalette.updatePalette({
 
 //刷新
 tooltipPalette.draw();
+
+```
+
+> # Instant Method
+
+> ## setFit
+
+Mavas实例化对象拥有setFit方法，可以使用这个方法来自动调整缩放级别、聚焦Polyline和Marker图层
+
+** config **
+
+| Type              | Compulsory/Optional | Default     | Description                                  |
+| :---------------- | :------------------ | :---------- | :------------------------------------------- |
+| Marker/Polyline   | C                   |             | Mavas.createLayer返回的Polyline或者Marker对象 |
+
+``` javascript
+//create Mavas instant
+const mavas = new window.Mavas.default('map', {
+});
+
+//setFit on a particular palette
+mavas.setFit(markerPalette);
 
 ```
