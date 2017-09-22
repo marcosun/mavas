@@ -21,6 +21,7 @@ import Migration from './pages/migration';
 import OriginDestinationSummary from './pages/originDestinationSummary';
 import Heatmap from './pages/heatmap';
 import Playground from './pages/playground';
+import Bq from './pages/bq';
 
 import Styles from './index.css';
 
@@ -46,6 +47,7 @@ render(
         <Route exact path='/heatmap' component={Heatmap} />
         <Route exact path='/playground' component={Playground} />
         <Route exact path='/releasenote' component={ReleaseNote} />
+        <Route exact path='/bq' component={Bq} />
       </div>
     </Router>
   </MuiThemeProvider>,
