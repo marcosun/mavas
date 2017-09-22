@@ -19,7 +19,7 @@
 | &nbsp;&nbsp;&nbsp;&nbsp;delay                            | Object   | O                   |             | 大数据量下的间隔时间段批量做图 |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interval | Number   | O                   |             | 时间间隔多久ms              |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size     | Number   | O                   |             | 每次做多少条直线             |
-| &nbsp;&nbsp;&nbsp;&nbsp;isRealtime                       | Object   | O                   | true        | 是否在托拉拽的时候实时重绘     |
+| &nbsp;&nbsp;&nbsp;&nbsp;isRealtime                       | Object   | O                   | false       | 是否在托拉拽的时候实时重绘     |
 | ** lineStyle **                                          | Object   | O                   |             | 全部线的样式                |
 | &nbsp;&nbsp;&nbsp;&nbsp;type                             | Sring    | O                   | line        | 直线 -> line 虚线 -> dash   |
 | &nbsp;&nbsp;&nbsp;&nbsp;lineWidth                        | Number   | O                   | 1           | 线的粗细，用数字表示宽度px    |
@@ -128,7 +128,7 @@ polylinePalette.draw(true);
 | ** type **                                               | String   | C                   |             | 标记做图类型，标记:marker   |
 | ** id **                                                 | String   | O                   |             | html canvas id           |
 | ** algo **                                               | Object   | O                   |             | 做图算法                  |
-| &nbsp;&nbsp;&nbsp;&nbsp;isRealtime                       | Object   | O                   | true        | 是否在托拉拽的时候实时重绘   |
+| &nbsp;&nbsp;&nbsp;&nbsp;isRealtime                       | Object   | O                   | false       | 是否在托拉拽的时候实时重绘   |
 | ** onClick **                                            | Function | O                   |             | 点击标记后的回调 (e) => {}  |
 | ** data **                                               | [Object] | O                   |             | [{coords: [10.123, 10.123]}, {coords: [10.456, 10.456]}] 表示标记此坐标 |
 | &nbsp;&nbsp;&nbsp;&nbsp;coords                           | Array    | O                   | []          | 坐标点                    |
