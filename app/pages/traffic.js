@@ -66,7 +66,7 @@ export default class Traffic extends React.Component {
   }
   
   fetch() {
-    return request('GET', 'http://10.88.2.175:8083/v1/opstat/getLinkSpeedByRectangle')
+    return request('GET', 'http://10.80.92.214:8083/v1/opstat/getLinkSpeedByRectangle')
     .query(this.searchConditions);
   }
   
