@@ -4,14 +4,15 @@ import request from 'superagent';
 import Mavas from '../../lib/mavas/main';
 import Util from '../../lib/mavas/util';
 
-import startIcon from '../image/start.png';
-let startImage = document.createElement('img');
-startImage.src = startIcon;
-import endIcon from '../image/end.png';
-let endImage = document.createElement('img');
-endImage.src = endIcon;
+//import startIcon from '../image/start.png';
+//let startImage = document.createElement('img');
+//startImage.src = startIcon;
+//import endIcon from '../image/end.png';
+//let endImage = document.createElement('img');
+//endImage.src = endIcon;
 
-import mockdata from '../mockData/bq';
+import onboard from '../mockData/onboard';
+import dropoff from '../mockData/dropoff';
 
 /*
   *Map component creates a container for map
@@ -24,14 +25,16 @@ export default class Bq extends React.Component {
     super(props);
     
     this.props = props;
-    this.state = {
-      isFetching: true,
-      startTime: '00:00:00',
-      endTime: '23:59:59',
-    };
+//    this.state = {
+//      isFetching: true,
+//      startTime: '00:00:00',
+//      endTime: '23:59:59',
+//    };
+//    
+//    this.delayExecute = new Util.Delay(1000);
+//    this.isRelationalVision = false;
     
-    this.delayExecute = new Util.Delay(1000);
-    this.isRelationalVision = false;
+    this.initIcons();
   }
   
   componentDidMount() {
@@ -47,119 +50,120 @@ export default class Bq extends React.Component {
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
-    startImage.src = startIcon;
-    endImage.src = endIcon;
+    setTimeout(() => {this.fetchAndDraw();}, 1000);
+  }
+  
+  initIcons() {
+    for(let i = 0; i < 10; i++) {
+      const iconName = `onboardIcon${i + 1}`;
+      const canvas = document.createElement('canvas');
+      canvas.width = i * 2 + 2 + 6;
+      canvas.height = i * 2 + 2 + 6;
+      const ctx = canvas.getContext('2d');
+      ctx.strokeStyle = 'navy';
+      ctx.lineWidth = 1;
+      ctx.arc(canvas.width / 2, canvas.height / 2, i + 3, 0, 2 * Math.PI);
+      ctx.stroke();
+      this[iconName] = canvas;
+    }
     
-    endImage.onload = () => {
-      this.fetchAndDraw();
-    };
+    for(let i = 0; i < 10; i++) {
+      const iconName = `dropoffIcon${i + 1}`;
+      const canvas = document.createElement('canvas');
+      canvas.width = i * 2 + 2 + 6;
+      canvas.height = i * 2 + 2 + 6;
+      const ctx = canvas.getContext('2d');
+      ctx.strokeStyle = 'red';
+      ctx.lineWidth = 1;
+      ctx.arc(canvas.width / 2, canvas.height / 2, i + 3, 0, 2 * Math.PI);
+      ctx.stroke();
+      this[iconName] = canvas;
+    }
   }
   
   fetchAndDraw(isUpdate) {
-//    this.fetchData()
-//      .then((res) => {
-//        this.setState({
-//          ...this.state,
-//          isFetching: false,
-//        });
-//        this.apiData = res.body;
-        this.apiData = mockdata;
-        this.dataTransformation(this.apiData);
-        if (isUpdate === true) {
-          this.redraw();
-        } else {
-          this.draw();
-        }
-//      });
-  }
-  
-  fetchData() {
-    this.setState({
-      ...this.state,
-      isFetching: true,
-    });
-    
-    return request.get(`${__API_ROOT__}/odByTime`)
-      .query({
-        startTime: this.state.startTime,
-        endTime: this.state.endTime,
-      });
+    this.dataTransformation();
+    if (isUpdate === true) {
+      this.redraw();
+    } else {
+      this.draw();
+    }
   }
   
   draw() {
-    this.palettePolyline = this.mavas.createLayer({
-      type: 'polyline',
-      id: 'polyline',
-      data: [],
-      lineStyle: {
-        type: 'dash',
-        color: 'red',
-      },
-    });
+//    this.palettePolyline = this.mavas.createLayer({
+//      type: 'polyline',
+//      id: 'polyline',
+//      data: [],
+//      lineStyle: {
+//        type: 'dash',
+//        color: 'red',
+//      },
+//    });
     
     this.paletteMarker = this.mavas.createLayer({
       type: 'marker',
       id: 'marker',
       data: this.markerData,
-      onClick: (e) => {
-        const removeDuplicatedMarker = (marker) => {
-          const isExist = (coords) => {
-            for(let i = 0, len = result.length; i < len; i++) {
-              if(Util.isEqual(coords, result[i].coords)) {
-                return true;
-              }
-              return false;
-            }
-          };
-          
-          let result = [];
-          
-          for(let i = 0, len = marker.length; i < len; i++) {
-            let coords = marker[i].coords;
-            if(!isExist(coords)) {
-              result.push(marker[i]);
-            }
-          }
-          
-          return result;
-        };
-        
-        this.isRelationalVision = !this.isRelationalVision;
-        
-        if (this.isRelationalVision === true) {
-          let targetCoords, matchedList = [];
-          
-          //remove duplicated marker
-          let clickMarkerList = removeDuplicatedMarker(e.marker);
-          
-          for(let ia = clickMarkerList.length - 1; ia >= 0; ia--) {
-            targetCoords = clickMarkerList[ia].coords;
-
-            for(let ib = this.apiData.length - 1; ib >= 0; ib--) {
-              let startCoords = [Number(this.apiData[ib].up_lng), Number(this.apiData[ib].up_lat)],
-                endCoords = [Number(this.apiData[ib].down_lng), Number(this.apiData[ib].down_lat)];
-
-              if(Util.isEqual(targetCoords, startCoords) || Util.isEqual(targetCoords, endCoords)) {
-                matchedList.push(this.apiData[ib]);
-              }
-            }
-          }
-          this.dataTransformation(matchedList);
-        } else {
-          this.dataTransformation(this.apiData);
-          this.makePolylineData([]);
-        }
-        
-        this.updateCurves();
-      },
+//      onClick: (e) => {
+//        const removeDuplicatedMarker = (marker) => {
+//          const isExist = (coords) => {
+//            for(let i = 0, len = result.length; i < len; i++) {
+//              if(Util.isEqual(coords, result[i].coords)) {
+//                return true;
+//              }
+//              return false;
+//            }
+//          };
+//          
+//          let result = [];
+//          
+//          for(let i = 0, len = marker.length; i < len; i++) {
+//            let coords = marker[i].coords;
+//            if(!isExist(coords)) {
+//              result.push(marker[i]);
+//            }
+//          }
+//          
+//          return result;
+//        };
+//        
+//        this.isRelationalVision = !this.isRelationalVision;
+//        
+//        if (this.isRelationalVision === true) {
+//          let targetCoords, matchedList = [];
+//          
+//          //remove duplicated marker
+//          let clickMarkerList = removeDuplicatedMarker(e.marker);
+//          
+//          for(let ia = clickMarkerList.length - 1; ia >= 0; ia--) {
+//            targetCoords = clickMarkerList[ia].coords;
+//
+//            for(let ib = this.apiData.length - 1; ib >= 0; ib--) {
+//              let startCoords = [Number(this.apiData[ib].up_lng), Number(this.apiData[ib].up_lat)],
+//                endCoords = [Number(this.apiData[ib].down_lng), Number(this.apiData[ib].down_lat)];
+//
+//              if(Util.isEqual(targetCoords, startCoords) || Util.isEqual(targetCoords, endCoords)) {
+//                matchedList.push(this.apiData[ib]);
+//              }
+//            }
+//          }
+//          this.dataTransformation(matchedList);
+//        } else {
+//          this.dataTransformation(this.apiData);
+//          this.makePolylineData([]);
+//        }
+//        
+//        this.updateCurves();
+//      },
     });
     
-    this.paletteTooltip = this.mavas.createLayer({
-      type: 'tooltip',
-      data: this.tooltipData,
-      width: 250,
-      cumulative: true,
-    });
+//    this.paletteTooltip = this.mavas.createLayer({
+//      type: 'tooltip',
+//      data: this.tooltipData,
+//      width: 250,
+//      cumulative: true,
+//    });
     
     this.mavas.draw({
       zIndex: 150,
@@ -171,13 +175,13 @@ export default class Bq extends React.Component {
     this.updateCurves();
   }
   
-  dataTransformation(data) {
+  dataTransformation() {
     //prepare polyline data
-    this.makePolylineData(data);
+//    this.makePolylineData(data);
     //prepare marker data
-    this.makeMarkerData(data);
+    this.makeMarkerData();
     //prepare tooltip data
-    this.makeTooltipData(data);
+//    this.makeTooltipData(data);
   }
   
   makePolylineData(data) {
@@ -195,12 +199,22 @@ export default class Bq extends React.Component {
     });
   }
   
-  makeMarkerData(data) {
+  makeMarkerData() {
     this.markerData = [];
-
-    data.forEach((currentRoute) => {
-      this.markerData.push({coords: [Number(currentRoute.up_lng), Number(currentRoute.up_lat)], icon: startImage, offsetY: startImage.height / 2,});
-      this.markerData.push({coords: [Number(currentRoute.down_lng), Number(currentRoute.down_lat)], icon: endImage, offsetY: endImage.height / 2,});
+    
+    onboard.forEach((marker) => {
+      if(this[`onboardIcon${marker.volume / 10 < 10 ? Math.floor(marker.volume / 10 + 1) : 10}`] === undefined) {console.log(marker);};
+      this.markerData.push({
+        coords: [Number(marker.coords.split(',')[1]), Number(marker.coords.split(',')[0])],
+        icon: this[`onboardIcon${marker.volume / 10 < 10 ? Math.floor(marker.volume / 10 + 1) : 10}`],
+      });
+    });
+    
+    dropoff.forEach((marker) => {
+      this.markerData.push({
+        coords: [Number(marker.coords.split(',')[1]), Number(marker.coords.split(',')[0])],
+        icon: this[`dropoffIcon${marker.volume / 10 < 10 ? Math.floor(marker.volume / 10 + 1) : 10}`],
+      });
     });
   }
   
@@ -233,17 +247,17 @@ export default class Bq extends React.Component {
   }
   
   updateCurves() {
-    this.palettePolyline.updatePalette({
-      type: 'polyline',
-      id: 'polyline',
-      data: this.polylineData,
-      lineStyle: {
-        type: 'dash',
-        color: 'red',
-      },
-    });
+//    this.palettePolyline.updatePalette({
+//      type: 'polyline',
+//      id: 'polyline',
+//      data: this.polylineData,
+//      lineStyle: {
+//        type: 'dash',
+//        color: 'red',
+//      },
+//    });
 
-    this.palettePolyline.draw(true);
+//    this.palettePolyline.draw(true);
 
     this.paletteMarker.updatePalette({
       type: 'marker',
@@ -253,12 +267,12 @@ export default class Bq extends React.Component {
 
     this.paletteMarker.draw(true);
 
-    this.paletteTooltip.updatePalette({
-      type: 'tooltip',
-      data: this.tooltipData,
-    });
-
-    this.paletteTooltip.draw(true);
+//    this.paletteTooltip.updatePalette({
+//      type: 'tooltip',
+//      data: this.tooltipData,
+//    });
+//
+//    this.paletteTooltip.draw(true);
   }
   
   render() {
