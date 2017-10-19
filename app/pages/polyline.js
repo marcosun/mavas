@@ -35,14 +35,14 @@ export default class Polyline extends React.Component {
         'instant': true,
       },
     };
-  };
+  }
   
   componentDidMount() {
     //prepare data to this format: [line, line], line = [point, point], point = [lng, lat], where lng and lat are float number
     this.transformedData = data.map((route) => {
       let len = route.length,
-          prev = [0,0],
-          result = [];
+        prev = [0,0],
+        result = [];
       
       for (let i = 0; i < len; i += 2) {
         prev[0] = Util.toDecimal(prev[0] + route[i] / 10000, 4);
@@ -63,59 +63,59 @@ export default class Polyline extends React.Component {
     //init amap layers on demand; see amap api reference
     this.mavas.map.plugin(['AMap.CustomLayer'], () => {});
     
-  };
+  }
   
   onChange(e) {
     switch(e.target.name) {
-      case '9 blocks':
-        this.setState({
-          ...this.state,
-          algo: {
-            ...this.defaultState.algo,
-            '9 blocks': true,
-          },
-        });
-        break;
-      case 'simple':
-        this.setState({
-          ...this.state,
-          algo: {
-            ...this.defaultState.algo,
-            'simple': true,
-          },
-        });
-        break;
-      case 'instant':
-        this.setState({
-          ...this.state,
-          render: {
-            ...this.defaultState.render,
-            'instant': true,
-          },
-        });
-        break;
-      case 'delay':
-        this.setState({
-          ...this.state,
-          render: {
-            ...this.defaultState.render,
-            'delay': true,
-          },
-        });
-        break;
-      case 'isRealtime':
-        this.setState({
-          ...this.state,
-          render: {
-            ...this.defaultState.render,
-            'isRealtime': true,
-          },
-        });
-        break;
-      default:
-        throw new Error('unknown error');
-    };
-  };
+    case '9 blocks':
+      this.setState({
+        ...this.state,
+        algo: {
+          ...this.defaultState.algo,
+          '9 blocks': true,
+        },
+      });
+      break;
+    case 'simple':
+      this.setState({
+        ...this.state,
+        algo: {
+          ...this.defaultState.algo,
+          'simple': true,
+        },
+      });
+      break;
+    case 'instant':
+      this.setState({
+        ...this.state,
+        render: {
+          ...this.defaultState.render,
+          'instant': true,
+        },
+      });
+      break;
+    case 'delay':
+      this.setState({
+        ...this.state,
+        render: {
+          ...this.defaultState.render,
+          'delay': true,
+        },
+      });
+      break;
+    case 'isRealtime':
+      this.setState({
+        ...this.state,
+        render: {
+          ...this.defaultState.render,
+          'isRealtime': true,
+        },
+      });
+      break;
+    default:
+      throw new Error('unknown error');
+    }
+  }
   
   draw() {
     let palette;
@@ -140,7 +140,7 @@ export default class Polyline extends React.Component {
           result.push({
             coords: this.transformedData[i],
           });
-        };
+        }
         return result;
       })(),
       algo: {
@@ -154,15 +154,18 @@ export default class Polyline extends React.Component {
       lineStyle: {
         color: '#00FFFF',
       },
+      onClick: (e) => {
+        console.log(e);
+      },
     });
     
     this.mavas.draw();
-  };
+  }
   
   clear() {
     this.mavas.map.destroy();
     this.componentDidMount();
-  };
+  }
   
   render() {
     return (
@@ -171,14 +174,14 @@ export default class Polyline extends React.Component {
         <div style={{'height': '50px'}}>
           <div style={{'display': 'inline-block'}}>
             <h5 style={{'margin': '5px 0'}}>算法（必选、单选）</h5>
-            <label style={{"padding": "2px 5px"}}><input name="9 blocks" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.algo['9 blocks']}></input>9 blocks</label>
-            <label style={{"padding": "2px 5px"}}><input name="simple" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.algo.simple}></input>simple</label>
+            <label style={{'padding': '2px 5px'}}><input name="9 blocks" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.algo['9 blocks']}></input>9 blocks</label>
+            <label style={{'padding': '2px 5px'}}><input name="simple" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.algo.simple}></input>simple</label>
           </div>
           <div style={{'display': 'inline-block', 'marginLeft': '100px'}}>
             <h5 style={{'margin': '5px 0'}}>渲染方式（必选、单选）</h5>
-            <label style={{"padding": "2px 5px"}}><input name="instant" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.instant}></input>instant</label>
-            <label style={{"padding": "2px 5px"}}><input name="delay" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.delay}></input>delay</label>
-            <label style={{"padding": "2px 5px"}}><input name="isRealtime" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.isRealtime}></input>isRealtime</label>
+            <label style={{'padding': '2px 5px'}}><input name="instant" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.instant}></input>instant</label>
+            <label style={{'padding': '2px 5px'}}><input name="delay" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.delay}></input>delay</label>
+            <label style={{'padding': '2px 5px'}}><input name="isRealtime" onChange={this.onChange.bind(this)} type="checkbox" checked={this.state.render.isRealtime}></input>isRealtime</label>
           </div>
           <a className="btn" onClick={this.clear.bind(this)} href="javascript:;">clear</a>
           <a className="btn" onClick={this.draw.bind(this)} href="javascript:;">draw</a>
@@ -186,5 +189,5 @@ export default class Polyline extends React.Component {
         <div className="map-container" id="map"></div>
       </div>
     );
-  };
-};
+  }
+}
