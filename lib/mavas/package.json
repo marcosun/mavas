@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack -p ",
-    "dev": "webpack"
+    "dev": "webpack",
+    "doc": "jsdoc -c ./config/jsdoc.config.json"
   },
   "keywords": [
     "map",
@@ -15,13 +16,13 @@
   ],
   "author": "Marco",
   "license": "UNLICENSED",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "jsdoc": "^3.5.5",
     "style-loader": "^0.18.1",
     "url-loader": "^0.5.8",
     "webpack": "^2.6.1"
